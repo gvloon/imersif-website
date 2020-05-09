@@ -26,7 +26,7 @@ class HeaderMenuType extends WPObjectType {
         $config = array(
             'name'        => 'HeaderMenuType',
             'fields'      => self::fields(),
-            'description' => __( 'Header Menu', 'postlight-headless-wp' ),
+            'description' => __( 'Header Menu', 'imersif' ),
         );
         parent::__construct( $config );
     }
@@ -40,15 +40,15 @@ class HeaderMenuType extends WPObjectType {
                 $fields = array(
                     'label' => array(
                         'type'        => Types::string(),
-                        'description' => __( 'The URL label', 'postlight-headless-wp' ),
+                        'description' => __( 'The URL label', 'imersif' ),
                     ),
                     'url'   => array(
                         'type'        => Types::string(),
-                        'description' => __( 'The URL', 'postlight-headless-wp' ),
+                        'description' => __( 'The URL', 'imersif' ),
                     ),
                     'type'  => array(
                         'type'        => Types::string(),
-                        'description' => __( 'internal or external', 'postlight-headless-wp' ),
+                        'description' => __( 'internal or external', 'imersif' ),
                     ),
                 );
                 return self::prepare_fields( $fields, 'HeaderMenuType' );

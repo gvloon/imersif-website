@@ -53,7 +53,7 @@ add_action(
             'headerMenu',
             array(
                 'type'        => Types::list_of( new HeaderMenuType() ),
-                'description' => __( 'Returns the header menu items', 'postlight-headless-wp' ),
+                'description' => __( 'Returns the header menu items', 'imersif' ),
                 'resolve'     => function () {
                     return get_items();
                 },
