@@ -15,5 +15,4 @@ before_script:
 
 script:
     - curl localhost:3000 | grep 'Congratulations!'
-    - curl localhost:3001 | grep 'WordPress + React'
     - docker exec -w /var/www/html/wp-content/themes/imersif wp-headless phpcs -v .
