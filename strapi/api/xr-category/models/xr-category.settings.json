@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "xr_categories",
+  "info": {
+    "name": "xr-category"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "devices": {
+      "collection": "device",
+      "via": "xr_categories",
+      "dominant": true
+    }
+  }
+}

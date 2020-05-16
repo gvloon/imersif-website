@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "patterns",
+  "info": {
+    "name": "pattern"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

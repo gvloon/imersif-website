@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "industries",
+  "info": {
+    "name": "industry"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "parent": {
+      "via": "children",
+      "model": "industry"
+    },
+    "children": {
+      "via": "parent",
+      "collection": "industry"
+    }
+  }
+}

@@ -1,54 +1,31 @@
 version: '3'
 
 services:
-    db-headless:
-        container_name: db-headless
+    mongo:
+        image: mongo
+        container_name: imersif_mongo
         environment:
-            - MYSQL_RANDOM_ROOT_PASSWORD=yes
-            - MYSQL_DATABASE=${WORDPRESS_DB_NAME}
-            - MYSQL_PASSWORD=${WORDPRESS_DB_PASSWORD}
-            - MYSQL_USER=${WORDPRESS_DB_USER}
-        image: mariadb
-        ports:
-            - '3307:3306'
-    wp-headless:
-        build: .
-        command: bash -c 'install_wordpress && apache2-foreground'
-        container_name: wp-headless
-        depends_on:
-            - db-headless
-        env_file: ./.env
-        ports:
-            - '8080:8080'
-        user: www-data
+            MONGO_INITDB_ROOT_USERNAME: strapi
+            MONGO_INITDB_ROOT_PASSWORD: strapi
         volumes:
-            - ./wordpress:/var/www/html
-            - ./docker/install_wordpress.sh:/usr/local/bin/install_wordpress
-            - ./docker/migratedb_import.sh:/usr/local/bin/migratedb_import
-            - ./docker/postlightheadlesswpstarter.wordpress.xml:/var/www/postlightheadlesswpstarter.wordpress.xml
-            - ./docker/images:/var/www/images
-            - ./docker/plugins:/var/www/plugins
-    frontend:
-        command: bash -c 'yarn && yarn start'
-        container_name: frontend
-        expose:
-            - '3000'
-        image: node
+            - mongodata:/data/db
         ports:
-            - '3000:3000'
-        user: node
+            - '27017:27017'
+    strapi:
+        image: strapi/strapi
+        container_name: imersif_strapi
+        environment:
+            DATABASE_CLIENT: mongo
+            DATABASE_NAME: strapi
+            DATABASE_HOST: mongo
+            DATABASE_PORT: 27017
+            DATABASE_USERNAME: strapi
+            DATABASE_PASSWORD: strapi
+        links:
+            - mongo:mongo
         volumes:
-            - ./frontend:/home/node/app
-        working_dir: /home/node/app
-    frontend-graphql:
-        command: bash -c 'yarn && yarn start'
-        container_name: frontend-graphql
-        expose:
-            - '3001'
-        image: node
+            - ./strapi:/srv/app
         ports:
-            - '3001:3001'
-        user: node
-        volumes:
-            - ./frontend-graphql:/home/node/app
-        working_dir: /home/node/app
+            - '1337:1337'
+volumes:
+    mongodata:

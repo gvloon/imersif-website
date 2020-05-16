@@ -1,7 +1,5 @@
 node_modules
 npm-debug.log
 yarn-error.log
-data
+data/db
 .idea/
-
-.vercel
