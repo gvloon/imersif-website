@@ -22,6 +22,7 @@ services:
             DATABASE_PORT: 27017
             DATABASE_USERNAME: strapi
             DATABASE_PASSWORD: strapi
+            HOST: $HOST
         links:
             - mongo:mongo
         volumes:
