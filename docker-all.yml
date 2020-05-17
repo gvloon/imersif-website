@@ -8,7 +8,7 @@ services:
             - strapi
         environment:
             NEXT_PUBLIC_STRAPI_URL: http://imersif_strapi:1337
-        command: bash -c 'yarn && yarn build && yarn start'
+        command: bash -c 'yarn && /home/scripts/wait.sh http://imersif_strapi:1337 && yarn build && yarn start'
         expose:
             - '3000'
         ports:
@@ -16,9 +16,12 @@ services:
         user: node
         volumes:
             - ./frontend:/home/node/app
+            - ./scripts:/home/scripts
         working_dir: /home/node/app
     ngnix:
         build: ./nginx
         container_name: imersif_nginx
+        depends_on:
+            - frontend
         ports:
             - '80:80'
