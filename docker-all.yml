@@ -1,6 +1,8 @@
 version: '3'
 
 services:
+    strapi:
+        command: bash -c 'yarn && NODE_ENV=production yarn build && NODE_ENV=production yarn start'
     frontend:
         image: node
         container_name: imersif_frontend
