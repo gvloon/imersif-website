@@ -7,8 +7,8 @@ services:
         depends_on:
             - strapi
         environment:
-            NEXT_PUBLIC_STRAPI_URL: http://imersif_strapi:1337
-        command: bash -c 'yarn && /home/scripts/wait.sh http://imersif_strapi:1337 && yarn build && yarn start'
+            NEXT_PUBLIC_STRAPI_URL: http://imersif_strapi:$STRAPI_PORT
+        command: bash -c 'yarn && /home/scripts/wait.sh http://imersif_strapi:$STRAPI_PORT && yarn build && yarn start'
         expose:
             - '3000'
         ports:
