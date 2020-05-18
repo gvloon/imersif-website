@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-rm -Rf /data/backup/strapi
+pushd $(dirname "$0")/../../
+
+rm -Rf data/backup/strapi
+git pull
 docker exec imersif_mongo mongodump --host mongo -d strapi -u strapi -p strapi --authenticationDatabase admin -o /data/backup
-git add /data/backup/strapi/\\*
+git add data/backup/strapi/*
 git commit -m "Update backup from production"
-git push
+sudo -u gdh_van_loon git push
 
-
+popd

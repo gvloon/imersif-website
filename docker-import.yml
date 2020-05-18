@@ -6,7 +6,7 @@ services:
         container_name: imersif_mongo_import
         command: bash -c '/home/scripts/wait-mongo.sh && /home/scripts/restore.sh'
         volumes:
-            - ./scripts:/home/scripts
+            - ./scripts/docker:/home/scripts
             - ./data/backup:/data/backup
         depends_on:
             - mongo

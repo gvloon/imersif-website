@@ -18,7 +18,7 @@ services:
         user: node
         volumes:
             - ./frontend:/home/node/app
-            - ./scripts:/home/scripts
+            - ./scripts/docker:/home/scripts
         working_dir: /home/node/app
     ngnix:
         build: ./nginx
