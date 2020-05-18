@@ -25,6 +25,7 @@ export const getStaticProps = async () => {
     return {
         props: {
             industries: response.data
-        }
+        },
+        unstable_revalidate: 1
     }
 }

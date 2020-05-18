@@ -21,6 +21,7 @@ export const getStaticProps = async () => {
     return {
         props: {
             devices: response.data
-        }
+        },
+        unstable_revalidate: 1
     }
 }

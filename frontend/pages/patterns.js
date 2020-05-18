@@ -21,6 +21,7 @@ export const getStaticProps = async () => {
     return {
         props: {
             patterns: response.data
-        }
+        },
+        unstable_revalidate: 1
     }
 }
