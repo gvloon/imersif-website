@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sectors",
+  "info": {
+    "name": "sector"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "industry_groups": {
+      "via": "sector",
+      "collection": "industry-group"
+    }
+  }
+}

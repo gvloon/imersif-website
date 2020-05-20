@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "name": "page"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "Home",
+        "Devices",
+        "Device",
+        "Patterns",
+        "Pattern",
+        "Cases",
+        "Cases_Sector",
+        "Cases_IndustryGroup",
+        "Cases_Industry",
+        "Cases_SubIndustry",
+        "Case"
+      ],
+      "unique": true,
+      "required": true
+    }
+  }
+}

@@ -1,31 +1,45 @@
-import axios from 'axios'
-import React from 'react'
-import Config from 'config'
-import {Content, Layout, Menu} from "components"
+import {React, api, template} from 'common'
+import {Content, Layout, Markdown, Menu} from "components"
 
-export default ({industry}) => (
-    <Layout title="Cases">
-        <Menu selected="cases" />
-        <Content>
-            {industry.name}
-        </Content>
-    </Layout>
-)
+export default ({page, useCase}) => {
+    const strings = {
+        Name: useCase.name
+    }
+    return (
+        <Layout title={template(page.title, strings)}>
+            <Menu selected="cases" />
+            <Content>
+                <Markdown source={page.content} strings={strings} />
+            </Content>
+        </Layout>
+    )
+}
 
 export const getStaticProps = async ({ params }) => {
-    const response = await axios.get(`${Config.apiUrl}/industries/${params.id}`)
-    return {
-        props: {
-            industry: response.data
+    const {data: props} = await api({
+        page: {
+            __aliasFor: 'pageByType',
+            __args: {type: 'Case'},
+            title: true,
+            content: true
         },
-        unstable_revalidate: 1
-    }
+        useCase : {
+            __aliasFor: 'case',
+            __args: {id: params.id},
+            name: true
+        }
+    })
+    return { props, unstable_revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
-    const response = await axios.get(`${Config.apiUrl}/industries`)
-    const paths = response.data.map(industry => ({
-        params : { id: industry.id }
+    const {data} = await api({
+        cases: {
+            id: true
+        }
+    })
+    const paths = data.cases.map(useCase => ({
+        params: { id: useCase.id }
     }))
     return { paths, fallback: false }
 }

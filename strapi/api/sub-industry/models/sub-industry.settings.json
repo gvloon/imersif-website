@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sub_industries",
+  "info": {
+    "name": "sub-industry"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "industry": {
+      "model": "industry",
+      "via": "sub_industries"
+    },
+    "description": {
+      "type": "string"
+    },
+    "cases": {
+      "via": "sub_industries",
+      "collection": "case"
+    }
+  }
+}

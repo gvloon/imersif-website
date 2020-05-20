@@ -10,15 +10,16 @@
   },
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
-    "parent": {
-      "via": "children",
-      "model": "industry"
+    "industry_group": {
+      "model": "industry-group",
+      "via": "industries"
     },
-    "children": {
-      "via": "parent",
-      "collection": "industry"
+    "sub_industries": {
+      "via": "industry",
+      "collection": "sub-industry"
     }
   }
 }

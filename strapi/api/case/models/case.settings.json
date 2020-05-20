@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cases",
+  "info": {
+    "name": "case"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "sub_industries": {
+      "collection": "sub-industry",
+      "via": "cases",
+      "dominant": true
+    }
+  }
+}

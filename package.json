@@ -6,5 +6,8 @@
   "private": true,
   "scripts": {
     "start": "docker-compose up"
+  },
+  "dependencies": {
+    "json-to-graphql-query": "^2.0.0"
   }
 }

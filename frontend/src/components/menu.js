@@ -12,10 +12,10 @@ export default ({selected}) => (
     </nav>
 )
 
-const MenuItem = ({href, children}) => (
+const MenuItem = ({href, selected, children}) => (
   <li>
     <Link href={href}>
-      <a href={href}>{children}</a>
+      <a href={href} style={selected ? { fontWeight: 'bold' } : {}}>{children}</a>
     </Link>
   </li>
 )

@@ -9,9 +9,13 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "html-to-react": "^1.4.2",
     "next": "9.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-jsx-parser": "^1.23.0",
+    "react-markdown": "^4.3.1",
+    "remark-breaks": "^1.0.5",
     "wait-on": "^5.0.0"
   }
 }

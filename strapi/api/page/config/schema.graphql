@@ -1,0 +1,18 @@
+const { sanitizeEntity } = require('strapi-utils')
+
+module.exports = {
+  query: `
+    pageByType(type: String!): Page
+  `,
+  resolver: {
+    Query: {
+      pageByType: {
+        description: 'Returns a page by content',
+        resolverOf: 'application::page.page.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services.page.findOne({type: options.type})
+        }
+      }
+    }
+  }
+}
