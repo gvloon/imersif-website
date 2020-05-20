@@ -3310,6 +3310,11 @@ json-schema-traverse@^0.4.1:
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
   integrity sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==
 
+json-to-graphql-query@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/json-to-graphql-query/-/json-to-graphql-query-2.0.0.tgz#2b0364a1be891ee530947db3cfbcae0ce583976e"
+  integrity sha512-+oFKHOVymP+jDETuLCl+ich+F7b8ym0vdczmOs8aJbtRd61+YGugVrtrI4xh5zfY1ZAVFG+zTAAsfDS1t5+17g==
+
 json5@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
