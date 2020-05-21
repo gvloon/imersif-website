@@ -3,7 +3,8 @@ import {Content, Layout, Link, Markdown, Menu} from "components"
 
 export default ({page, subIndustry}) => {
     const strings = {
-        Name: subIndustry.name
+        Name: subIndustry.name,
+        Description: subIndustry.description
     }
     const components = {
         Cases: () => getCases(subIndustry.cases)
@@ -18,12 +19,14 @@ export default ({page, subIndustry}) => {
     )
 }
 
-const getCases = (useCases) => (
+const getCases = (cases) => (
     <ul>
         {
-            useCases.map(useCase =>
-                <li key={useCase.id}>
-                    <Link href={`/cases/${useCase.id}`}>{useCase.title}</Link>
+            cases.map(({id, title}) =>
+                <li key={id}>
+                    <Link href="/cases/[id]" data={{id}}>
+                        {title}
+                    </Link>
                 </li>
             )
         }
@@ -41,6 +44,7 @@ export const getStaticProps = async ({ params }) => {
         subIndustry: {
             __args: {id: params.id},
             name: true,
+            description: true,
             cases: {
                 id: true,
                 title: true

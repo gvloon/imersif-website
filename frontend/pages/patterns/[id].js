@@ -1,13 +1,14 @@
 import {React, api, template} from 'common'
 import {Content, Layout, Markdown, Menu} from "components"
 
-export default ({page, useCase}) => {
+export default ({page, pattern}) => {
     const strings = {
-        Name: useCase.name
+        Name: pattern.name,
+        Device: pattern.content
     }
     return (
         <Layout title={template(page.title, strings)}>
-            <Menu selected="cases" />
+            <Menu selected="patterns" />
             <Content>
                 <Markdown source={page.content} strings={strings} />
             </Content>
@@ -19,12 +20,11 @@ export const getStaticProps = async ({ params }) => {
     const {data: props} = await api({
         page: {
             __aliasFor: 'pageByType',
-            __args: {type: 'Case'},
+            __args: {type: 'Device'},
             title: true,
             content: true
         },
-        useCase : {
-            __aliasFor: 'case',
+        device : {
             __args: {id: params.id},
             name: true
         }
@@ -34,11 +34,11 @@ export const getStaticProps = async ({ params }) => {
 
 export const getStaticPaths = async () => {
     const {data} = await api({
-        cases: {
+        devices: {
             id: true
         }
     })
-    const paths = data.cases.map(({id}) => ({
+    const paths = data.devices.map(({id}) => ({
         params: { id }
     }))
     return { paths, fallback: false }

@@ -1,5 +1,5 @@
 import {React, api} from 'common'
-import {Layout, Menu, Content, Markdown} from 'components'
+import {Layout, Menu, Content, Markdown, Link} from 'components'
 
 export default ({page, patterns}) => {
     const components = {
@@ -18,7 +18,13 @@ export default ({page, patterns}) => {
 const getPatterns = (patterns) => (
     <ul>
         {
-            patterns.map(pattern => <li key={pattern.id}>{pattern.title}</li>)
+            patterns.map(({id, title}) => (
+                <li key={id}>
+                    <Link href="/patterns/[id]" data={{id}}>
+                        {title}
+                    </Link>
+                </li>
+            ))
         }
     </ul>
 )

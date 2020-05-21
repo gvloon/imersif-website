@@ -6,7 +6,7 @@ export default ({page, group}) => {
         Name: group.name
     }
     const components = {
-        Industries: () => getIndustries(group.industries)
+        Industries: () => getIndustries(group.industries),
     }
     return (
         <Layout title={template(page.title, strings)}>
@@ -21,9 +21,11 @@ export default ({page, group}) => {
 const getIndustries = (industries) => (
     <ul>
         {
-            industries.map(industry =>
-                <li key={industry.id}>
-                    <Link href={`/cases/industries/${industry.id}`}>{industry.name}</Link>
+            industries.map(({id, name}) =>
+                <li key={id}>
+                    <Link href="/cases/industries/[id]" data={{id}}>
+                        {name}
+                    </Link>
                 </li>
             )
         }
@@ -57,8 +59,8 @@ export const getStaticPaths = async () => {
             id: true
         }
     })
-    const paths = data.industryGroups.map(group => ({
-        params: { id: group.id }
+    const paths = data.industryGroups.map(({id}) => ({
+        params: { id }
     }))
     return { paths, fallback: false }
 }

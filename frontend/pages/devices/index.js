@@ -1,5 +1,5 @@
 import {React, api} from 'common'
-import {Layout, Menu, Content, Markdown} from 'components'
+import {Layout, Menu, Content, Markdown, Link} from 'components'
 
 export default ({page, devices}) => {
     const components = {
@@ -18,7 +18,13 @@ export default ({page, devices}) => {
 const getDevices = (devices) => (
     <ul>
         {
-            devices.map(device => <li key={device.id}>{device.name}</li>)
+            devices.map(({id, name}) => (
+                <li key={id}>
+                    <Link href="/devices/[id]" data={{id}}>
+                        {name}
+                    </Link>
+                </li>
+            ))
         }
     </ul>
 )

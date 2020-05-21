@@ -1,16 +1,16 @@
 import {React, api, template} from 'common'
-import {Content, Layout, Link, Markdown, Menu} from "components"
+import {Content, Layout, Markdown, Menu} from "components"
 
-export default ({page, sector}) => {
+export default ({page, device}) => {
     const strings = {
-        Name: sector.name
+        Name: device.name
     }
     const components = {
-        IndustryGroups: () => getIndustryGroups(sector.industry_groups)
+        Description: () => <Markdown source={device.description} strings={strings} />
     }
     return (
         <Layout title={template(page.title, strings)}>
-            <Menu selected="cases" />
+            <Menu selected="devices" />
             <Content>
                 <Markdown source={page.content} strings={strings} components={components} />
             </Content>
@@ -18,35 +18,18 @@ export default ({page, sector}) => {
     )
 }
 
-const getIndustryGroups = (groups) => (
-    <ul>
-        {
-            groups.map(({id, name}) =>
-                <li key={id}>
-                    <Link href="/cases/industry-groups/[id]" data={{id}}>
-                        {name}
-                    </Link>
-                </li>
-            )
-        }
-    </ul>
-)
-
 export const getStaticProps = async ({ params }) => {
     const {data: props} = await api({
         page: {
             __aliasFor: 'pageByType',
-            __args: {type: 'Cases_Sector'},
+            __args: {type: 'Device'},
             title: true,
             content: true
         },
-        sector : {
+        device : {
             __args: {id: params.id},
             name: true,
-            industry_groups: {
-                id: true,
-                name: true
-            }
+            description: true
         }
     })
     return { props, unstable_revalidate: 1 }
@@ -54,12 +37,12 @@ export const getStaticProps = async ({ params }) => {
 
 export const getStaticPaths = async () => {
     const {data} = await api({
-        sectors: {
+        devices: {
             id: true
         }
     })
-    const paths = data.sectors.map(sector => ({
-        params: { id: sector.id }
+    const paths = data.devices.map(({id}) => ({
+        params: { id }
     }))
     return { paths, fallback: false }
 }

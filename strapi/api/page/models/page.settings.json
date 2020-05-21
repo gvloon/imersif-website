@@ -28,7 +28,9 @@
         "Cases_IndustryGroup",
         "Cases_Industry",
         "Cases_SubIndustry",
-        "Case"
+        "Case",
+        "Tools",
+        "Glossary"
       ],
       "unique": true,
       "required": true

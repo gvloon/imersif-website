@@ -21,9 +21,11 @@ export default ({page, industry}) => {
 const getSubIndustries = (subIndustries) => (
     <ul>
         {
-            subIndustries.map(subIndustry =>
-                <li key={subIndustry.id}>
-                    <Link href={`/cases/sub-industries/${subIndustry.id}`}>{subIndustry.name}</Link>
+            subIndustries.map(({id, name}) =>
+                <li key={id}>
+                    <Link href="/cases/sub-industries/[id]" data={{id}}>
+                        {name}
+                    </Link>
                 </li>
             )
         }

@@ -18,9 +18,11 @@ export default ({page, sectors}) => {
 const getSectors = (sectors) => (
     <ul>
         {
-            sectors.map(sector =>
-                <li key={sector.id}>
-                    <Link href={`/cases/sectors/${sector.id}`}>{sector.name}</Link>
+            sectors.map(({id, name}) =>
+                <li key={id}>
+                    <Link href="/cases/sectors/[id]" data={{id}}>
+                        {name}
+                    </Link>
                 </li>
             )
         }
