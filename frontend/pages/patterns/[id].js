@@ -34,11 +34,11 @@ export const getStaticProps = async ({ params }) => {
 
 export const getStaticPaths = async () => {
     const {data} = await api({
-        devices: {
+        patterns: {
             id: true
         }
     })
-    const paths = data.devices.map(({id}) => ({
+    const paths = data.patterns.map(({id}) => ({
         params: { id }
     }))
     return { paths, fallback: false }
