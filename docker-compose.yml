@@ -7,9 +7,6 @@ services:
         environment:
             MONGO_INITDB_ROOT_USERNAME: strapi
             MONGO_INITDB_ROOT_PASSWORD: strapi
-        volumes:
-            - mongodata:/data/db
-            - ./data/backup:/data/backup
         ports:
             - '27017:27017'
     strapi:
@@ -26,9 +23,7 @@ services:
             PORT: $STRAPI_PORT
         links:
             - mongo:mongo
-        volumes:
-            - ./strapi:/srv/app
+        expose:
+            - '$STRAPI_PORT'
         ports:
             - '$STRAPI_PORT:$STRAPI_PORT'
-volumes:
-    mongodata:

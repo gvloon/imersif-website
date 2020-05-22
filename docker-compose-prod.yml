@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  mongo:
+    volumes:
+      - mongodata:/data/db
+      - ./data/backup:/data/backup
+  strapi:
+    command: bash -c 'yarn && NODE_ENV=production yarn build && NODE_ENV=production yarn start'
+    volumes:
+      - ./strapi/api:/srv/app/api
+      - ./strapi/config:/src/app/config
+  frontend:
+    image: node
+    container_name: imersif_frontend
+    depends_on:
+      - strapi
+    environment:
+      NEXT_PUBLIC_STRAPI_URL: http://imersif_strapi:$STRAPI_PORT
+    command: bash -c 'yarn && /home/scripts/wait.sh http://imersif_strapi:$STRAPI_PORT && yarn build && yarn start'
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+    user: node
+    volumes:
+      - ./frontend:/home/node/app
+      - ./scripts/docker:/home/scripts
+    working_dir: /home/node/app
+  ngnix:
+    build: ./nginx
+    container_name: imersif_nginx
+    depends_on:
+      - frontend
+    ports:
+      - '80:80'
+volumes:
+  mongodata:
