@@ -8,8 +8,7 @@ services:
   strapi:
     command: bash -c 'yarn && NODE_ENV=production yarn build && NODE_ENV=production yarn start'
     volumes:
-      - ./strapi/api:/srv/app/api
-      - ./strapi/config:/src/app/config
+      - ./strapi:/srv/app
   frontend:
     image: node
     container_name: imersif_frontend
