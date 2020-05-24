@@ -7,11 +7,15 @@ services:
         environment:
             MONGO_INITDB_ROOT_USERNAME: strapi
             MONGO_INITDB_ROOT_PASSWORD: strapi
+        volumes:
+            - mongodata:/data/db
+            - ./data/backup:/data/backup
         ports:
             - '27017:27017'
     strapi:
         image: strapi/strapi
         container_name: imersif_strapi
+        command: bash -c 'yarn && yarn start'
         environment:
             DATABASE_CLIENT: mongo
             DATABASE_NAME: strapi
@@ -21,9 +25,13 @@ services:
             DATABASE_PASSWORD: strapi
             HOST: $STRAPI_HOST
             PORT: $STRAPI_PORT
+        volumes:
+            - ./strapi:/srv/app
         links:
             - mongo:mongo
         expose:
             - '$STRAPI_PORT'
         ports:
             - '$STRAPI_PORT:$STRAPI_PORT'
+volumes:
+    mongodata:
