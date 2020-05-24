@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-export default ({href, data, children}) => {
+export default ({href, data, className, children}) => {
     const props = {href}
     if (data) {
         props.as = href
@@ -13,7 +13,7 @@ export default ({href, data, children}) => {
     }
     return (
         <Link {...props}>
-            <a>{children}</a>
+            {children}
         </Link>
     )
 }

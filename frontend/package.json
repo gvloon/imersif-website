@@ -15,6 +15,23 @@
     "react-dom": "^16.13.1",
     "react-jsx-parser": "^1.23.0",
     "react-markdown": "^4.3.1",
-    "remark-breaks": "^1.0.5"
+    "remark-breaks": "^1.0.5",
+    "@material-ui/core": "4.9.13",
+    "@material-ui/icons": "4.9.1",
+    "@zeit/next-sass": "1.0.1",
+    "classnames": "2.2.6",
+    "moment": "2.25.3",
+    "next-compose-plugins": "2.2.0",
+    "next-images": "1.3.1",
+    "nextjs-redirect": "2.0.2",
+    "node-sass": "4.14.1",
+    "nouislider": "14.4.0",
+    "path": "0.12.7",
+    "prop-types": "15.7.2",
+    "react-datetime": "2.16.3",
+    "react-slick": "0.25.2",
+    "react-swipeable-views": "0.13.9",
+    "styled-components": "5.1.0",
+    "webpack": "4.43.0"
   }
 }

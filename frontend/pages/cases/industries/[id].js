@@ -24,7 +24,7 @@ const getSubIndustries = (subIndustries) => (
             subIndustries.map(({id, name}) =>
                 <li key={id}>
                     <Link href="/cases/sub-industries/[id]" data={{id}}>
-                        {name}
+                        <a>{name}</a>
                     </Link>
                 </li>
             )

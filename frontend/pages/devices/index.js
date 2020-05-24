@@ -21,7 +21,7 @@ const getDevices = (devices) => (
             devices.map(({id, name}) => (
                 <li key={id}>
                     <Link href="/devices/[id]" data={{id}}>
-                        {name}
+                        <a>{name}</a>
                     </Link>
                 </li>
             ))

@@ -21,7 +21,7 @@ const getPatterns = (patterns) => (
             patterns.map(({id, title}) => (
                 <li key={id}>
                     <Link href="/patterns/[id]" data={{id}}>
-                        {title}
+                        <a>{title}</a>
                     </Link>
                 </li>
             ))

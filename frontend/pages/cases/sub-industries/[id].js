@@ -25,7 +25,7 @@ const getCases = (cases) => (
             cases.map(({id, title}) =>
                 <li key={id}>
                     <Link href="/cases/[id]" data={{id}}>
-                        {title}
+                        <a>{title}</a>
                     </Link>
                 </li>
             )

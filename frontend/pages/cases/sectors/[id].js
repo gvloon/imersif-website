@@ -24,7 +24,7 @@ const getIndustryGroups = (groups) => (
             groups.map(({id, name}) =>
                 <li key={id}>
                     <Link href="/cases/industry-groups/[id]" data={{id}}>
-                        {name}
+                        <a>{name}</a>
                     </Link>
                 </li>
             )
@@ -33,6 +33,7 @@ const getIndustryGroups = (groups) => (
 )
 
 export const getStaticProps = async ({ params }) => {
+    console.log('getStaticProps sectors')
     const {data: props} = await api({
         page: {
             __aliasFor: 'pageByType',
@@ -53,6 +54,7 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
+    console.log('getStaticPaths sectors')
     const {data} = await api({
         sectors: {
             id: true
