@@ -16,12 +16,14 @@ export default async (query) => {
         const headers = {
             'Content-Type': 'application/json'
         }
-        const data = JSON.stringify({ query: jsonToGraphQLQuery({query}, { includeFalsyKeys: true})})
+        query = jsonToGraphQLQuery({query}, { includeFalsyKeys: true})
+        const data = JSON.stringify({query})
         const response = await axios.post(`${Config.apiUrl}/graphql`, data, {headers})
         if (response.status !== 200)
             return {success: false, data: {}}
         return {success: true, data: response.data.data}
     } catch (error) {
+        console.log(error)
         return {success: false, data: {}}
     }
 }

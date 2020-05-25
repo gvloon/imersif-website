@@ -1,30 +1,19 @@
 import {React, api, template} from 'common'
-import {Content, Layout, Markdown, Menu} from "components"
+import {Page, getPages} from "components"
 
-export default ({page, pattern}) => {
+export default (props) => {
     const strings = {
-        Name: pattern.name,
-        Device: pattern.content
+        Name: props.pattern.name,
+        Device: props.pattern.content
     }
-    return (
-        <Layout title={template(page.title, strings)}>
-            <Menu selected="patterns" />
-            <Content>
-                <Markdown source={page.content} strings={strings} />
-            </Content>
-        </Layout>
-    )
+    return <Page {...props} strings={strings} />
 }
 
 export const getStaticProps = async ({ params }) => {
+    const pages = getPages('Patterns')
     const {data: props} = await api({
-        page: {
-            __aliasFor: 'pageByType',
-            __args: {type: 'Device'},
-            title: true,
-            content: true
-        },
-        device : {
+        ...pages,
+        pattern : {
             __args: {id: params.id},
             name: true
         }

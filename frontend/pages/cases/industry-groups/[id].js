@@ -1,21 +1,15 @@
-import {React, api, template} from 'common'
-import {Content, Layout, Link, Markdown, Menu} from "components"
+import {React, api} from 'common'
+import {Link, Page, getPages} from "components"
 
-export default ({page, group}) => {
+export default (props) => {
+    const {group} = props
     const strings = {
         Name: group.name
     }
     const components = {
         Industries: () => getIndustries(group.industries),
     }
-    return (
-        <Layout title={template(page.title, strings)}>
-            <Menu selected="cases" />
-            <Content>
-                <Markdown source={page.content} strings={strings} components={components} />
-            </Content>
-        </Layout>
-    )
+    return <Page {...props} strings={strings} components={components} />
 }
 
 const getIndustries = (industries) => (
@@ -33,13 +27,9 @@ const getIndustries = (industries) => (
 )
 
 export const getStaticProps = async ({ params }) => {
+    const pages = getPages('Cases_IndustryGroup')
     const {data: props} = await api({
-        page: {
-            __aliasFor: 'pageByType',
-            __args: {type: 'Cases_IndustryGroup'},
-            title: true,
-            content: true
-        },
+        ...pages,
         group : {
             __aliasFor: 'industryGroup',
             __args: {id: params.id},

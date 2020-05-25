@@ -1,21 +1,15 @@
-import {React, api, template} from 'common'
-import {Content, Layout, Link, Markdown, Menu} from "components"
+import {React, api} from 'common'
+import {Link, Page, getPages} from "components"
 
-export default ({page, sector}) => {
+export default (props) => {
+    const {sector} = props
     const strings = {
         Name: sector.name
     }
     const components = {
         IndustryGroups: () => getIndustryGroups(sector.industry_groups)
     }
-    return (
-        <Layout title={template(page.title, strings)}>
-            <Menu selected="cases" />
-            <Content>
-                <Markdown source={page.content} strings={strings} components={components} />
-            </Content>
-        </Layout>
-    )
+    return <Page {...props} strings={strings} components={components} />
 }
 
 const getIndustryGroups = (groups) => (
@@ -33,14 +27,9 @@ const getIndustryGroups = (groups) => (
 )
 
 export const getStaticProps = async ({ params }) => {
-    console.log('getStaticProps sectors')
+    const pages = getPages('Cases_Sector')
     const {data: props} = await api({
-        page: {
-            __aliasFor: 'pageByType',
-            __args: {type: 'Cases_Sector'},
-            title: true,
-            content: true
-        },
+        ...pages,
         sector : {
             __args: {id: params.id},
             name: true,
@@ -54,7 +43,6 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-    console.log('getStaticPaths sectors')
     const {data} = await api({
         sectors: {
             id: true

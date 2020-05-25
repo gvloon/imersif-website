@@ -1,31 +1,20 @@
 import {React, api, template} from 'common'
-import {Content, Layout, Markdown, Menu} from "components"
+import {Markdown, Page, getPages} from "components"
 
-export default ({page, device}) => {
+export default (props) => {
     const strings = {
-        Name: device.name
+        Name: props.device.name
     }
     const components = {
-        Description: () => <Markdown source={device.description} strings={strings} />
+        Description: () => <Markdown source={props.device.description} strings={props.strings} />
     }
-    return (
-        <Layout title={template(page.title, strings)}>
-            <Menu selected="devices" />
-            <Content>
-                <Markdown source={page.content} strings={strings} components={components} />
-            </Content>
-        </Layout>
-    )
+    return <Page {...props} strings={strings} components={components} />
 }
 
 export const getStaticProps = async ({ params }) => {
+    const pages = getPages('Device')
     const {data: props} = await api({
-        page: {
-            __aliasFor: 'pageByType',
-            __args: {type: 'Device'},
-            title: true,
-            content: true
-        },
+        ...pages,
         device : {
             __args: {id: params.id},
             name: true,

@@ -1,5 +1,3 @@
-const { sanitizeEntity } = require('strapi-utils')
-
 module.exports = {
   query: `
     pageByType(type: String!): Page

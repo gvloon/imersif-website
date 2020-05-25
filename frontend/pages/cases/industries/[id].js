@@ -1,21 +1,15 @@
 import {React, api, template} from 'common'
-import {Content, Layout, Link, Markdown, Menu} from "components"
+import {Link, Page, getPages} from "components"
 
-export default ({page, industry}) => {
+export default (props) => {
+    const {industry} = props
     const strings = {
         Name: industry.name
     }
     const components = {
         SubIndustries: () => getSubIndustries(industry.sub_industries)
     }
-    return (
-        <Layout title={template(page.title, strings)}>
-            <Menu selected="cases" />
-            <Content>
-                <Markdown source={page.content} strings={strings} components={components} />
-            </Content>
-        </Layout>
-    )
+    return <Page {...props} strings={strings} components={components} />
 }
 
 const getSubIndustries = (subIndustries) => (
@@ -33,13 +27,9 @@ const getSubIndustries = (subIndustries) => (
 )
 
 export const getStaticProps = async ({ params }) => {
+    const pages = getPages('Cases_Industry')
     const {data: props} = await api({
-        page: {
-            __aliasFor: 'pageByType',
-            __args: {type: 'Cases_Industry'},
-            title: true,
-            content: true
-        },
+        ...pages,
         industry : {
             __args: {id: params.id},
             name: true,

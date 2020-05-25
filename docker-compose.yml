@@ -15,7 +15,6 @@ services:
     strapi:
         image: strapi/strapi
         container_name: imersif_strapi
-        command: bash -c 'yarn && yarn start'
         environment:
             DATABASE_CLIENT: mongo
             DATABASE_NAME: strapi

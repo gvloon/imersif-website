@@ -1,21 +1,14 @@
 import {React, api} from 'common'
-import {Layout, Menu, Content, Markdown, Link} from 'components'
+import {Link, Page, getPages} from 'components'
 
-export default ({page, patterns}) => {
+export default (props) => {
     const components = {
-        Patterns: () => getPatterns(patterns)
+        Patterns: () => getPatterns(props)
     }
-    return (
-        <Layout title={page.title}>
-            <Menu selected="patterns" />
-            <Content>
-                <Markdown source={page.content} components={components} />
-            </Content>
-        </Layout>
-    )
+    return <Page {...props} components={components} />
 }
 
-const getPatterns = (patterns) => (
+const getPatterns = ({patterns}) => (
     <ul>
         {
             patterns.map(({id, title}) => (
@@ -30,13 +23,9 @@ const getPatterns = (patterns) => (
 )
 
 export const getStaticProps = async () => {
+    const pages = getPages('Patterns')
     const {data: props} = await api({
-        page: {
-            __aliasFor: 'pageByType',
-            __args: { type: 'Patterns' },
-            title: true,
-            content: true
-        },
+        ...pages,
         patterns : {
             id: true,
             title: true

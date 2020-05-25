@@ -1,18 +1,19 @@
-import {React, api} from 'common'
+import {React, api, template} from 'common'
 import {Page, getPages} from "components"
 
 export default (props) => {
     const strings = {
-        Name: props.case.name
+        Name: props.tool.name,
+        Description: props.tool.description
     }
     return <Page {...props} strings={strings} />
 }
 
 export const getStaticProps = async ({ params }) => {
-    const pages = getPages('Case')
+    const pages = getPages('Device')
     const {data: props} = await api({
         ...pages,
-        case : {
+        tool : {
             __args: {id: params.id},
             name: true
         }
@@ -22,11 +23,11 @@ export const getStaticProps = async ({ params }) => {
 
 export const getStaticPaths = async () => {
     const {data} = await api({
-        cases: {
+        tools: {
             id: true
         }
     })
-    const paths = data.cases.map(({id}) => ({
+    const paths = data.tools.map(({id}) => ({
         params: { id }
     }))
     return { paths, fallback: false }

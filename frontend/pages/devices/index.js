@@ -1,21 +1,14 @@
 import {React, api} from 'common'
-import {Layout, Menu, Content, Markdown, Link} from 'components'
+import {Link, Page, getPages} from 'components'
 
-export default ({page, devices}) => {
+export default (props) => {
     const components = {
-        Devices : () => getDevices(devices)
+        Devices : () => getDevices(props)
     }
-    return (
-        <Layout title={page.title}>
-            <Menu selected="devices"/>
-            <Content>
-                <Markdown source={page.content} components={components} />
-            </Content>
-        </Layout>
-    )
+    return <Page {...props} components={components} />
 }
 
-const getDevices = (devices) => (
+const getDevices = ({devices}) => (
     <ul>
         {
             devices.map(({id, name}) => (
@@ -30,13 +23,9 @@ const getDevices = (devices) => (
 )
 
 export const getStaticProps = async () => {
+    const pages = getPages('Devices')
     const {data: props} = await api({
-        page: {
-            __aliasFor: 'pageByType',
-            __args: {type:'Devices'},
-            title: true,
-            content: true
-        },
+        ...pages,
         devices: {
             id: true,
             name: true

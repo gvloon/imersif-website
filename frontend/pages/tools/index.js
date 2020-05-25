@@ -2,32 +2,31 @@ import {React, api} from 'common'
 import {Link, Page, getPages} from 'components'
 
 export default (props) => {
-    const {sectors} = props
     const components = {
-        Sectors: () => getSectors(sectors)
+        Tools: () => getTools(props)
     }
     return <Page {...props} components={components} />
 }
 
-const getSectors = (sectors) => (
+const getTools = ({tools}) => (
     <ul>
         {
-            sectors.map(({id, name}) =>
+            tools.map(({id, name}) => (
                 <li key={id}>
-                    <Link href="/cases/sectors/[id]" data={{id}}>
+                    <Link href="/tools/[id]" data={{id}}>
                         <a>{name}</a>
                     </Link>
                 </li>
-            )
+            ))
         }
     </ul>
 )
 
 export const getStaticProps = async () => {
-    const pages = getPages('Cases')
+    const pages = getPages('Tools')
     const {data: props} = await api({
         ...pages,
-        sectors: {
+        tools : {
             id: true,
             name: true
         }

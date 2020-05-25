@@ -25,6 +25,7 @@ const useStyles = makeStyles(styles);
 export default ({ color = 'primary' }) => (
     <Header
         color={color}
+        brand="XR Patterns"
         rightLinks={<HeaderLinks />}
         fixed
         changeColorOnScroll={{
@@ -58,7 +59,7 @@ const HeaderLinks = () => {
             <ListItem className={classes.listItem}>
                 <Link href="/patterns">
                     <Button color="transparent" className={classes.navLink}>Patterns</Button>
-                </Link>,
+                </Link>
             </ListItem>
         </List>
     )

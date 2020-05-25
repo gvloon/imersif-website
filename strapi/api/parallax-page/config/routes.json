@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/parallax-pages",
+      "handler": "parallax-page.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/parallax-pages/count",
+      "handler": "parallax-page.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/parallax-pages/:id",
+      "handler": "parallax-page.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/parallax-pages",
+      "handler": "parallax-page.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/parallax-pages/:id",
+      "handler": "parallax-page.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/parallax-pages/:id",
+      "handler": "parallax-page.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
