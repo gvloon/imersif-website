@@ -1,6 +1,7 @@
 module.exports = {
   query: `
     pageByType(type: String!): Page
+    searchPages(text: String!): [Page]
   `,
   resolver: {
     Query: {
@@ -9,6 +10,16 @@ module.exports = {
         resolverOf: 'application::page.page.findOne',
         resolver: async (obj, options, ctx) => {
           return await strapi.services.page.findOne({type: options.type})
+        }
+      },
+      searchPages: {
+        description: 'Returns a page by content',
+        resolverOf: 'application::page.page.findOne',
+        resolver: async (obj, options, ctx) => {
+          const db = strapi.connections.default
+          const model = db.model('Page')
+          console.log(model)
+          return await model.fuzzySearch(options.text)
         }
       }
     }

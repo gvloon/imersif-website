@@ -32,5 +32,13 @@ services:
             - '$STRAPI_PORT'
         ports:
             - '$STRAPI_PORT:$STRAPI_PORT'
+    sonic:
+        image: valeriansaliou/sonic:v1.2.3
+        container_name: imersif_sonic
+        volumes:
+            - ./sonic/sonic.cfg:/etc/sonic.cfg
+            - ./sonic/store/:/var/lib/sonic/store/
+        expose:
+            - '1491'
 volumes:
     mongodata:
