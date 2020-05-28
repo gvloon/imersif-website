@@ -12,6 +12,12 @@
     "title": {
       "type": "string",
       "required": true
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "keywords": {
+      "type": "string"
     }
   }
 }

@@ -11,7 +11,7 @@ services:
             - mongodata:/data/db
             - ./data/backup:/data/backup
         ports:
-            - '27017:27017'
+            - '$MONGO_PORT:$MONGO_PORT'
     strapi:
         image: strapi/strapi
         container_name: imersif_strapi
@@ -19,11 +19,13 @@ services:
             DATABASE_CLIENT: mongo
             DATABASE_NAME: strapi
             DATABASE_HOST: mongo
-            DATABASE_PORT: 27017
+            DATABASE_PORT: $MONGO_PORT
             DATABASE_USERNAME: strapi
             DATABASE_PASSWORD: strapi
-            HOST: $STRAPI_HOST
+            HOST: $HOST
             PORT: $STRAPI_PORT
+            ELASTIC_HOST: elastic
+            ELASTIC_PORT: $ELASTIC_PORT
         volumes:
             - ./strapi:/srv/app
         links:
@@ -32,13 +34,20 @@ services:
             - '$STRAPI_PORT'
         ports:
             - '$STRAPI_PORT:$STRAPI_PORT'
-    sonic:
-        image: valeriansaliou/sonic:v1.2.3
-        container_name: imersif_sonic
-        volumes:
-            - ./sonic/sonic.cfg:/etc/sonic.cfg
-            - ./sonic/store/:/var/lib/sonic/store/
-        expose:
-            - '1491'
+    elastic:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+        container_name: imersif_es
+        ports:
+            - '$ELASTIC_PORT:$ELASTIC_PORT'
+        environment:
+            - bootstrap.memory_lock=true
+            - discovery.type=single-node
+            - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
+            - cluster.routing.allocation.disk.threshold_enabled=false
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        user: 'elasticsearch'
 volumes:
     mongodata:

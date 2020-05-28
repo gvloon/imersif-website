@@ -1,0 +1,16 @@
+const {patterns: search} = require('../../../src/search')
+
+module.exports = {
+  query: `
+    searchPatterns(text: String!): [Pattern]
+  `,
+  resolver: {
+    Query: {
+      searchPatterns: {
+        description: 'Search patterns',
+        resolverOf: 'application::pattern.pattern.find',
+        resolver: async (obj, {text}) => search.fuzzy(text)
+      }
+    }
+  }
+}

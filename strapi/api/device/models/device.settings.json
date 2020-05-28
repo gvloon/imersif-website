@@ -16,8 +16,11 @@
       "type": "richtext"
     },
     "xr_categories": {
-      "via": "devices",
-      "collection": "xr-category"
+      "collection": "xr-category",
+      "via": "devices"
+    },
+    "keywords": {
+      "type": "string"
     }
   }
 }

@@ -1,9 +1,0 @@
-version: "2"
-options:
-  verbose: true
-syncs:
-  imersif_sync_strapi:
-    sync_strategy: 'unison'
-    sync_excludes: ['.cache', 'build', 'exports', 'node_modules']
-    src: './strapi'
-

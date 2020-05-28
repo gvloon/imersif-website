@@ -19,6 +19,9 @@
       "collection": "sub-industry",
       "via": "cases",
       "dominant": true
+    },
+    "keywords": {
+      "type": "string"
     }
   }
 }

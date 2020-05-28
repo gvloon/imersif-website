@@ -1,0 +1,16 @@
+const {devices: search} = require('../../../src/search')
+
+module.exports = {
+  query: `
+    searchDevices(text: String!): [Device]
+  `,
+  resolver: {
+    Query: {
+      searchDevices: {
+        description: 'Search devices',
+        resolverOf: 'application::device.device.find',
+        resolver: async (obj, {text}) => search.fuzzy(text)
+      }
+    }
+  }
+}

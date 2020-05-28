@@ -1,0 +1,16 @@
+const {cases: search} = require('../../../src/search')
+
+module.exports = {
+  query: `
+    searchCases(text: String!): [Case]
+  `,
+  resolver: {
+    Query: {
+      searchCases: {
+        description: 'Search cases',
+        resolverOf: 'application::case.case.find',
+        resolver: async (obj, {text}) => search.fuzzy(text)
+      }
+    }
+  }
+}

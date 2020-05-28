@@ -13,8 +13,8 @@
       "type": "string"
     },
     "devices": {
-      "collection": "device",
       "via": "xr_categories",
+      "collection": "device",
       "dominant": true
     }
   }
