@@ -1,7 +1,7 @@
 const {devices, cases, patterns} = require('../../../src/search')
 
 module.exports = {
-  updateSearch: async () => {
+  indexElastic: async () => {
     await devices.index()
     await cases.index()
     await patterns.index()

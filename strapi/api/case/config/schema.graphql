@@ -1,8 +1,14 @@
 const {cases: search} = require('../../../src/search')
 
 module.exports = {
+  definition: `
+    type CaseSuggestion {
+      text: String
+    }
+  `,
   query: `
-    searchCases(text: String!): [Case]
+    searchCases(text: String!): [Case],
+    suggestCases(text: String!): [CaseSuggestion]
   `,
   resolver: {
     Query: {
@@ -10,6 +16,11 @@ module.exports = {
         description: 'Search cases',
         resolverOf: 'application::case.case.find',
         resolver: async (obj, {text}) => search.fuzzy(text)
+      },
+      suggestCases: {
+        description: 'Suggest cases',
+        resolverOf: 'application::case.case.find',
+        resolver: async (obj, {text}) => search.suggest(text)
       }
     }
   }

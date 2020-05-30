@@ -1,4 +1,4 @@
-export {default as React} from 'react'
+export {default as React, useState} from 'react'
 export {default as axios} from 'axios'
 export {default as Config} from 'config'
 export {default as template} from './template'

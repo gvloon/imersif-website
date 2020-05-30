@@ -2,8 +2,8 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/system/update-search",
-      "handler": "system.updateSearch"
+      "path": "/system/index-elastic",
+      "handler": "system.indexElastic"
     }
   ]
 }

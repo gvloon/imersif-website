@@ -1,8 +1,14 @@
 const {devices: search} = require('../../../src/search')
 
 module.exports = {
+  definition: `
+    type DeviceSuggestion {
+      text: String
+    }
+  `,
   query: `
-    searchDevices(text: String!): [Device]
+    searchDevices(text: String!): [Device],
+    suggestDevices(text: String!): [DeviceSuggestion]
   `,
   resolver: {
     Query: {
@@ -10,6 +16,11 @@ module.exports = {
         description: 'Search devices',
         resolverOf: 'application::device.device.find',
         resolver: async (obj, {text}) => search.fuzzy(text)
+      },
+      suggestDevices: {
+        description: 'Suggest devices',
+        resolverOf: 'application::device.device.find',
+        resolver: async (obj, {text}) => search.suggest(text)
       }
     }
   }

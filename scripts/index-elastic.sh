@@ -4,6 +4,6 @@ set -a
 . .env
 set +a
 
-curl http://localhost:$STRAPI_PORT/system/update-search
+curl http://localhost:$STRAPI_PORT/system/index-elastic
 
 popd > /dev/null

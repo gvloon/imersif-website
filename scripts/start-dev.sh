@@ -21,9 +21,8 @@ echo ""
 
 if [ "$IMPORT" == 1 ]
 then
-  print "Importing data: "
+  echo "Importing data"
   scripts/restore-mongo.sh > /dev/null
-  echo "ok"
 fi
 
 printf "Indexing elastic: "

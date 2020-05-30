@@ -1,8 +1,14 @@
 const {patterns: search} = require('../../../src/search')
 
 module.exports = {
+  definition: `
+    type PatternSuggestion {
+      text: String
+    }
+  `,
   query: `
     searchPatterns(text: String!): [Pattern]
+    suggestPatterns(text: String!): [PatternSuggestion]
   `,
   resolver: {
     Query: {
@@ -10,6 +16,11 @@ module.exports = {
         description: 'Search patterns',
         resolverOf: 'application::pattern.pattern.find',
         resolver: async (obj, {text}) => search.fuzzy(text)
+      },
+      suggestPatterns: {
+        description: 'Suggest patterns',
+        resolverOf: 'application::patterns.patterns.find',
+        resolver: async (obj, {text}) => search.suggest(text)
       }
     }
   }
