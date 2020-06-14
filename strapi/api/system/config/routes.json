@@ -4,6 +4,36 @@
       "method": "GET",
       "path": "/system/index-elastic",
       "handler": "system.indexElastic"
+    },
+    {
+      "method": "GET",
+      "path": "/system/update-slugs",
+      "handler": "system.updateSlugs"
+    },
+    {
+      "method": "GET",
+      "path": "/system/update-cases",
+      "handler": "system.updateCases"
+    },
+    {
+      "method": "GET",
+      "path": "/system/update-case-categories",
+      "handler": "system.updateCaseCategories"
+    },
+    {
+      "method": "GET",
+      "path": "/system/update-devices",
+      "handler": "system.updateDevices"
+    },
+    {
+      "method": "GET",
+      "path": "/system/update-patterns",
+      "handler": "system.updatePatterns"
+    },
+    {
+      "method": "GET",
+      "path": "/system/update-tools",
+      "handler": "system.updateTools"
     }
   ]
 }

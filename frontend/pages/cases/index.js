@@ -1,36 +1,34 @@
-import {React, api} from 'common'
-import {Link, Page, getPages} from 'components'
+import { React, pageApi, PagePropTypes } from 'common'
+import { CaseCategoryList, PageRenderer } from 'components'
 
-export default (props) => {
-    const {sectors} = props
-    const components = {
-        Sectors: () => getSectors(sectors)
+const Page = ({ page, context, data }) => {
+    context = {
+        ...context,
+        section: 'cases'
     }
-    return <Page {...props} components={components} />
+    const components = {
+        Categories: props => <CaseCategoryList {...props} categories={data.categories} />
+    }
+    return <PageRenderer context={context} page={page} components={components} />
 }
 
-const getSectors = (sectors) => (
-    <ul>
-        {
-            sectors.map(({id, name}) =>
-                <li key={id}>
-                    <Link href="/cases/sectors/[id]" data={{id}}>
-                        <a>{name}</a>
-                    </Link>
-                </li>
-            )
-        }
-    </ul>
-)
+Page.propTypes = PagePropTypes
 
-export const getStaticProps = async () => {
-    const pages = getPages('Cases')
-    const {data: props} = await api({
-        ...pages,
-        sectors: {
-            id: true,
-            name: true
+export const getStaticProps = async context => {
+    const props = await pageApi('Cases', context, {
+        categories: {
+            __aliasFor: 'caseCategories',
+            __args: {
+                sort: 'title',
+                where: {
+                    parent_null: true
+                }
+            },
+            slug: true,
+            title: true
         }
     })
-    return {props, unstable_revalidate: 1}
+    return { props, unstable_revalidate: 1 }
 }
+
+export default Page

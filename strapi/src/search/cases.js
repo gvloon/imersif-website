@@ -17,7 +17,7 @@ class Search {
       suggest: {type: 'completion'}
     })
     const db = strapi.connections.default
-    const model = db.model('Device')
+    const model = db.model('Case')
     const items = await model.find()
     for (let item of items) {
       await this._index(item)

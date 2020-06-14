@@ -46,19 +46,18 @@ class Api {
       suggest: {}
     }
     const tokens = value.split(/\s+/)
-    console.log(tokens)
     for (let i in tokens) {
       doc.suggest[i.toString()] = {
         prefix: tokens[i],
         completion: {
           field: 'suggest',
+          skip_duplicates: true,
           fuzzy: {
             fuzziness: 2
           }
         }
       }
     }
-    console.log('doc: ' + JSON.stringify(doc))
     const data = await this._post(`/${name}/_search`, doc)
     return this.mergeSuggestResult(tokens, data)
   }
@@ -71,6 +70,7 @@ class Api {
         if (results.length === 0) {
           for (let option of options) {
             results.push({
+              values: { [option.text]: true },
               score: option._score,
               text: option.text
             })
@@ -78,8 +78,11 @@ class Api {
         } else {
           for (let result of results) {
             for (let option of options) {
-              result.score += option._score
-              result.text += ' ' + option.text
+              if (!result.values.hasOwnProperty(option.text)) {
+                result.values[option.text] = true
+                result.score += option._score
+                result.text += ' ' + option.text
+              }
             }
           }
         }

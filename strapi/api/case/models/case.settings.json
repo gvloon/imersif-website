@@ -12,15 +12,41 @@
     "title": {
       "type": "string"
     },
-    "content": {
-      "type": "richtext"
-    },
     "sub_industries": {
       "collection": "sub-industry",
       "via": "cases",
       "dominant": true
     },
     "keywords": {
+      "type": "string"
+    },
+    "platforms": {
+      "collection": "case-platform",
+      "via": "cases",
+      "dominant": true
+    },
+    "url": {
+      "type": "string"
+    },
+    "categories": {
+      "collection": "case-category",
+      "via": "cases",
+      "dominant": true
+    },
+    "thumbnail": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string",
+      "unique": true
+    },
+    "summary": {
+      "type": "text"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "release": {
       "type": "string"
     }
   }

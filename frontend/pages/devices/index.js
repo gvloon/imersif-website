@@ -1,21 +1,26 @@
-import {React, useState, api} from 'common'
-import {Link, SearchInput, Page, getPages} from 'components'
+import { React, pageApi, PagePropTypes } from 'common'
+import { Link, PageRenderer } from 'components'
 
-export default (props) => {
-    const components = {
-        Devices : () => getDevices(props),
-        Search : () => getSearch(props)
+const Page = ({ page, context, data }) => {
+    context = {
+        ...context,
+        section: 'devices'
     }
-    return <Page {...props} components={components} />
+    const components = {
+        Devices: () => getDevices(data)
+    }
+    return <PageRenderer context={context} page={page} components={components} />
 }
 
-const getDevices = ({devices}) => (
+Page.propTypes = PagePropTypes
+
+const getDevices = ({ devices }) => (
     <ul>
         {
-            devices.map(({id, name}) => (
-                <li key={id}>
-                    <Link href="/devices/[id]" data={{id}}>
-                        <a>{name}</a>
+            devices.map(({ slug, title }, key) => (
+                <li key={key}>
+                    <Link href="/devices/[slug]" as={`/devices/${slug}`}>
+                        <a>{title}</a>
                     </Link>
                 </li>
             ))
@@ -23,33 +28,14 @@ const getDevices = ({devices}) => (
     </ul>
 )
 
-const onChange = (text, setOptions) => {
-    api({
-        suggestDevices: {
-            __args: {text},
-            text: true
-        }
-    }).then(response => {
-        console.log(JSON.stringify(response.data.suggestDevices))
-        setOptions(response.data.suggestDevices.map(suggestion => suggestion.text))
-    })
-}
-
-const getSearch = () => {
-    const [options, setOptions] = useState([])
-    return (
-        <SearchInput options={options} label="Search devices" onChange={evt => onChange(evt.target.value, setOptions)} />
-    )
-}
-
-export const getStaticProps = async () => {
-    const pages = getPages('Devices')
-    const {data: props} = await api({
-        ...pages,
+export const getStaticProps = async context => {
+    const props = await pageApi('Devices', context, {
         devices: {
-            id: true,
-            name: true
+            slug: true,
+            title: true
         }
     })
-    return {props, unstable_revalidate: 1}
+    return { props, unstable_revalidate: 1 }
 }
+
+export default Page

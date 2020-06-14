@@ -1,0 +1,175 @@
+html * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  letter-spacing: normal !important;
+}
+
+body {
+  font-size: 14px;
+  @include xs {
+    font-size: 15px;
+  }
+  @include md {
+    font-size: 16px;
+  }
+
+  overflow-x: hidden;
+  height: 100vh;
+  background-color: #eee;
+  color: $black-color;
+  margin: 0;
+  text-align: left;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 300;
+  line-height: 1.5em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: inherit;
+}
+h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-top: 0rem;
+  margin-bottom: 0.8rem;
+  @include xs {
+    font-size: 1.75rem;
+  }
+  @include sm {
+    font-size: 2rem;
+  }
+}
+h2 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  @include xs {
+    font-size: 1.375rem;
+  }
+  @include sm {
+    font-size: 1.5rem;
+  }
+}
+h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+  @include xs {
+    font-size: 1rem;
+  }
+  @include sm {
+    font-size: 1rem;
+  }
+}
+
+h4, h5, h6 {
+  font-size: 1rem;
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+}
+
+p {
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+b,
+strong {
+  font-weight: 700;
+}
+
+legend {
+  border-bottom: 0;
+}
+
+// Prevent highlight on mobile
+* {
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  &:focus {
+    outline: 0;
+  }
+}
+
+a {
+  color: $black-color;
+  text-decoration: none;
+  background-color: transparent;
+  &:hover,
+  &:focus {
+    color: darken($black-color, 5%);
+    text-decoration: none;
+  }
+}
+
+label {
+  font-size: 14px;
+  line-height: 1.42857;
+  color: $black-color;
+  font-weight: 400;
+}
+small {
+  font-size: 75%;
+  color: #777;
+  font-weight: 400;
+}
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+form {
+  margin-bottom: 1.125rem;
+}
+
+hr {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+div#__next {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+

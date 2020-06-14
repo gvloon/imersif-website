@@ -1,11 +1,20 @@
-import React from 'react'
-import Head from "next/head";
+import { React, PropTypes } from 'common'
+import Head from 'next/head'
 
-export default ({children, title}) => (
-    <div>
-        <Head>
-            <title>{title}</title>
-        </Head>
-        {children}
-    </div>
-)
+const Layout = ({ children, title }) => {
+    return (
+        <>
+            <Head>
+                <title>{title}</title>
+            </Head>
+            {children}
+        </>
+    )
+}
+
+Layout.propTypes = {
+    title: PropTypes.string,
+    children: PropTypes.node
+}
+
+export default Layout

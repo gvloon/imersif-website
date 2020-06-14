@@ -14,14 +14,15 @@ import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 // @material-ui/icons
 import Menu from "@material-ui/icons/Menu";
+import Close from "@material-ui/icons/Close";
 // core components
-import styles from "assets/jss/nextjs-material-kit/components/headerStyle.js";
+import styles from "assets/jss/nextjs-material-kit-pro/components/headerStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
-  const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const classes = useStyles();
   React.useEffect(() => {
     if (props.changeColorOnScroll) {
       window.addEventListener("scroll", headerColorChange);
@@ -37,6 +38,7 @@ export default function Header(props) {
   };
   const headerColorChange = () => {
     const { color, changeColorOnScroll } = props;
+
     const windowsScrollTop = window.pageYOffset;
     if (windowsScrollTop > changeColorOnScroll.height) {
       document.body
@@ -54,33 +56,18 @@ export default function Header(props) {
         .classList.remove(classes[changeColorOnScroll.color]);
     }
   };
-  const { color, rightLinks, leftLinks, brand, fixed, absolute } = props;
+  const { color, links, brand, fixed, absolute } = props;
   const appBarClasses = classNames({
     [classes.appBar]: true,
     [classes[color]]: color,
     [classes.absolute]: absolute,
     [classes.fixed]: fixed
   });
-  const brandComponent = (
-    <Link href="/" as="/">
-      <Button className={classes.title}>{brand}</Button>
-    </Link>
-  );
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
-        {leftLinks !== undefined ? brandComponent : null}
-        <div className={classes.flex}>
-          {leftLinks !== undefined ? (
-            <Hidden smDown implementation="css">
-              {leftLinks}
-            </Hidden>
-          ) : (
-            brandComponent
-          )}
-        </div>
-        <Hidden smDown implementation="css">
-          {rightLinks}
+        <Hidden smDown implementation="css" className={classes.hidden}>
+          <div className={classes.collapse}>{links}</div>
         </Hidden>
         <Hidden mdUp>
           <IconButton
@@ -102,10 +89,15 @@ export default function Header(props) {
           }}
           onClose={handleDrawerToggle}
         >
-          <div className={classes.appResponsive}>
-            {leftLinks}
-            {rightLinks}
-          </div>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerToggle}
+            className={classes.closeButtonDrawer}
+          >
+            <Close />
+          </IconButton>
+          <div className={classes.appResponsive}>{links}</div>
         </Drawer>
       </Hidden>
     </AppBar>
@@ -128,8 +120,7 @@ Header.propTypes = {
     "rose",
     "dark"
   ]),
-  rightLinks: PropTypes.node,
-  leftLinks: PropTypes.node,
+  links: PropTypes.node,
   brand: PropTypes.string,
   fixed: PropTypes.bool,
   absolute: PropTypes.bool,

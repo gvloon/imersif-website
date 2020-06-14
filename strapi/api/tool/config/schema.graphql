@@ -1,0 +1,35 @@
+const {tools: search} = require('../../../src/search')
+
+module.exports = {
+  definition: `
+    type ToolSuggestion {
+      text: String
+    }
+  `,
+  query: `
+    searchTools(text: String!): [Tool]
+    suggestTools(text: String!): [ToolSuggestion]
+    toolBySlug(slug: String!): Tool
+  `,
+  resolver: {
+    Query: {
+      searchTools: {
+        description: 'Search tools',
+        resolverOf: 'application::tool.tool.find',
+        resolver: async (obj, {text}) => search.fuzzy(text)
+      },
+      suggestTools: {
+        description: 'Suggest tools',
+        resolverOf: 'application::tool.tool.find',
+        resolver: async (obj, {text}) => search.suggest(text)
+      },
+      toolBySlug: {
+        description: 'Returns a tool by slug',
+        resolverOf: 'application::tool.tool.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['tool'].findOne({slug: options.slug})
+        }
+      }
+    }
+  }
+}

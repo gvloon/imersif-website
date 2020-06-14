@@ -7,8 +7,9 @@ module.exports = {
     }
   `,
   query: `
-    searchDevices(text: String!): [Device],
+    searchDevices(text: String!): [Device]
     suggestDevices(text: String!): [DeviceSuggestion]
+    deviceBySlug(slug: String!): Device
   `,
   resolver: {
     Query: {
@@ -21,6 +22,13 @@ module.exports = {
         description: 'Suggest devices',
         resolverOf: 'application::device.device.find',
         resolver: async (obj, {text}) => search.suggest(text)
+      },
+      deviceBySlug: {
+        description: 'Returns a device by slug',
+        resolverOf: 'application::device.device.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['device'].findOne({slug: options.slug})
+        }
       }
     }
   }

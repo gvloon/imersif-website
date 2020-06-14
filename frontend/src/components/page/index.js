@@ -1,34 +1,13 @@
-import React from 'react'
+import { React } from 'common'
 import BasicPage from './basic-page'
-import ParallaxPage from './parallax-page'
+import FullImagePage from './full-image-page'
 
-export const Page = ({basic_page, parallax_page, components, strings}) => {
-    if (parallax_page != null) {
-        return <ParallaxPage page={parallax_page} components={components} strings={strings}/>
+const PageRenderer = ({ context, page, components, strings }) => {
+    if (page.parallax_page != null) {
+        return <FullImagePage context={context} page={page.parallax_page} components={components} strings={strings}/>
     } else {
-        return <BasicPage page={basic_page} components={components} strings={strings}/>
+        return <BasicPage context={context} page={page.basic_page} components={components} strings={strings}/>
     }
 }
 
-export const getPages = (type) => ({
-    basic_page: {
-        __aliasFor: 'pageByType',
-        __args: {type},
-        title: true,
-        content: true
-    },
-    parallax_page: {
-        __aliasFor: 'parallaxPageByType',
-        __args: {type},
-        title: true,
-        content: true,
-        parallax_content: true,
-        parallax_image: {
-            url: true
-        }
-    }
-})
-
-
-
-
+export default PageRenderer

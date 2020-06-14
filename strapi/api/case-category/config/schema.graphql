@@ -1,0 +1,16 @@
+module.exports = {
+  query: `
+    caseCategoryBySlug(slug: String!): CaseCategory
+  `,
+  resolver: {
+    Query: {
+      caseCategoryBySlug: {
+        description: 'Returns a caseCategory by slug',
+        resolverOf: 'application::case-category.case-category.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['case-category'].findOne({slug: options.slug})
+        }
+      }
+    }
+  }
+}

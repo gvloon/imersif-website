@@ -11,11 +11,6 @@
   "attributes": {
     "title": {
       "type": "string"
-    },
-    "devices": {
-      "via": "xr_categories",
-      "collection": "device",
-      "dominant": true
     }
   }
 }

@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-// core components
-import styles from "assets/jss/nextjs-material-kit/components/customLinearProgressStyle.js";
+
+import styles from "assets/jss/nextjs-material-kit-pro/components/customLinearProgressStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function CustomLinearProgress(props) {
-  const classes = useStyles();
   const { color, ...rest } = props;
+  const classes = useStyles();
   return (
     <LinearProgress
       {...rest}

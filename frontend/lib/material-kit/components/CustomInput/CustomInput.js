@@ -3,18 +3,22 @@ import React from "react";
 import PropTypes from "prop-types";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
+// @material-ui/icons
+import Clear from "@material-ui/icons/Clear";
+import Check from "@material-ui/icons/Check";
+// core components
 
-import styles from "assets/jss/nextjs-material-kit/components/customInputStyle.js";
+import styles from "assets/jss/nextjs-material-kit-pro/components/customInputStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function CustomInput(props) {
-  const classes = useStyles();
   const {
     formControlProps,
     labelText,
@@ -26,7 +30,7 @@ export default function CustomInput(props) {
     inputRootCustomClasses,
     success
   } = props;
-
+  const classes = useStyles();
   const labelClasses = classNames({
     [" " + classes.labelRootError]: error,
     [" " + classes.labelRootSuccess]: success && !error
@@ -74,6 +78,11 @@ export default function CustomInput(props) {
         id={id}
         {...inputProps}
       />
+      {error ? (
+        <Clear className={classes.feedback + " " + classes.labelRootError} />
+      ) : success ? (
+        <Check className={classes.feedback + " " + classes.labelRootSuccess} />
+      ) : null}
     </FormControl>
   );
 }

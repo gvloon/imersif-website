@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/case-platforms",
+      "handler": "case-platform.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/case-platforms/count",
+      "handler": "case-platform.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/case-platforms/:id",
+      "handler": "case-platform.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/case-platforms",
+      "handler": "case-platform.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/case-platforms/:id",
+      "handler": "case-platform.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/case-platforms/:id",
+      "handler": "case-platform.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

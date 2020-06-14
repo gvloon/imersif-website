@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "glossary_items",
+  "info": {
+    "name": "glossary-item"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "term": {
+      "type": "string"
+    },
+    "explanation": {
+      "type": "richtext"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "keywords": {
+      "type": "string"
+    }
+  }
+}

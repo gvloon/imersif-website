@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "case_categories",
+  "info": {
+    "name": "case-category"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "cases": {
+      "via": "categories",
+      "collection": "case"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "children": {
+      "collection": "case-category",
+      "via": "parent"
+    },
+    "parent": {
+      "model": "case-category",
+      "via": "children"
+    },
+    "slug": {
+      "type": "string",
+      "unique": true
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "image": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

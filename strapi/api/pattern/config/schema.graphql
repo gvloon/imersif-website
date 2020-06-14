@@ -9,6 +9,7 @@ module.exports = {
   query: `
     searchPatterns(text: String!): [Pattern]
     suggestPatterns(text: String!): [PatternSuggestion]
+    patternBySlug(slug: String!): Pattern
   `,
   resolver: {
     Query: {
@@ -21,6 +22,13 @@ module.exports = {
         description: 'Suggest patterns',
         resolverOf: 'application::patterns.patterns.find',
         resolver: async (obj, {text}) => search.suggest(text)
+      },
+      patternBySlug: {
+        description: 'Returns a pattern by slug',
+        resolverOf: 'application::pattern.pattern.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['pattern'].findOne({slug: options.slug})
+        }
       }
     }
   }

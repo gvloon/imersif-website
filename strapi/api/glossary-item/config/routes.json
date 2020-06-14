@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/glossary-items",
+      "handler": "glossary-item.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/glossary-items/count",
+      "handler": "glossary-item.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/glossary-items/:id",
+      "handler": "glossary-item.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/glossary-items",
+      "handler": "glossary-item.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/glossary-items/:id",
+      "handler": "glossary-item.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/glossary-items/:id",
+      "handler": "glossary-item.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

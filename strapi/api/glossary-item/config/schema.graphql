@@ -1,0 +1,35 @@
+const {glossary: search} = require('../../../src/search')
+
+module.exports = {
+  definition: `
+    type GlossarySuggestion {
+      text: String
+    }
+  `,
+  query: `
+    searchGlossary(text: String!): [Case]
+    suggestGlossary(text: String!): [GlossarySuggestion]
+    glossaryBySlug(slug: String!): Case
+  `,
+  resolver: {
+    Query: {
+      searchGlossary: {
+        description: 'Search glossary',
+        resolverOf: 'application::glossary-item.glossary-item.find',
+        resolver: async (obj, {text}) => search.fuzzy(text)
+      },
+      suggestGlossary: {
+        description: 'Suggest glossary',
+        resolverOf: 'application::glossary-item.glossary-item.find',
+        resolver: async (obj, {text}) => search.suggest(text)
+      },
+      glossaryBySlug: {
+        description: 'Returns a glossary by slug',
+        resolverOf: 'application::glossary-item.glossary-item.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['glossary'].findOne({slug: options.slug})
+        }
+      }
+    }
+  }
+}

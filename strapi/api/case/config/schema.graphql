@@ -7,8 +7,9 @@ module.exports = {
     }
   `,
   query: `
-    searchCases(text: String!): [Case],
+    searchCases(text: String!): [Case]
     suggestCases(text: String!): [CaseSuggestion]
+    caseBySlug(slug: String!): Case
   `,
   resolver: {
     Query: {
@@ -21,6 +22,13 @@ module.exports = {
         description: 'Suggest cases',
         resolverOf: 'application::case.case.find',
         resolver: async (obj, {text}) => search.suggest(text)
+      },
+      caseBySlug: {
+        description: 'Returns a case by slug',
+        resolverOf: 'application::case.case.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['case'].findOne({slug: options.slug})
+        }
       }
     }
   }

@@ -1,19 +1,25 @@
-import {React, api} from 'common'
-import {Link, Page, getPages} from 'components'
+import { React, PagePropTypes, pageApi } from 'common'
+import { Link, PageRenderer } from 'components'
 
-export default (props) => {
-    const components = {
-        Patterns: () => getPatterns(props)
+export const Page = ({ page, context, data }) => {
+    context = {
+        ...context,
+        section: 'patterns'
     }
-    return <Page {...props} components={components} />
+    const components = {
+        Patterns: () => getPatterns(data)
+    }
+    return <PageRenderer context={context} page={page} components={components} />
 }
 
-const getPatterns = ({patterns}) => (
+Page.propTypes = PagePropTypes
+
+const getPatterns = ({ patterns }) => (
     <ul>
         {
-            patterns.map(({id, title}) => (
-                <li key={id}>
-                    <Link href="/patterns/[id]" data={{id}}>
+            patterns.map(({ slug, title }, index) => (
+                <li key={index}>
+                    <Link href="/patterns/[slug]" as={`/patterns/${slug}`}>
                         <a>{title}</a>
                     </Link>
                 </li>
@@ -22,14 +28,14 @@ const getPatterns = ({patterns}) => (
     </ul>
 )
 
-export const getStaticProps = async () => {
-    const pages = getPages('Patterns')
-    const {data: props} = await api({
-        ...pages,
-        patterns : {
-            id: true,
+export const getStaticProps = async context => {
+    const props = await pageApi('Patterns', context, {
+        patterns: {
+            slug: true,
             title: true
         }
     })
-    return {props, unstable_revalidate: 1}
+    return { props, unstable_revalidate: 1 }
 }
+
+export default Page
