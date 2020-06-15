@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 const ParallaxPage = ({ context, page, components, strings }) => {
     const classes = useStyles()
-    const image = page.parallax_image ? config.apiUrl + page.parallax_image[0].url : null
+    const image = page.parallax_image ? config.publicApiUrl + page.parallax_image[0].url : null
     return (
         <Layout title={template(page.title, strings)}>
             <Menu color="transparent" context={context} />

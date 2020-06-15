@@ -104,7 +104,6 @@ class Api {
           'Content-Type': 'application/json'
         }
       })
-    console.log(response.status + ': ' + JSON.stringify(response.data))
     return response.data
   }
 
@@ -112,7 +111,6 @@ class Api {
     const baseUrl = this.baseUrl
     url = `${baseUrl}${url}`
     data = JSON.stringify(data)
-    console.log(`${url}: ${data}`)
     const response = await axios.post(
       url,
       data,
@@ -121,7 +119,6 @@ class Api {
           'Content-Type': 'application/json'
         }
       })
-    console.log(response.status + ': ' + JSON.stringify(response.data))
     return response.data
   }
 }

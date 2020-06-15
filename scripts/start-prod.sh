@@ -5,6 +5,7 @@ set -a
 set +a
 
 docker-compose -f docker-compose.yml -f docker-compose-prod.yml down --remove-orphans
+docker-compose -f docker-compose.yml -f docker-compose-prod.yml build --no-cache
 docker-compose -f docker-compose.yml -f docker-compose-prod.yml up -d
 
 printf "Waiting for containers "

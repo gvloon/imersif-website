@@ -3,8 +3,6 @@ version: '3'
 services:
   strapi:
     command: bash -c 'yarn && NODE_ENV=production yarn build && NODE_ENV=production yarn start'
-    volumes:
-      - ./strapi:/srv/app
   next:
     image: node
     container_name: imersif_next
@@ -12,6 +10,7 @@ services:
       - strapi
     environment:
       NEXT_PUBLIC_STRAPI_URL: http://$HOST:$STRAPI_PORT
+      NEXT_DOCKER_STRAPI_URL: http://imersif_strapi:$STRAPI_PORT
     command: bash -c 'yarn && /home/scripts/wait.sh http://imersif_strapi:$STRAPI_PORT && yarn build && yarn start'
     expose:
       - '$NEXT_PORT'
@@ -19,7 +18,7 @@ services:
       - '$NEXT_PORT:$NEXT_PORT'
     user: node
     volumes:
-      - ./frontend:/home/node/app
+      - ./next:/home/node/app
       - ./scripts:/home/scripts
     working_dir: /home/node/app
   ngnix:

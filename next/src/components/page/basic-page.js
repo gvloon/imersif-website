@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 
 const BasicPage = ({ context, page, components, strings }) => {
     const classes = useStyles()
-    const image = page.image.length ? config.apiUrl + page.image[0].url : null
+    const image = page.image.length ? config.publicApiUrl + page.image[0].url : null
     return (
         <Layout title={template(page.title, strings)}>
             <Menu context={context} />
