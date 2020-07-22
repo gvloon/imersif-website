@@ -13,7 +13,6 @@
     "@material-ui/lab": "^4.0.0-alpha.54",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.2",
-    "bricks.js": "^1.8.0",
     "classnames": "2.2.6",
     "json-to-graphql-query": "^2.0.0",
     "moment": "2.25.3",

@@ -24,8 +24,7 @@ export const getStaticProps = async context => {
         pattern: {
             __aliasFor: 'patternBySlug',
             __args: { slug: context.params.slug },
-            title: true,
-            description: true
+            title: true
         }
     })
     return { props, unstable_revalidate: 1 }
