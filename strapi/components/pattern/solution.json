@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_pattern_solutions",
+  "info": {
+    "name": "solution",
+    "icon": "wrench"
+  },
+  "options": {},
+  "attributes": {
+    "what": {
+      "type": "string"
+    },
+    "why": {
+      "type": "string"
+    },
+    "how": {
+      "type": "string"
+    },
+    "when": {
+      "type": "string"
+    }
+  }
+}

@@ -13,6 +13,7 @@
     "@material-ui/lab": "^4.0.0-alpha.54",
     "@zeit/next-sass": "^1.0.1",
     "axios": "^0.19.2",
+    "bricks.js": "^1.8.0",
     "classnames": "2.2.6",
     "json-to-graphql-query": "^2.0.0",
     "moment": "2.25.3",
@@ -35,6 +36,7 @@
     "react-swipeable-views": "0.13.9",
     "remark-breaks": "^1.0.5",
     "styled-components": "5.1.0",
+    "util": "^0.12.3",
     "webpack": "4.43.0"
   },
   "devDependencies": {

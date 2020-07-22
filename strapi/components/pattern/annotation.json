@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_pattern_annotations",
+  "info": {
+    "name": "annotation",
+    "icon": "align-justify"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  }
+}

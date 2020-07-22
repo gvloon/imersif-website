@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/pattern-variants",
+      "handler": "pattern-variant.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pattern-variants/count",
+      "handler": "pattern-variant.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pattern-variants/:id",
+      "handler": "pattern-variant.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/pattern-variants",
+      "handler": "pattern-variant.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/pattern-variants/:id",
+      "handler": "pattern-variant.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/pattern-variants/:id",
+      "handler": "pattern-variant.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

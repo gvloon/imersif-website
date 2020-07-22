@@ -1,0 +1,16 @@
+module.exports = {
+  query: `
+    patternCategoryBySlug(slug: String!): PatternCategory
+  `,
+  resolver: {
+    Query: {
+      patternCategoryBySlug: {
+        description: 'Returns a pattern category by slug',
+        resolverOf: 'application::pattern-category.pattern-category.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['pattern-category'].findOne({slug: options.slug})
+        }
+      }
+    }
+  }
+}

@@ -24,9 +24,9 @@ const Vimeo = ({ id }) => {
                 src={`https://player.vimeo.com/video/${id}`}
                 className={classes.player}
                 frameBorder='0'
-                webkitAllowFullScreen
-                mozallowfullscreen
-                allowFullScreen />
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
+                allowFullScreen={true} />
         </div>
     )
 }

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_pattern_interactions",
+  "info": {
+    "name": "interaction",
+    "icon": "address-card"
+  },
+  "options": {},
+  "attributes": {
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "annotations": {
+      "type": "component",
+      "repeatable": true,
+      "component": "pattern.annotation"
+    }
+  }
+}

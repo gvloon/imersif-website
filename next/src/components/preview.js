@@ -1,4 +1,4 @@
-import {React, makeStyles, PropTypes} from 'common'
+import { React, makeStyles, PropTypes } from 'common'
 import { Link } from 'components'
 import LinesEllipsis from 'react-lines-ellipsis'
 import responsiveHOC from 'react-lines-ellipsis/lib/responsiveHOC'

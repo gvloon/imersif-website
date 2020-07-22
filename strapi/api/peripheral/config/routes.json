@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/peripherals",
+      "handler": "peripheral.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/peripherals/count",
+      "handler": "peripheral.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/peripherals/:id",
+      "handler": "peripheral.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/peripherals",
+      "handler": "peripheral.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/peripherals/:id",
+      "handler": "peripheral.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/peripherals/:id",
+      "handler": "peripheral.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { React, PropTypes, makeStyles, categorize, _ } from 'common'
+import { Markdown } from 'components'
 
 const useStyles = makeStyles(index => ({
     glossary: {
@@ -48,7 +49,7 @@ const GlossaryItem = ({ item }) => {
     return (
         <>
             <div className={classes.term}><a href={`#${item.slug}`}>{item.term}</a></div>
-            <div className={classes.explanation}>{item.explanation}</div>
+            <Markdown source={item.explanation} />
         </>
     )
 }

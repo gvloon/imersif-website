@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_pattern_pros_and_cons",
+  "info": {
+    "name": "pros-and-cons",
+    "icon": "yin-yang"
+  },
+  "options": {},
+  "attributes": {
+    "pros": {
+      "type": "component",
+      "repeatable": true,
+      "component": "pattern.pro-con"
+    },
+    "cons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "pattern.pro-con"
+    }
+  }
+}

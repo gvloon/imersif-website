@@ -15,29 +15,12 @@
     "keywords": {
       "type": "string"
     },
-    "tethering": {
-      "type": "enumeration",
-      "enum": [
-        "untethered",
-        "mobile_tethered",
-        "pc_tethered"
-      ]
-    },
-    "xr_type": {
-      "type": "enumeration",
-      "enum": [
-        "augmented_reality",
-        "mixed_reality",
-        "virtual_reality"
-      ]
-    },
     "url": {
       "type": "string"
     },
-    "device_types": {
-      "collection": "device-type",
+    "device_type": {
       "via": "devices",
-      "dominant": true
+      "model": "device-type"
     },
     "slug": {
       "type": "string",
@@ -47,6 +30,22 @@
       "type": "string",
       "required": true,
       "unique": true
+    },
+    "device_screen": {
+      "via": "devices",
+      "model": "device-screen"
+    },
+    "device_tethering": {
+      "via": "devices",
+      "model": "device-tethering"
+    },
+    "device_tracking_type": {
+      "via": "devices",
+      "model": "device-tracking-type"
+    },
+    "device_dof": {
+      "via": "devices",
+      "model": "device-dof"
     }
   }
 }

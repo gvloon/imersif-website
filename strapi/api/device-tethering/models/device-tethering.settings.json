@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "device_tetherings",
+  "info": {
+    "name": "device-tethering"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "devices": {
+      "collection": "device",
+      "via": "device_tethering"
+    }
+  }
+}

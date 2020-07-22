@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "peripherals",
+  "info": {
+    "name": "peripheral"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "keywords": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

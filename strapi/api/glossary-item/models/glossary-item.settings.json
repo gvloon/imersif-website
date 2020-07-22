@@ -20,6 +20,10 @@
     },
     "keywords": {
       "type": "string"
+    },
+    "category": {
+      "model": "glossary-category",
+      "via": "items"
     }
   }
 }

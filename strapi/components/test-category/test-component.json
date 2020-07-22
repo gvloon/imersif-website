@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_test_category_test_components",
+  "info": {
+    "name": "TestComponent",
+    "icon": "atom"
+  },
+  "options": {},
+  "attributes": {
+    "test": {
+      "type": "string"
+    }
+  }
+}

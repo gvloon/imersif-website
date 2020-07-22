@@ -7,7 +7,8 @@ import Vimeo from './media/vimeo'
 
 const useStyles = makeStyles(theme => ({
     paragraph: {
-        marginBottom: '1rem'
+        marginTop: '0.5rem',
+        marginBottom: '0.5rem'
     }
 }))
 

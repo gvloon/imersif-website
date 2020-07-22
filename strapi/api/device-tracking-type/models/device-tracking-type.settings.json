@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "device_tracking_types",
+  "info": {
+    "name": "device-tracking-type"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "devices": {
+      "collection": "device",
+      "via": "device_tracking_type"
+    }
+  }
+}

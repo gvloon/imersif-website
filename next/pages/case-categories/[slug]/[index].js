@@ -1,5 +1,6 @@
 import { React, api, pageApi, getStyle, PagePropTypes } from 'common'
-import { Markdown, PageRenderer, CaseList, CaseCategoryList } from 'components'
+import { Markdown, PageRenderer, CaseList, CategoryList } from 'components'
+import Link from 'next/link'
 
 const pageSize = 10
 
@@ -12,9 +13,14 @@ const Page = ({ page, context, data }) => {
     const strings = {
         Title: title
     }
+    const categories = data.category.children.map((child, index) => (
+        <Link key={index} href="/case-categories/[slug]/[index]" as={`/case-categories/${child.slug}/0`}>
+            <a>{child.title}</a>
+        </Link>
+    ))
     const components = {
         Description: props => <Markdown style={getStyle(props)} source={description} strings={strings} />,
-        Categories: props => <CaseCategoryList {...props} categories={data.category.children} />,
+        Categories: props => <CategoryList {...props} categories={categories} />,
         Cases: props => (
             <CaseList
                 {...props}
@@ -28,7 +34,6 @@ const Page = ({ page, context, data }) => {
 }
 
 Page.propTypes = PagePropTypes
-
 
 export const getStaticProps = async context => {
     const props = await pageApi('Cases_Category', context, {

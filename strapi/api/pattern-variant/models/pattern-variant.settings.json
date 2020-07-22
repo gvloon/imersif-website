@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pattern_variants",
+  "info": {
+    "name": "pattern-variant"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "platforms": {
+      "collection": "xr-category"
+    },
+    "pattern": {
+      "via": "variants",
+      "model": "pattern"
+    },
+    "interaction": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pattern.interaction"
+    }
+  }
+}

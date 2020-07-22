@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/glossary-categories",
+      "handler": "glossary-category.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/glossary-categories/count",
+      "handler": "glossary-category.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/glossary-categories/:id",
+      "handler": "glossary-category.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/glossary-categories",
+      "handler": "glossary-category.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/glossary-categories/:id",
+      "handler": "glossary-category.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/glossary-categories/:id",
+      "handler": "glossary-category.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

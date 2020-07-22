@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/device-dofs",
+      "handler": "device-dof.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-dofs/count",
+      "handler": "device-dof.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-dofs/:id",
+      "handler": "device-dof.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/device-dofs",
+      "handler": "device-dof.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/device-dofs/:id",
+      "handler": "device-dof.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/device-dofs/:id",
+      "handler": "device-dof.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -16,8 +16,6 @@
 
 */
 import React from 'react'
-import App from 'next/app'
-import Head from 'next/head'
 import Router from 'next/router'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
@@ -57,32 +55,10 @@ const theme = createMuiTheme({
     }
 })
 
-export default class MyApp extends App {
-    componentDidMount () {
-    }
-
-    static async getInitialProps ({ Component, router, ctx }) {
-        let pageProps = {}
-
-        if (Component.getInitialProps) {
-            pageProps = await Component.getInitialProps(ctx)
-        }
-
-        return { pageProps }
-    }
-
-    render () {
-        const { Component, pageProps } = this.props
-
-        return (
-            <React.Fragment>
-                <Head>
-                    <title>NextJS Material Kit by Creative Tim</title>
-                </Head>
-                <ThemeProvider theme={theme}>
-                    <Component {...pageProps} />
-                </ThemeProvider>
-            </React.Fragment>
-        )
-    }
+export default ({ Component, pageProps }) => {
+    return (
+        <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+        </ThemeProvider>
+    )
 }

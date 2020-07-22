@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/device-tracking-types",
+      "handler": "device-tracking-type.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-tracking-types/count",
+      "handler": "device-tracking-type.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-tracking-types/:id",
+      "handler": "device-tracking-type.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/device-tracking-types",
+      "handler": "device-tracking-type.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/device-tracking-types/:id",
+      "handler": "device-tracking-type.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/device-tracking-types/:id",
+      "handler": "device-tracking-type.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

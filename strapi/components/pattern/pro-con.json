@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_pattern_pro_cons",
+  "info": {
+    "name": "pro-con",
+    "icon": "adjust"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  }
+}

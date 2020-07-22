@@ -16,16 +16,39 @@
     "keywords": {
       "type": "string"
     },
-    "description": {
-      "type": "richtext"
-    },
     "slug": {
       "type": "string",
-      "unique": true,
-      "required": true
+      "unique": false,
+      "required": false
     },
-    "summary": {
-      "type": "text"
+    "solution": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pattern.solution"
+    },
+    "pros_and_cons": {
+      "type": "component",
+      "repeatable": false,
+      "component": "pattern.pros-and-cons"
+    },
+    "variants": {
+      "collection": "pattern-variant",
+      "via": "pattern"
+    },
+    "category": {
+      "model": "pattern-category",
+      "via": "patterns"
+    },
+    "media": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }

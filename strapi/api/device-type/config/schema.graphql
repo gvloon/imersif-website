@@ -1,0 +1,16 @@
+module.exports = {
+  query: `
+    deviceTypeBySlug(slug: String!): DeviceType
+  `,
+  resolver: {
+    Query: {
+      deviceTypeBySlug: {
+        description: 'Returns a deviceType by slug',
+        resolverOf: 'application::device-type.device-type.findOne',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.services['device-type'].findOne({slug: options.slug})
+        }
+      }
+    }
+  }
+}

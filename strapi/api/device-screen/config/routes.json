@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/device-screens",
+      "handler": "device-screen.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-screens/count",
+      "handler": "device-screen.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-screens/:id",
+      "handler": "device-screen.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/device-screens",
+      "handler": "device-screen.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/device-screens/:id",
+      "handler": "device-screen.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/device-screens/:id",
+      "handler": "device-screen.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

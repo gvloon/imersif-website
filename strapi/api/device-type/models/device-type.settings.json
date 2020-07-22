@@ -9,12 +9,15 @@
     "timestamps": true
   },
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string"
     },
     "devices": {
-      "via": "device_types",
-      "collection": "device"
+      "collection": "device",
+      "via": "device_type"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

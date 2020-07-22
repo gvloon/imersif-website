@@ -20,7 +20,7 @@ class Slug {
     const update = model.getUpdate()
     if (update && update[name]) {
       model.update({
-        slug: this._slugify(update[name]),
+        slug: this._slugify(update[name])
       })
     }
   }

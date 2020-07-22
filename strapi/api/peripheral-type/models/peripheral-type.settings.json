@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "peripheral_types",
+  "info": {
+    "name": "peripheral-type"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    }
+  }
+}

@@ -32,3 +32,9 @@ echo ""
 echo "All running"
 
 popd > /dev/null
+
+pushd $(dirname "$0")/../next/ > /dev/null
+
+yarn dev
+
+popd > /dev/null

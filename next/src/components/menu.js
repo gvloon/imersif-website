@@ -147,8 +147,8 @@ const Menu = ({ context }) => {
                             buttonIcon={Apps}
                             dropdownList={[
                                 <Link href="/glossary" key="devices"><a className={classes.dropdownLink}>Glossary</a></Link>,
-                                <Link href="/devices" key="devices"><a className={classes.dropdownLink}>Hardware</a></Link>,
-                                <Link href="/tools" key="tools"><a className={classes.dropdownLink}>Software</a></Link>,
+                                <Link href="/hardware" key="devices"><a className={classes.dropdownLink}>Hardware</a></Link>,
+                                <Link href="/software" key="tools"><a className={classes.dropdownLink}>Software</a></Link>,
                                 <Link href="/cases" key="cases"><a className={classes.dropdownLink}>Cases</a></Link>
                             ]}
                         />
@@ -200,10 +200,10 @@ const Menu = ({ context }) => {
                     <Link href="/glossary">
                         <Button className={classes.drawerLink}>Glossary</Button>
                     </Link>
-                    <Link href="/devices">
+                    <Link href="/hardware">
                         <Button className={classes.drawerLink}>Hardware</Button>
                     </Link>
-                    <Link href="/tools">
+                    <Link href="/software">
                         <Button className={classes.drawerLink}>Software</Button>
                     </Link>
                     <Link href="/cases">

@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/device-tetherings",
+      "handler": "device-tethering.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-tetherings/count",
+      "handler": "device-tethering.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/device-tetherings/:id",
+      "handler": "device-tethering.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/device-tetherings",
+      "handler": "device-tethering.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/device-tetherings/:id",
+      "handler": "device-tethering.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/device-tetherings/:id",
+      "handler": "device-tethering.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

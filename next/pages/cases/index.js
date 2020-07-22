@@ -1,13 +1,19 @@
 import { React, pageApi, PagePropTypes } from 'common'
-import { CaseCategoryList, PageRenderer } from 'components'
+import { CategoryList, PageRenderer } from 'components'
+import Link from 'next/link'
 
 const Page = ({ page, context, data }) => {
     context = {
         ...context,
         section: 'cases'
     }
+    const categories = data.categories.map((category, index) =>
+        <Link key={index} href="/case-categories/[slug]/[index]" as={`/case-categories/${category.slug}/0`}>
+            <a>{category.title}</a>
+        </Link>
+    )
     const components = {
-        Categories: props => <CaseCategoryList {...props} categories={data.categories} />
+        Categories: props => <CategoryList {...props} categories={categories} />
     }
     return <PageRenderer context={context} page={page} components={components} />
 }

@@ -17,7 +17,6 @@ export const api = async query => {
             throw new Error(error.message)
         }
     }
-    console.log(JSON.stringify(response.data))
     if (response.data.errors && response.data.errors.length) {
         throw new Error(response.data.errors[0].message)
     }
