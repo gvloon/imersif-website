@@ -19,7 +19,7 @@ import React from 'react'
 import Router from 'next/router'
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
-import 'scss/index.scss'
+import '../assets/scss/index.scss'
 
 Router.events.on('routeChangeStart', url => {
     console.log(`Loading: ${url}`)

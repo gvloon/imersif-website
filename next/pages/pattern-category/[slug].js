@@ -1,43 +1,9 @@
-import { React, makeStyles, config, api, pageApi, PagePropTypes } from 'common'
+import { React, api, pageApi, PagePropTypes } from 'common'
 import { PageRenderer } from 'components'
-import { ProConList } from 'components/patterns'
-
-const marginPattern = 2
-
-const useStyles = makeStyles(theme => ({
-    patterns: {
-        marginTop: '-' + marginPattern + 'rem',
-        marginBottom: '-' + marginPattern + 'rem'
-    },
-    pattern: {
-        marginTop: marginPattern + 'rem',
-        marginBottom: marginPattern + 'rem',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    top: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    image: {
-        width: '25%',
-        paddingTop: '20%',
-        backgroundSize: 'cover'
-    },
-    prosAndCons: {
-        marginLeft: '1rem',
-        flex: 1
-    },
-    title: {
-        fontWeight: 'bold',
-        paddingTop: '0.5rem'
-    }
-}))
+import { PatternList } from 'components/patterns'
 
 export const Page = ({ page, context, data }) => {
     const { name } = data.patternCategory
-    const classes = useStyles()
-
     context = {
         ...context,
         section: 'patterns'
@@ -46,26 +12,10 @@ export const Page = ({ page, context, data }) => {
         Name: name
     }
     const components = {
-        Patterns: () => getPatterns(data.patternCategory.patterns, classes)
+        Patterns: () => <PatternList patterns={data.patternCategory.patterns} />
     }
     return <PageRenderer context={context} page={page} strings={strings} components={components} />
 }
-
-const getPatterns = (patterns, classes) => (
-    <div className={classes.patterns}>
-        {
-            patterns.map((pattern, index) => (
-                <div key={index} className={classes.pattern}>
-                    <div className={classes.top}>
-                        <div className={classes.image} style={{ backgroundImage: 'url("' + config.publicApiUrl + pattern.media.url + '")' }} />
-                        <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
-                    </div>
-                    <div className={classes.title}>{pattern.title}</div>
-                </div>
-            ))
-        }
-    </div>
-)
 
 Page.PropTypes = PagePropTypes
 
