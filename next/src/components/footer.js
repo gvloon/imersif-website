@@ -60,16 +60,13 @@ const useStyles = makeStyles(theme => ({
 const Footer = ({ color }) => {
     const classes = useStyles()
     const footerClass = classNames({
-        [classes.footer]: true,
-        [classes[color]]: true
+        [classes.footer]: true
     })
     const linkClass = classNames({
-        [classes.link]: true,
-        [classes[color]]: true
+        [classes.link]: true
     })
     const companyClass = classNames({
-        [classes.company]: true,
-        [classes[color]]: true
+        [classes.company]: true
     })
     return (
         <div className={footerClass}>

@@ -1,4 +1,4 @@
-import { React, PropTypes, classNames, paginate, getStyle, makeStyles } from 'common'
+import { React, PropTypes, classNames, paginate, makeStyles } from 'common'
 import { Link, PaginatedList, Preview } from 'components'
 import { color } from 'jss/index'
 
@@ -44,7 +44,7 @@ const CaseList = ({ category, title, pageSize, pageIndex, ...rest }) => {
         )
     }
     return (
-        <div style={getStyle(rest)}>
+        <div>
             {
                 title &&
                 <h2>{title}</h2>

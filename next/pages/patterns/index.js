@@ -1,21 +1,19 @@
-import { React, PagePropTypes, pageApi } from 'common'
-import { PageRenderer, NestedColumnList } from 'components'
-import Link from 'next/link'
+import { React, api } from 'common'
+import { NestedColumnList, Markdown, Link } from 'components'
+import { BasicPage } from 'components/page'
 
-export const Page = ({ page, context, data }) => {
-    context = {
-        ...context,
-        section: 'patterns'
-    }
-    const components = {
-        Categories: () => getCategories(data)
-    }
-    return <PageRenderer context={context} page={page} components={components} />
+export const Page = ({ context, data }) => {
+    const { title, image, introduction } = data.page
+    return (
+        <BasicPage context={context} title={title} image={image}>
+            <h1>{title}</h1>
+            <Markdown source={introduction} />
+            <CategoryList categories={data.categories} />
+        </BasicPage>
+    )
 }
 
-Page.propTypes = PagePropTypes
-
-const getCategories = ({ categories }) => {
+const CategoryList = ({ categories }) => {
     const items = categories.map(category => ({
         value: category.name,
         children: category.children.map((category, index) => {
@@ -41,7 +39,15 @@ const getCategories = ({ categories }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await pageApi('Patterns', context, {
+    const data = await api({
+        page: {
+            __aliasFor: 'patternsPage',
+            title: true,
+            image: {
+                url: true
+            },
+            introduction: true
+        },
         categories: {
             __aliasFor: 'patternCategories',
             __args: {
@@ -61,6 +67,13 @@ export const getStaticProps = async context => {
             }
         }
     })
+    const props = {
+        data,
+        context: {
+            ...context,
+            section: 'patterns'
+        }
+    }
     return { props, unstable_revalidate: 1 }
 }
 

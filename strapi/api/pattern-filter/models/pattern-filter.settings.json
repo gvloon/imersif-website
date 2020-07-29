@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pattern_filters",
+  "info": {
+    "name": "pattern-filter"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "icon": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

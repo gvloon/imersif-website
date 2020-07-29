@@ -5,7 +5,7 @@ const Layout = ({ children, title }) => {
     return (
         <>
             <Head>
-                <title>{title}</title>
+                <title>{title || ''}</title>
             </Head>
             {children}
         </>

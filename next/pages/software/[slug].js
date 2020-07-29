@@ -1,26 +1,19 @@
-import { React, PagePropTypes, api, pageApi } from 'common'
-import { Markdown, PageRenderer } from 'components'
+import { React, api } from 'common'
+import { Markdown } from 'components'
+import { BasicPage } from 'components/page'
 
-const Page = ({ page, context, data }) => {
+const Page = ({ context, data }) => {
     const { title, description } = data.tool
-
-    context = {
-        ...context,
-        section: 'software'
-    }
-    const strings = {
-        Title: title
-    }
-    const components = {
-        Description: () => <Markdown source={description} strings={strings} />
-    }
-    return <PageRenderer context={context} page={page} strings={strings} components={components} />
+    return (
+        <BasicPage context={context} title={title}>
+            <h1>{title}</h1>
+            <Markdown source={description} />
+        </BasicPage>
+    )
 }
 
-Page.propTypes = PagePropTypes
-
 export const getStaticProps = async context => {
-    const props = await pageApi('Tool', context, {
+    const data = await api({
         tool: {
             __aliasFor: 'toolBySlug',
             __args: { slug: context.params.slug },
@@ -28,6 +21,13 @@ export const getStaticProps = async context => {
             description: true
         }
     })
+    const props = {
+        data,
+        context: {
+            ...context,
+            section: 'software'
+        }
+    }
     return { props, unstable_revalidate: 1 }
 }
 

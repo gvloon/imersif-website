@@ -15,28 +15,23 @@
     "subtitle": {
       "type": "string"
     },
-    "image": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos"
-      ],
-      "plugin": "upload",
-      "required": false
-    },
     "platforms": {
       "collection": "xr-category"
     },
     "pattern": {
-      "via": "variants",
-      "model": "pattern"
+      "model": "pattern",
+      "via": "variants"
     },
     "interaction": {
       "type": "component",
-      "repeatable": false,
-      "component": "pattern.interaction"
+      "repeatable": true,
+      "component": "pattern.interaction-step"
+    },
+    "examples": {
+      "collection": "pattern-example"
+    },
+    "additions": {
+      "collection": "pattern-example"
     }
   }
 }

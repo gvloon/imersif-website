@@ -6,6 +6,13 @@ html * {
 html {
   font-family: sans-serif;
   line-height: 1.15;
+  font-size: 14px;
+  @include xs {
+    font-size: 15px;
+  }
+  @include md {
+    font-size: 16px;
+  }
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
@@ -17,14 +24,6 @@ html {
 }
 
 body {
-  font-size: 14px;
-  @include xs {
-    font-size: 15px;
-  }
-  @include md {
-    font-size: 16px;
-  }
-
   overflow-x: hidden;
   height: 100vh;
   background-color: #eee;
@@ -56,7 +55,7 @@ h1 {
   font-size: 1.5rem;
   font-weight: 500;
   margin-top: 0rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0rem;
   @include xs {
     font-size: 1.75rem;
   }

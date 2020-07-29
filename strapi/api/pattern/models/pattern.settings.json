@@ -32,14 +32,14 @@
       "component": "pattern.pros-and-cons"
     },
     "variants": {
-      "collection": "pattern-variant",
-      "via": "pattern"
+      "via": "pattern",
+      "collection": "pattern-variant"
     },
     "category": {
       "model": "pattern-category",
       "via": "patterns"
     },
-    "media": {
+    "image": {
       "model": "file",
       "via": "related",
       "allowedTypes": [
@@ -49,6 +49,9 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "filters": {
+      "collection": "pattern-filter"
     }
   }
 }

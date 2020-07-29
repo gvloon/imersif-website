@@ -1,24 +1,20 @@
-import { React, api, pageApi, PagePropTypes } from 'common'
-import { Markdown, PageRenderer, Specifications } from 'components'
+import { React, api } from 'common'
+import { Markdown, Specifications } from 'components'
+import { BasicPage } from 'components/page'
 
-const Page = ({ page, context, data }) => {
+const Page = ({ context, data }) => {
     const { title, description } = data.device
 
-    context = {
-        ...context,
-        section: 'hardware'
-    }
-    const strings = {
-        Title: title
-    }
-    const components = {
-        Description: () => <Markdown source={description} strings={strings} />,
-        Specifications: () => getSpecifications(data.device)
-    }
-    return <PageRenderer context={context} page={page} strings={strings} components={components} />
+    return (
+        <BasicPage context={context} title={title}>
+            <h1>{title}</h1>
+            <SpecificationList device={data.device} />
+            <Markdown source={description} />
+        </BasicPage>
+    )
 }
 
-const getSpecifications = device => {
+const SpecificationList = ({ device }) => {
     const specs = [
         ['Type', 'device_type'],
         ['Display type', 'device_screen'],
@@ -33,10 +29,8 @@ const getSpecifications = device => {
     return <Specifications data={specs} />
 }
 
-Page.propTypes = PagePropTypes
-
 export const getStaticProps = async context => {
-    const props = await pageApi('Device', context, {
+    const data = await api({
         device: {
             __aliasFor: 'deviceBySlug',
             __args: { slug: context.params.slug },
@@ -59,6 +53,13 @@ export const getStaticProps = async context => {
             }
         }
     })
+    const props = {
+        data,
+        context: {
+            ...context,
+            section: 'hardware'
+        }
+    }
     return { props, unstable_revalidate: 1 }
 }
 

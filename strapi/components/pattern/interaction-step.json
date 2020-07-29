@@ -1,13 +1,13 @@
 {
-  "collectionName": "components_pattern_interactions",
+  "collectionName": "components_pattern_interaction_steps",
   "info": {
-    "name": "interaction",
-    "icon": "address-card"
+    "name": "interaction-step",
+    "icon": "hand-pointer"
   },
   "options": {},
   "attributes": {
-    "images": {
-      "collection": "file",
+    "image": {
+      "model": "file",
       "via": "related",
       "allowedTypes": [
         "images",

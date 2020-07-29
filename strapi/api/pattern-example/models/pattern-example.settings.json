@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pattern_examples",
+  "info": {
+    "name": "pattern-example"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

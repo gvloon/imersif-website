@@ -1,5 +1,5 @@
-import { React, PropTypes, template, makeStyles, config } from 'common'
-import { Layout, Markdown, Menu, Footer } from 'components'
+import { React, PropTypes, makeStyles } from 'common'
+import { Layout, Menu, Footer, Image } from 'components'
 
 import { color, container, contentPadding, merge } from 'jss/index'
 
@@ -33,26 +33,20 @@ const useStyles = makeStyles(theme => ({
         }
     ),
     image: {
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
         width: '100%',
         paddingTop: '25%'
     }
 }))
 
-const BasicPage = ({ context, page, components, strings }) => {
+const BasicPage = ({ context, title, image, children }) => {
     const classes = useStyles()
-    const image = page.image.length ? config.publicApiUrl + page.image[0].url : null
     return (
-        <Layout title={template(page.title, strings)}>
+        <Layout title={title}>
             <Menu context={context} />
             <div className={classes.container}>
-                {
-                    image &&
-                    <div className={classes.image} style={{ backgroundImage: `url(${image})` }} />
-                }
+                <Image className={classes.image} image={image} />
                 <div className={classes.content}>
-                    <Markdown source={page.content} components={components} strings={strings} />
+                    { children }
                 </div>
             </div>
             <Footer/>
@@ -62,9 +56,9 @@ const BasicPage = ({ context, page, components, strings }) => {
 
 BasicPage.propTypes = {
     context: PropTypes.object,
-    page: PropTypes.object,
-    components: PropTypes.object,
-    strings: PropTypes.object
+    title: PropTypes.string,
+    image: PropTypes.object,
+    children: PropTypes.node
 }
 
 export default BasicPage

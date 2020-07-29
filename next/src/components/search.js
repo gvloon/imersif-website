@@ -115,7 +115,7 @@ const options = [
 ]
 
 const Search = ({ className, context, optionsEnabled, mobile, onSearch, onClose }) => {
-    let optionIndex = _.findIndex(options, option => option.id === context.section)
+    let optionIndex = context ? _.findIndex(options, option => option.id === context.section) : -1
     if (optionIndex < 0) {
         optionIndex = 0
     }

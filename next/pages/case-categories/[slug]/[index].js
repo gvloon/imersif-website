@@ -1,42 +1,36 @@
-import { React, api, pageApi, getStyle, PagePropTypes } from 'common'
-import { Markdown, PageRenderer, CaseList, CategoryList } from 'components'
-import Link from 'next/link'
+import { React, api } from 'common'
+import { Markdown, CaseList, CategoryList, Link} from 'components'
+import { BasicPage } from 'components/page'
 
 const pageSize = 10
 
-const Page = ({ page, context, data }) => {
+const Page = ({ context, data }) => {
     const { title, description } = data.category
-    context = {
-        ...context,
-        section: 'cases'
-    }
-    const strings = {
-        Title: title
-    }
-    const categories = data.category.children.map((child, index) => (
-        <Link key={index} href="/case-categories/[slug]/[index]" as={`/case-categories/${child.slug}/0`}>
-            <a>{child.title}</a>
-        </Link>
-    ))
-    const components = {
-        Description: props => <Markdown style={getStyle(props)} source={description} strings={strings} />,
-        Categories: props => <CategoryList {...props} categories={categories} />,
-        Cases: props => (
+    return (
+        <BasicPage context={context} title={title}>
+            <h1>{title}</h1>
+            <Markdown source={description} />
+            <Categories categories={data.category.children} />
             <CaseList
-                {...props}
                 category={data.category}
                 pageSize={pageSize}
                 pageIndex={parseInt(context.params.index)}
             />
-        )
-    }
-    return <PageRenderer context={context} page={page} strings={strings} components={components} />
+        </BasicPage>
+    )
 }
 
-Page.propTypes = PagePropTypes
+const Categories = ({ categories }) => {
+    const items = categories.map((child, index) => (
+        <Link key={index} href="/case-categories/[slug]/[index]" as={`/case-categories/${child.slug}/0`}>
+            <a>{child.title}</a>
+        </Link>
+    ))
+    return <CategoryList categories={items} />
+}
 
 export const getStaticProps = async context => {
-    const props = await pageApi('Cases_Category', context, {
+    const data = await api({
         category: {
             __aliasFor: 'caseCategoryBySlug',
             __args: { slug: context.params.slug },
@@ -54,6 +48,13 @@ export const getStaticProps = async context => {
             }
         }
     })
+    const props = {
+        data,
+        context: {
+            ...context,
+            section: 'cases'
+        }
+    }
     return { props, unstable_revalidate: 1 }
 }
 

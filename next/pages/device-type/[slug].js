@@ -1,26 +1,21 @@
-import { React, pageApi, api, PagePropTypes } from 'common'
-import { Link, PageRenderer } from 'components'
+import { React, api } from 'common'
+import { Link } from 'components'
+import { BasicPage } from 'components/page'
 
-const Page = ({ page, context, data }) => {
-    context = {
-        ...context,
-        section: 'hardware'
-    }
-    const strings = {
-        Name: data.deviceType.name
-    }
-    const components = {
-        Devices: () => getDevices(data)
-    }
-    return <PageRenderer context={context} page={page} components={components} strings={strings} />
+const Page = ({ context, data }) => {
+    const { name, devices } = data.page
+    return (
+        <BasicPage context={context} title={name} >
+            <h1>{name}</h1>
+            <DeviceList devices={devices} />
+        </BasicPage>
+    )
 }
 
-Page.propTypes = PagePropTypes
-
-const getDevices = ({ deviceType }) => (
+const DeviceList = ({ devices }) => (
     <ul>
         {
-            deviceType.devices.map(({ slug, title }, key) => (
+            devices.map(({ slug, title }, key) => (
                 <li key={key}>
                     <Link href="/device/[slug]" as={`/device/${slug}`}>
                         <a>{title}</a>
@@ -32,7 +27,7 @@ const getDevices = ({ deviceType }) => (
 )
 
 export const getStaticProps = async context => {
-    const props = await pageApi('Device_type', context, {
+    const props = await api({
         deviceType: {
             __aliasFor: 'deviceTypeBySlug',
             __args: {

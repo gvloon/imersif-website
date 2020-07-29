@@ -1,5 +1,5 @@
-import { React, PropTypes, template, config, makeStyles } from 'common'
-import { Layout, Markdown, Menu, Footer } from 'components'
+import { React, PropTypes, config, makeStyles, inspect } from 'common'
+import { Layout, Menu, Footer, Image } from 'components'
 
 import { color, container, contentPadding } from 'jss/index'
 
@@ -9,8 +9,6 @@ const useStyles = makeStyles(theme => ({
         flex: 1,
         alignItems: 'center',
         marginTop: '50px',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
         color: color.white
     },
     container: {
@@ -28,29 +26,27 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const ParallaxPage = ({ context, page, components, strings }) => {
+const FullImagePage = ({ context, title, image, children }) => {
     const classes = useStyles()
-    const image = page.parallax_image ? config.publicApiUrl + page.parallax_image[0].url : null
     return (
-        <Layout title={template(page.title, strings)}>
+        <Layout title={title}>
             <Menu color="transparent" context={context} />
-            <div className={classes.root} style={{ backgroundImage: `url(${image})` }}>
+            <Image className={classes.root} image={image}>
                 <div className={classes.container}>
                     <div className={classes.content}>
-                        <Markdown source={page.parallax_content} components={components} strings={strings} />
+                        { children }
                     </div>
                 </div>
-            </div>
+            </Image>
             <Footer color="gray" />
         </Layout>
     )
 }
 
-ParallaxPage.propTypes = {
+FullImagePage.propTypes = {
     context: PropTypes.object,
-    page: PropTypes.object,
-    components: PropTypes.object,
-    strings: PropTypes.object
+    title: PropTypes.string,
+    image: PropTypes.object
 }
 
-export default ParallaxPage
+export default FullImagePage

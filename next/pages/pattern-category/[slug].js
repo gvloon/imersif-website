@@ -1,33 +1,93 @@
-import { React, api, pageApi, PagePropTypes } from 'common'
-import { PageRenderer } from 'components'
-import { PatternList } from 'components/patterns'
+import { React, api, withStyles } from 'common'
+import { BasicPage } from 'components/page'
+import { FilterList, PatternList } from 'components/patterns'
 
-export const Page = ({ page, context, data }) => {
-    const { name } = data.patternCategory
-    context = {
-        ...context,
-        section: 'patterns'
+const styles = theme => ({
+    patterns: {
+        marginTop: '0.5rem'
     }
-    const strings = {
-        Name: name
+})
+
+class Page extends React.PureComponent {
+    constructor(props) {
+        super(props)
+        this.state = {
+            selectedFilters: []
+        }
     }
-    const components = {
-        Patterns: () => <PatternList patterns={data.patternCategory.patterns} />
+
+    render = () => {
+        const { context, data, classes } = this.props
+        const { name } = data.patternCategory
+        const metaData = this.getMetaData()
+        const filteredPatterns = this.getFilteredPatterns(metaData.patterns)
+        return (
+            <BasicPage context={context} title={name}>
+                <h1>{name}</h1>
+                <FilterList values={metaData.filters} onChange={this.onFilterChange} />
+                <PatternList className={classes.patterns} patterns={filteredPatterns} />
+            </BasicPage>
+        )
     }
-    return <PageRenderer context={context} page={page} strings={strings} components={components} />
+
+    getMetaData = () => {
+        const filters = {}
+        const patterns = []
+        this.props.data.patternCategory.patterns.forEach(pattern => {
+            const item = {
+                pattern,
+                filters: {}
+            }
+            pattern.filters.forEach(filter => {
+                filters[filter.name] = true
+                item.filters[filter.name] = true
+            })
+            patterns.push(item)
+        })
+
+        return {
+            filters: Object.keys(filters),
+            patterns
+        }
+    }
+
+    getFilteredPatterns = (patternsInfo) => {
+        const result = []
+        patternsInfo.forEach(info => {
+            if (this.filtersMatches(info.filters)) {
+                result.push(info.pattern)
+            }
+        })
+        return result
+    }
+
+    filtersMatches = filterMap => {
+        if (this.state.selectedFilters.length === 0) {
+            return true
+        }
+        for (const filter of this.state.selectedFilters) {
+            if (filterMap.hasOwnProperty(filter)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    onFilterChange = (selected) => {
+        this.setState({ selectedFilters: selected })
+    }
 }
 
-Page.PropTypes = PagePropTypes
-
 export const getStaticProps = async context => {
-    const props = await pageApi('Pattern_Category', context, {
+    const data = await api({
         patternCategory: {
             __aliasFor: 'patternCategoryBySlug',
             __args: { slug: context.params.slug },
             name: true,
             patterns: {
                 title: true,
-                media: {
+                slug: true,
+                image: {
                     url: true
                 },
                 pros_and_cons: {
@@ -37,10 +97,20 @@ export const getStaticProps = async context => {
                     cons: {
                         text: true
                     }
+                },
+                filters: {
+                    name: true
                 }
             }
         }
     })
+    const props = {
+        data,
+        context: {
+            ...context,
+            section: 'patterns'
+        }
+    }
     return { props, unstable_revalidate: 1 }
 }
 
@@ -56,4 +126,4 @@ export const getStaticPaths = async () => {
     return { paths, fallback: false }
 }
 
-export default Page
+export default withStyles(styles)(Page)

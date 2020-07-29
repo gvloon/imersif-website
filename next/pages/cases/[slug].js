@@ -1,26 +1,20 @@
-import { React, api, pageApi, PagePropTypes } from 'common'
-import { Markdown, PageRenderer } from 'components'
+import { React, api } from 'common'
+import { Markdown } from 'components'
+import { BasicPage } from 'components/page'
 
-const Page = ({ page, context, data }) => {
+const Page = ({ context, data }) => {
     const { title, summary, description } = data.case
-    context = {
-        ...context,
-        section: 'cases'
-    }
-    const strings = {
-        Title: title
-    }
-    const components = {
-        Summary: () => <div>{summary}</div>,
-        Description: () => <Markdown source={description} strings={strings} />
-    }
-    return <PageRenderer context={context} page={page} strings={strings} components={components} />
+    return (
+        <BasicPage context={context} title={title}>
+            <h1>{title}</h1>
+            <div>{summary}</div>
+            <Markdown source={description} />
+        </BasicPage>
+    )
 }
 
-Page.propTypes = PagePropTypes
-
 export const getStaticProps = async context => {
-    const props = await pageApi('Case', context, {
+    const data = await api({
         case: {
             __aliasFor: 'caseBySlug',
             __args: { slug: context.params.slug },
@@ -29,6 +23,13 @@ export const getStaticProps = async context => {
             description: true
         }
     })
+    const props = {
+        data,
+        context: {
+            ...context,
+            section: 'cases'
+        }
+    }
     return { props, unstable_revalidate: 1 }
 }
 

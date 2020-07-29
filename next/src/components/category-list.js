@@ -1,16 +1,27 @@
 import { useTheme } from '@material-ui/core/styles'
 import { Grid, useMediaQuery } from '@material-ui/core'
-import { getStyle, paginate, React, PropTypes } from 'common'
+import { paginate, React, PropTypes, makeStyles, classNames } from 'common'
 
-const CategoryList = ({ categories, title, ...rest }) => {
+const useStyles = makeStyles(theme => ({
+    categoryList: {
+        marginTop: '1rem'
+    }
+}))
+
+const CategoryList = ({ categories, title, className }) => {
     if (!categories || !categories.length) {
         return null
     }
+    const classes = useStyles()
+    const rootClasses = classNames({
+        [className]: !!className,
+        [classes.categoryList]: true
+    })
     const theme = useTheme()
     const lg = useMediaQuery(theme.breakpoints.up('lg'))
     const md = useMediaQuery(theme.breakpoints.up('md'))
     return (
-        <div style={getStyle(rest)}>
+        <div className={rootClasses}>
             {
                 title &&
                 <h2>{title}</h2>

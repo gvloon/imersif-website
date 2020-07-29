@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/glossary-page",
+      "handler": "glossary-page.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/glossary-page",
+      "handler": "glossary-page.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/glossary-page",
+      "handler": "glossary-page.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

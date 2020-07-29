@@ -1,38 +1,41 @@
-import { React, PropTypes, template, makeStyles } from 'common'
+import { React, PropTypes, template, withStyles } from 'common'
 import ReactMarkdown from 'react-markdown'
 import breaks from 'remark-breaks'
 import JsxParser from 'react-jsx-parser'
 import Youtube from './media/youtube'
 import Vimeo from './media/vimeo'
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     paragraph: {
-        marginTop: '0.5rem',
-        marginBottom: '0.5rem'
+        marginTop: '1rem'
     }
-}))
+})
 
-const MarkDown = ({ source, strings, components }) => {
-    const classes = useStyles()
+class Markdown extends React.PureComponent {
+    static propTypes = {
+        source: PropTypes.string
+    }
 
-    source = template(source, strings)
-    components = {
-        React: (props) => <>{props.children}</>,
-        Youtube: (props) => <Youtube {...props} />,
-        Vimeo: (props) => <Vimeo {...props} />,
-        ...components
+    constructor(props)
+    {
+        super()
+        console.log('Markdown constructor')
     }
-    const renderers = {
-        html: (props) => <JsxParser jsx={props.value} components={components} allowUnknownElements={true} renderInWrapper={false} />,
-        paragraph: ({ children }) => <div className={classes.paragraph}>{children}</div>
+
+    render () {
+        console.log('render markdown')
+        let { source, classes } = this.props
+        const components = {
+            React: (props) => <>{props.children}</>,
+            Youtube: (props) => <Youtube {...props} />,
+            Vimeo: (props) => <Vimeo {...props} />
+        }
+        const renderers = {
+            html: (props) => <JsxParser jsx={props.value} components={components} allowUnknownElements={true} renderInWrapper={false} />,
+            paragraph: ({ children }) => <div className={classes.paragraph}>{children}</div>
+        }
+        return <ReactMarkdown plugins={[breaks]} renderers={renderers} source={source} />
     }
-    return <ReactMarkdown plugins={[breaks]} renderers={renderers} source={source} />
 }
 
-MarkDown.propTypes = {
-    source: PropTypes.string,
-    strings: PropTypes.object,
-    components: PropTypes.object
-}
-
-export default MarkDown
+export default withStyles(styles)(Markdown)

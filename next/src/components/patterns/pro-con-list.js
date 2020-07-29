@@ -1,8 +1,8 @@
-import { React, getStyle, makeStyles, PropTypes, classNames } from 'common'
+import { React, makeStyles, PropTypes, classNames } from 'common'
 import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons'
 import { color } from 'jss/index'
 
-const spacing = 0.5
+const spacing = 0
 
 const useStyles = makeStyles(theme => ({
     prosAndCons: {
@@ -19,18 +19,14 @@ const useStyles = makeStyles(theme => ({
     },
     label: {
         marginTop: spacing + 'rem',
-        marginBottom: '-' + spacing + 'rem',
-        fontWeight: 'bold',
-        fontSize: '0.8rem'
+        marginBottom: spacing + 'rem',
+        fontWeight: 'bold'
     },
     row: {
         marginTop: spacing + 'rem',
         marginBottom: spacing + 'rem',
         display: 'flex',
-        alignItems: 'center',
-        border: '1px solid #666666',
-        textTransform: 'uppercase',
-        fontSize: '0.8rem'
+        alignItems: 'center'
     },
     disabled: {
         color: color.gray[17]
@@ -38,23 +34,22 @@ const useStyles = makeStyles(theme => ({
     icon: {
         fontSize: '1rem',
         color: color.black,
-        marginLeft: '0.3rem',
         marginRight: '0.3rem'
     }
 }))
 
-const ProConList = ({ prosAndCons, className, ...rest }) => {
+const ProConList = ({ prosAndCons, className }) => {
     if (!prosAndCons) {
         return null
     }
     const { pros, cons } = prosAndCons
     const classes = useStyles()
-    const prosAndConsClasses = classNames({
+    const rootClasses = classNames({
         [className]: className,
         [classes.prosAndCons]: true
     })
     return (
-        <div className={prosAndConsClasses} {...rest}>
+        <div className={rootClasses}>
             <List label="Pro's" symbol="plus" items={pros} classes={classes} />
             <List label="Con's" symbol="minus" items={cons} classes={classes} />
         </div>

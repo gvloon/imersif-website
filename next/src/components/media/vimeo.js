@@ -13,21 +13,29 @@ const useStyles = makeStyles({
         left: 0,
         width: '100%',
         height: '100%'
+    },
+    caption: {
     }
 })
 
-const Vimeo = ({ id }) => {
+const Vimeo = ({ id, caption }) => {
     const classes = useStyles()
     return (
-        <div className={classes.root}>
-            <iframe
-                src={`https://player.vimeo.com/video/${id}`}
-                className={classes.player}
-                frameBorder='0'
-                webkitallowfullscreen="true"
-                mozallowfullscreen="true"
-                allowFullScreen={true} />
-        </div>
+        <>
+            <div className={classes.root}>
+                <iframe
+                    src={`https://player.vimeo.com/video/${id}`}
+                    className={classes.player}
+                    frameBorder='0'
+                    webkitallowfullscreen="true"
+                    mozallowfullscreen="true"
+                    allowFullScreen={true} />
+            </div>
+            {
+                caption &&
+                <div className={classes.caption}>{caption}</div>
+            }
+        </>
     )
 }
 

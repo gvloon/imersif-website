@@ -1,4 +1,4 @@
-import { React, PropTypes, getStyle, makeStyles } from 'common'
+import { React, PropTypes, makeStyles } from 'common'
 
 const useStyles = makeStyles({
     root: {
@@ -13,27 +13,36 @@ const useStyles = makeStyles({
         left: 0,
         width: '100%',
         height: '100%'
+    },
+    caption: {
+
     }
 })
 
 const Youtube = props => {
-    const { id } = props
-    const style = getStyle(props)
+    const { id, caption } = props
     const classes = useStyles()
     return (
-        <div className={classes.root} style={style}>
-            <iframe
-                src={`https://www.youtube.com/embed/${id}`}
-                className={classes.player}
-                frameBorder="0"
-                allowFullScreen>
-            </iframe>
-        </div>
+        <>
+            <div className={classes.root}>
+                <iframe
+                    src={`https://www.youtube.com/embed/${id}`}
+                    className={classes.player}
+                    frameBorder="0"
+                    allowFullScreen>
+                </iframe>
+            </div>
+            {
+                caption &&
+                <div className={classes.caption}>{caption}</div>
+            }
+        </>
     )
 }
 
 Youtube.propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
+    caption: PropTypes.string
 }
 
 export default Youtube

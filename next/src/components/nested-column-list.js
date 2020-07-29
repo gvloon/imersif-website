@@ -1,4 +1,4 @@
-import { getStyle, React, PropTypes, makeStyles } from 'common'
+import { React, PropTypes, classNames, makeStyles } from 'common'
 
 const verticalItemSpacing = 0.6
 const horizontalItemSpacing = 0.4
@@ -8,12 +8,15 @@ const titleHeight = 2.5
 const itemHeight = 1.5
 const subItemHeight = 1.4
 
-const List = ({ items, title, ...rest }) => {
+const List = ({ items, title, className }) => {
     if (!items || !items.length) {
         return null
     }
     const data = analyzeItems(items)
     const useStyles = makeStyles(theme => ({
+        root: {
+            marginTop: '1rem',
+        },
         list: {
             marginTop: '-' + verticalItemSpacing + 'rem',
             marginBottom: '-' + verticalItemSpacing + 'rem',
@@ -76,8 +79,12 @@ const List = ({ items, title, ...rest }) => {
         }
     }))
     const classes = useStyles()
+    const rootClasses = classNames({
+        [className]: !!className,
+        [classes.root]: true
+    })
     return (
-        <div style={getStyle(rest)}>
+        <div className={rootClasses}>
             {
                 title &&
                     <h2>{title}</h2>
@@ -167,14 +174,14 @@ const Item = ({ classes, item }) => {
                 <div className={classes.items}>
                     {
                         item.children.map((child, index) => (
-                            <>
-                                <div key={index} className={classes.item}>{child.value}</div>
+                            <React.Fragment key={index}>
+                                <div className={classes.item}>{child.value}</div>
                                 {
                                     child.children.map((subChild, index) => (
                                         <div key={index} className={classes.subItem}>{subChild.value}</div>
                                     ))
                                 }
-                            </>
+                            </React.Fragment>
                         ))
                     }
                 </div>

@@ -14,23 +14,6 @@ export const template = (string, data) => {
     })
 }
 
-export const getStyle = ({ top, bottom, left, right }) => {
-    const styles = {}
-    if (top) {
-        styles.marginTop = top + 'px'
-    }
-    if (bottom) {
-        styles.marginBottom = bottom + 'px'
-    }
-    if (left) {
-        styles.marginLeft = left + 'px'
-    }
-    if (right) {
-        styles.marginRight = right + ' px'
-    }
-    return styles
-}
-
 export const first = list => {
     if (!list || list.length === 0) {
         return {}
