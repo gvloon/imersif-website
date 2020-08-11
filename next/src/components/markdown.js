@@ -16,14 +16,7 @@ class Markdown extends React.PureComponent {
         source: PropTypes.string
     }
 
-    constructor(props)
-    {
-        super()
-        console.log('Markdown constructor')
-    }
-
     render () {
-        console.log('render markdown')
         let { source, classes } = this.props
         const components = {
             React: (props) => <>{props.children}</>,

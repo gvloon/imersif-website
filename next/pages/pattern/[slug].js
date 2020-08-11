@@ -10,15 +10,15 @@ const styles = theme => ({
     variantsMobile: {
         marginTop: '3rem',
         display: 'block',
-        [theme.breakpoints.up('xs')]: {
-            display: 'none'
-        }
+        // [theme.breakpoints.up('xs')]: {
+        //     display: 'none'
+        // }
     },
     variantsDesktop: {
         display: 'none',
-        [theme.breakpoints.up('xs')]: {
-            display: 'block'
-        }
+        // [theme.breakpoints.up('xs')]: {
+        //     display: 'block'
+        // }
     },
     containerDesktop: {
         marginTop: '6rem'
