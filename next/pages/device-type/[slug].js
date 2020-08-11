@@ -3,7 +3,7 @@ import { Link } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
-    const { name, devices } = data.page
+    const { name, devices } = data.deviceType
     return (
         <BasicPage context={context} title={name} >
             <h1>{name}</h1>
@@ -27,7 +27,7 @@ const DeviceList = ({ devices }) => (
 )
 
 export const getStaticProps = async context => {
-    const props = await api({
+    const data = await api({
         deviceType: {
             __aliasFor: 'deviceTypeBySlug',
             __args: {
@@ -40,6 +40,13 @@ export const getStaticProps = async context => {
             }
         }
     })
+    const props = {
+        data,
+        context: {
+            ...context,
+            section: 'hardware'
+        }
+    }
     return { props, unstable_revalidate: 1 }
 }
 

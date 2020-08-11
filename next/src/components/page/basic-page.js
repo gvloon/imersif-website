@@ -17,15 +17,15 @@ const useStyles = makeStyles(theme => ({
         contentPadding(theme),
         {
             backgroundColor: color.white,
-            paddingTop: '0.7rem',
+            paddingTop: '1rem',
             paddingBottom: '4rem',
             display: 'flex',
             flexDirection: 'column',
             [theme.breakpoints.up('xs')]: {
-                paddingTop: '1.1rem'
+                paddingTop: '1.3rem'
             },
             [theme.breakpoints.up('sm')]: {
-                paddingTop: '1.5rem'
+                paddingTop: '1.6rem'
             },
             [theme.breakpoints.up('md')]: {
                 paddingTop: '1.9rem'

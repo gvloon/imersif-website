@@ -1,4 +1,4 @@
-import { React, makeStyles, PropTypes, config, classNames } from 'common'
+import { React, makeStyles, PropTypes, classNames } from 'common'
 import { Button, Link, Image } from 'components'
 import ProConList from './pro-con-list'
 
@@ -12,25 +12,25 @@ const useStyles = makeStyles(theme => ({
         marginTop: '-' + marginPattern + 'rem',
         marginBottom: '-' + marginPattern + 'rem'
     },
-    pattern: {
+    patternMobile: {
         marginTop: marginPattern + 'rem',
         marginBottom: marginPattern + 'rem',
+        backgroundColor: '#fafafa',
         padding: '0.5rem',
-        border: '1px solid #eeeeee',
-        boxShadow: '0 2px 12px 0 rgba(0,0,0,0.075)',
-        borderRadius: '5px',
+        border: '1px solid #e9e9e9',
+        borderRadius: '3px',
         display: 'flex',
         flexDirection: 'column',
         [theme.breakpoints.up('xs')]: {
             display: 'none'
-        },
+        }
     },
-    patternLarge: {
+    patternDesktop: {
         marginTop: marginPattern + 'rem',
         marginBottom: marginPattern + 'rem',
-        border: '1px solid #eeeeee',
-        boxShadow: '0 2px 12px 0 rgba(0,0,0,0.075)',
-        borderRadius: '5px',
+        backgroundColor: '#fafafa',
+        border: '1px solid #e9e9e9',
+        borderRadius: '3px',
         flexDirection: 'row',
         alignItems: 'flex-start',
         padding: '0.5rem',
@@ -82,24 +82,24 @@ const PatternList = ({ patterns, filters, className, ...rest }) => {
                 {
                     patterns.map((pattern, index) => (
                         <React.Fragment key={index}>
-                            <div className={classes.pattern}>
+                            <div className={classes.patternMobile}>
                                 <div className={classes.top}>
                                     <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
                                         <Image className={classes.image} image={pattern.image} />
                                     </Link>
                                     <div className={classes.right}>
-                                        <div className={classes.title}>{pattern.title}</div>
+                                        <h3>{pattern.title}</h3>
                                     </div>
                                 </div>
                                 <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
                                 <Button className={classes.seeMore} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>See more</Button>
                             </div>
-                            <div className={classes.patternLarge}>
-                                <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`} passHref>
+                            <div className={classes.patternDesktop}>
+                                <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
                                     <Image className={classes.image} image={pattern.image} />
                                 </Link>
                                 <div className={classes.right}>
-                                    <div className={classes.title}>{pattern.title}</div>
+                                    <h4>{pattern.title}</h4>
                                     <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
                                     <Button className={classes.seeMore} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>See more</Button>
                                 </div>

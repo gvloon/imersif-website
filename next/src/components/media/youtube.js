@@ -15,7 +15,8 @@ const useStyles = makeStyles({
         height: '100%'
     },
     caption: {
-
+        fontStyle: 'italic',
+        fontSize: '0.9rem'
     }
 })
 

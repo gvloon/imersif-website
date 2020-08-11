@@ -41,7 +41,10 @@ Router.events.on('routeChangeError', () => {
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#000'
+            main: '#1976d2'
+        },
+        secondary: {
+            main: '#3eb489'
         }
     },
     breakpoints: {

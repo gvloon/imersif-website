@@ -7,7 +7,7 @@ class Slug {
       lower: true,
       strict: true
     }
-    this.regex = /[.]/g
+    this.regex = /[^\w]/g
   }
 
   beforeSave(model, name) {

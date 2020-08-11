@@ -34,19 +34,19 @@ const SolutionBlock = ({ solution, image, className }) => {
             <Image className={classes.image} image={image} />
             {
                 solution.what &&
-                <><span className={classes.label}>What: </span>{solution.what}<br /></>
+                <p className={className.paragraph}><span className={classes.label}>What: </span>{solution.what}</p>
             }
             {
                 solution.why &&
-                <><span className={classes.label}>Why: </span>{solution.why}<br /></>
+                <p className={className.paragraph}><span className={classes.label}>Why: </span>{solution.why}</p>
             }
             {
                 solution.how &&
-                <><span className={classes.label}>How: </span>{solution.how}<br /></>
+                <p className={className.paragraph}><span className={classes.label}>How: </span>{solution.how}</p>
             }
             {
                 solution.when &&
-                <><span className={classes.label}>When: </span>{solution.when}<br /></>
+                <p className={className.paragraph}><span className={classes.label}>When: </span>{solution.when}{solution.when}{solution.when}</p>
             }
         </div>
     )

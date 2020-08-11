@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     label: {
         marginTop: spacing + 'rem',
         marginBottom: spacing + 'rem',
-        fontWeight: 'bold'
+        fontWeight: 500
     },
     row: {
         marginTop: spacing + 'rem',

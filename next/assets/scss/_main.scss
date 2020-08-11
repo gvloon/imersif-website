@@ -10,7 +10,7 @@ html {
   @include xs {
     font-size: 15px;
   }
-  @include md {
+  @include sm {
     font-size: 16px;
   }
   -webkit-text-size-adjust: 100%;
@@ -41,7 +41,7 @@ h5,
 h6 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-weight: 300;
-  line-height: 1.5em;
+  line-height: 1.25em;
 }
 h1,
 h2,
@@ -50,53 +50,60 @@ h4,
 h5,
 h6 {
   color: inherit;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  font-weight: 400;
 }
 h1 {
-  font-size: 1.5rem;
-  font-weight: 500;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
+  font-size: 34px;
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
   @include xs {
-    font-size: 1.75rem;
+    font-size: 40px;
   }
   @include sm {
-    font-size: 2rem;
+    font-size: 48px;
   }
 }
+
 h2 {
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
+  font-size: 24px;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
   @include xs {
-    font-size: 1.375rem;
+    font-size: 28px;
   }
   @include sm {
-    font-size: 1.5rem;
+    font-size: 32px;
   }
 }
 h3 {
-  font-size: 1rem;
-  font-weight: 500;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
+  font-size: 18px;
   @include xs {
-    font-size: 1rem;
+    font-size: 20px;
   }
   @include sm {
-    font-size: 1rem;
+    font-size: 22px;
   }
 }
 
-h4, h5, h6 {
+
+h4 {
+  font-size: 15px;
+  @include xs {
+    font-size: 17px;
+  }
+  @include sm {
+    font-size: 18px;
+  }
+}
+
+h5, h6 {
   font-size: 1rem;
-  margin-top: 0rem;
-  margin-bottom: 0rem;
 }
 
 p {
-  font-size: 14px;
-  margin: 0 0 10px;
+  margin: 0 0 0.5rem;
 }
 b,
 strong {

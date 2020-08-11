@@ -8,12 +8,8 @@ export const container = theme => ({
 })
 
 export const contentPadding = theme => ({
-    paddingLeft: '1rem',
-    paddingRight: '1rem',
-    [theme.breakpoints.up('xs')]: {
-        paddingLeft: '1.5rem',
-        paddingRight: '1.5rem'
-    },
+    paddingLeft: '1.5rem',
+    paddingRight: '1.5rem',
     [theme.breakpoints.up('sm')]: {
         paddingLeft: '2rem',
         paddingRight: '2rem'

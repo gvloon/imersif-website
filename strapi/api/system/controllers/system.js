@@ -17,6 +17,7 @@ module.exports = {
     await slug.updateAll('Device', 'title')
     await slug.updateAll('Pattern', 'title')
     await slug.updateAll('PatternCategory', 'name')
+    await slug.updateAll('PatternVariant', 'title')
     await slug.updateAll('Tool', 'title')
     await slug.updateAll('DeviceType', 'name')
   },

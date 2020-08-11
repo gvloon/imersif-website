@@ -32,6 +32,9 @@
     },
     "additions": {
       "collection": "pattern-example"
+    },
+    "slug": {
+      "type": "string"
     }
   }
 }

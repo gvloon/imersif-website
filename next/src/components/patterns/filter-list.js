@@ -1,5 +1,6 @@
 import { React, withStyles, PropTypes, classNames } from 'common'
-import { Checkbox, FormGroup, FormControlLabel } from '@material-ui/core'
+import { Checkbox } from 'components'
+import { FormGroup, FormControlLabel } from '@material-ui/core'
 
 const styles = theme => ({
     filters: {

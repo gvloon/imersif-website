@@ -1,4 +1,4 @@
-import { React, api, withStyles } from 'common'
+import { React, api, withStyles, createSelector } from 'common'
 import { BasicPage } from 'components/page'
 import { FilterList, PatternList } from 'components/patterns'
 
@@ -19,64 +19,66 @@ class Page extends React.PureComponent {
     render = () => {
         const { context, data, classes } = this.props
         const { name } = data.patternCategory
-        const metaData = this.getMetaData()
-        const filteredPatterns = this.getFilteredPatterns(metaData.patterns)
+        const filters = getAvailableFilters(this.state, this.props)
+        const patterns = getFilteredPatterns(this.state, this.props)
         return (
             <BasicPage context={context} title={name}>
                 <h1>{name}</h1>
-                <FilterList values={metaData.filters} onChange={this.onFilterChange} />
-                <PatternList className={classes.patterns} patterns={filteredPatterns} />
+                <FilterList values={filters} onChange={this.onFilterChange} />
+                <PatternList className={classes.patterns} patterns={patterns} />
             </BasicPage>
         )
     }
 
-    getMetaData = () => {
-        const filters = {}
-        const patterns = []
-        this.props.data.patternCategory.patterns.forEach(pattern => {
-            const item = {
-                pattern,
-                filters: {}
-            }
-            pattern.filters.forEach(filter => {
-                filters[filter.name] = true
-                item.filters[filter.name] = true
-            })
-            patterns.push(item)
-        })
-
-        return {
-            filters: Object.keys(filters),
-            patterns
-        }
-    }
-
-    getFilteredPatterns = (patternsInfo) => {
-        const result = []
-        patternsInfo.forEach(info => {
-            if (this.filtersMatches(info.filters)) {
-                result.push(info.pattern)
-            }
-        })
-        return result
-    }
-
-    filtersMatches = filterMap => {
-        if (this.state.selectedFilters.length === 0) {
-            return true
-        }
-        for (const filter of this.state.selectedFilters) {
-            if (filterMap.hasOwnProperty(filter)) {
-                return true
-            }
-        }
-        return false
-    }
-
-    onFilterChange = (selected) => {
+    onFilterChange = selected => {
         this.setState({ selectedFilters: selected })
     }
 }
+
+const getAvailableFilters = createSelector(
+    (state, props) => props.data.patternCategory.patterns,
+    patterns => {
+        const map = {}
+        patterns.forEach(pattern => {
+            pattern.filters.forEach(filter => {
+                map[filter.name] = true
+            })
+        })
+        return Object.keys(map)
+    }
+)
+
+const getPatterns = createSelector(
+    (state, props) => props.data.patternCategory.patterns,
+    patterns => {
+        return patterns.map(pattern => {
+            const item = Object.assign({}, pattern)
+            item.filterMap = {}
+            pattern.filters.forEach(filter => {
+                item.filterMap[filter.name] = true
+            })
+            return item
+        })
+    }
+)
+
+const getFilteredPatterns = createSelector(
+    getPatterns,
+    (state, props) => state.selectedFilters,
+    (patterns, filters) => {
+        return patterns.filter(pattern => {
+            if (filters.length === 0) {
+                return true
+            }
+            for (const filter of filters) {
+                if (pattern.filterMap.hasOwnProperty(filter)) {
+                    return true
+                }
+            }
+            return false
+        })
+    }
+)
 
 export const getStaticProps = async context => {
     const data = await api({

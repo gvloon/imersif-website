@@ -16,24 +16,20 @@ export const Page = ({ context, data }) => {
 const CategoryList = ({ categories }) => {
     const items = categories.map(category => ({
         value: category.name,
-        children: category.children.map((category, index) => {
-            return {
+        children: category.children.map((category, index) => ({
+            value: (
+                <Link key={index} href="/pattern-category/[slug]" as={`/pattern-category/${category.slug}`}>
+                    <a>{category.name}</a>
+                </Link>
+            ),
+            children: category.children.map((category, index) => ({
                 value: (
                     <Link key={index} href="/pattern-category/[slug]" as={`/pattern-category/${category.slug}`}>
                         <a>{category.name}</a>
                     </Link>
-                ),
-                children: category.children.map((category, index) => (
-                    {
-                        value: (
-                            <Link key={index} href="/pattern-category/[slug]" as={`/pattern-category/${category.slug}`}>
-                                <a>{category.name}</a>
-                            </Link>
-                        )
-                    }
-                ))
-            }
-        })
+                )
+            }))
+        }))
     }))
     return <NestedColumnList items={items} />
 }

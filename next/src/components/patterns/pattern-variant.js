@@ -1,119 +1,145 @@
-import { React, makeStyles, PropTypes, config, classNames } from 'common'
-import { Button, Link, Image } from 'components'
-import ProConList from './pro-con-list'
-
-const marginPattern = 1
+import { React, makeStyles, PropTypes, classNames, _ } from 'common'
+import { Image, Markdown } from 'components'
 
 const useStyles = makeStyles(theme => ({
-    patterns: {
-        marginTop: '1rem'
+    variant: {
+        paddingTop: '0.5rem',
+        width: '100%'
     },
-    container: {
-        marginTop: '-' + marginPattern + 'rem',
-        marginBottom: '-' + marginPattern + 'rem'
+    interaction: {
+
     },
-    pattern: {
-        marginTop: marginPattern + 'rem',
-        marginBottom: marginPattern + 'rem',
-        padding: '0.5rem',
-        border: '1px solid #eeeeee',
-        boxShadow: '0 2px 12px 0 rgba(0,0,0,0.075)',
-        borderRadius: '5px',
+    interactionPair: {
         display: 'flex',
+        marginLeft: '-1rem',
+        marginRight: '-1rem',
         flexDirection: 'column',
         [theme.breakpoints.up('xs')]: {
-            display: 'none'
-        },
-    },
-    patternLarge: {
-        marginTop: marginPattern + 'rem',
-        marginBottom: marginPattern + 'rem',
-        border: '1px solid #eeeeee',
-        boxShadow: '0 2px 12px 0 rgba(0,0,0,0.075)',
-        borderRadius: '5px',
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        padding: '0.5rem',
-        display: 'none',
-        [theme.breakpoints.up('xs')]: {
-            display: 'flex'
+            flexDirection: 'row'
         }
     },
-    right: {
+    steps: {
+        marginTop: '0.5rem'
+    },
+    interactionStep: {
+        width: '100%',
         paddingLeft: '1rem',
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignSelf: 'stretch'
+        paddingRight: '1rem',
+        marginBottom: '1rem',
+        [theme.breakpoints.up('xs')]: {
+            width: '50%'
+        }
     },
-    top: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'flex-start'
+    interactionImage: {
+        width: '100%',
+        paddingTop: '66%'
     },
-    image: {
-        width: '25%',
-        paddingTop: '20%'
+    examples: {
+        marginTop: '3rem'
     },
-    prosAndCons: {
-        marginTop: '0.5rem',
-        flex: 1
+    annotations: {
+        marginTop: '0.5rem'
     },
-    title: {
-        fontWeight: 'bold'
-    },
-    seeMore: {
-        marginLeft: 'auto'
+    annotationIndex: {
+        fontWeight: 400,
+        color: theme.palette.secondary.main
     }
 }))
 
-const PatternList = ({ patterns, filters, className, ...rest }) => {
-    if (!patterns) {
+const PatternVariant = ({ variant, className }) => {
+    if (!variant) {
         return null
     }
+    const { interaction, examples, additions } = variant
     const classes = useStyles()
     const rootClasses = classNames({
         [className]: !!className,
-        [classes.patterns]: true
+        [classes.variant]: true
     })
     return (
         <div className={rootClasses}>
-            <div className={classes.container}>
-                {
-                    patterns.map((pattern, index) => (
-                        <React.Fragment key={index}>
-                            <div className={classes.pattern}>
-                                <div className={classes.top}>
-                                    <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
-                                        <Image className={classes.image} image={pattern.image} />
-                                    </Link>
-                                    <div className={classes.right}>
-                                        <div className={classes.title}>{pattern.title}</div>
-                                    </div>
-                                </div>
-                                <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
-                                <Button className={classes.seeMore} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>See more</Button>
-                            </div>
-                            <div className={classes.patternLarge}>
-                                <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`} passHref>
-                                    <Image className={classes.image} image={pattern.image} />
-                                </Link>
-                                <div className={classes.right}>
-                                    <div className={classes.title}>{pattern.title}</div>
-                                    <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
-                                    <Button className={classes.seeMore} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>See more</Button>
-                                </div>
-                            </div>
-                        </React.Fragment>
-                    ))
-                }
-            </div>
+            <h3>How this pattern works</h3>
+            <InteractionSteps interaction={interaction} classes={classes} />
+            <Examples examples={examples} classes={classes} />
+            <Additions additions={additions} classes={classes} />
         </div>
     )
 }
 
-PatternList.propTypes = {
-    patterns: PropTypes.array
+const InteractionSteps = ({ interaction, classes }) => {
+    return (
+        <div className={classes.steps}>
+            {
+                _.chunk(interaction, 2).map((chunk, index) => (
+                    <div key={index} className={classes.interactionPair}>
+                        {
+                            chunk.map((step, index) => (
+                                <div key={index} className={classes.interactionStep}>
+                                    <Image className={classes.interactionImage} image={step.image} />
+                                    <Annotations annotations={step.annotations} classes={classes} />
+                                </div>
+                            ))
+                        }
+                    </div>
+                ))
+            }
+        </div>
+    )
 }
 
-export default PatternList
+const Annotations = ({ annotations, classes }) => {
+    return (
+        <div className={classes.annotations}>
+            {
+                annotations.map((annotation, index) => (
+                    <div key={index}><span className={classes.annotationIndex}>{annotation.index + ') '}</span>{annotation.text}</div>
+                ))
+            }
+        </div>
+    )
+}
+
+const Examples = ({ examples, classes }) => {
+    if (!examples || examples.length === 0) {
+        return null
+    }
+
+    return (
+        <div className={classes.examples}>
+            <h3>{ examples.length === 1 ? 'Examples' : 'Example' }</h3>
+            {
+                examples.map((example, index) => <Example key={index} example={example} classes={classes} />)
+            }
+        </div>
+    )
+}
+
+const Additions = ({ additions, classes }) => {
+    if (!additions || additions.length === 0) {
+        return null
+    }
+
+    return (
+        <>
+            <h2>{ additions.length === 1 ? 'Additions' : 'Addition' }</h2>
+            {
+                additions.map((addition, index) => <Example key={index} example={addition} classes={classes} />)
+            }
+        </>
+    )
+}
+
+const Example = ({ example, classes }) => {
+    return (
+        <div className={classes.example}>
+            <h4>{example.title}</h4>
+            <Markdown source={example.content} />
+        </div>
+    )
+}
+
+PatternVariant.propTypes = {
+    variant: PropTypes.object
+}
+
+export default PatternVariant

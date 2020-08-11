@@ -5,8 +5,8 @@ const horizontalItemSpacing = 0.4
 const verticalSubItemsPadding = 0.4
 const horizontalItemPadding = 0.8
 const titleHeight = 2.5
-const itemHeight = 1.5
-const subItemHeight = 1.4
+const itemHeight = 1.8
+const subItemHeight = 1.8
 
 const List = ({ items, title, className }) => {
     if (!items || !items.length) {
@@ -15,7 +15,7 @@ const List = ({ items, title, className }) => {
     const data = analyzeItems(items)
     const useStyles = makeStyles(theme => ({
         root: {
-            marginTop: '1rem',
+            marginTop: '1rem'
         },
         list: {
             marginTop: '-' + verticalItemSpacing + 'rem',
@@ -25,6 +25,7 @@ const List = ({ items, title, className }) => {
             display: 'flex',
             flexDirection: 'column',
             flexWrap: 'wrap',
+            justifyContent: 'flex-start',
             [theme.breakpoints.up('xs')]: {
                 height: getMinimalHeight(data, 2) + 'rem'
             },
@@ -50,10 +51,10 @@ const List = ({ items, title, className }) => {
             height: titleHeight + 'rem',
             paddingLeft: horizontalItemPadding + 'rem',
             paddingRight: horizontalItemPadding + 'rem',
-            fontSize: '0.95rem',
             backgroundColor: 'black',
             color: 'white',
             display: 'flex',
+            fontWeight: '400',
             alignItems: 'center'
         },
         items: {
@@ -63,7 +64,6 @@ const List = ({ items, title, className }) => {
         },
         item: {
             height: itemHeight + 'rem',
-            fontSize: '0.95rem',
             paddingLeft: horizontalItemPadding + 'rem',
             paddingRight: horizontalItemPadding + 'rem',
             display: 'flex',
@@ -71,7 +71,6 @@ const List = ({ items, title, className }) => {
         },
         subItem: {
             height: subItemHeight + 'rem',
-            fontSize: '0.90rem',
             paddingLeft: (2 * horizontalItemPadding) + 'rem',
             paddingRight: horizontalItemPadding + 'rem',
             display: 'flex',
@@ -156,7 +155,9 @@ const isValidHeight = (items, columnCount, height) => {
 const getHeightForItem = (item) => {
     let height = 2 * verticalSubItemsPadding + item.children.length * itemHeight + titleHeight
     item.children.forEach(child => {
-        height += child.children.length * subItemHeight
+        if (child.children) {
+            height += child.children.length * subItemHeight
+        }
     })
     return height
 }
@@ -177,9 +178,9 @@ const Item = ({ classes, item }) => {
                             <React.Fragment key={index}>
                                 <div className={classes.item}>{child.value}</div>
                                 {
-                                    child.children.map((subChild, index) => (
+                                    child.children ? child.children.map((subChild, index) => (
                                         <div key={index} className={classes.subItem}>{subChild.value}</div>
-                                    ))
+                                    )) : []
                                 }
                             </React.Fragment>
                         ))
