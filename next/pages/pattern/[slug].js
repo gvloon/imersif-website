@@ -146,7 +146,7 @@ export const getStaticProps = async context => {
             section: 'patterns'
         }
     }
-    return { props, unstable_revalidate: 1 }
+    return { props, revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
