@@ -1,12 +1,30 @@
 import { React, api } from 'common'
-import { Markdown } from 'components'
+import { Markdown, Breadcrumb } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
-    const { title, summary, description } = data.case
+    const { slug, title, summary, description, categories } = data.case
+
+    const category = categories[0]
+    const breadcrumb = [
+        {
+            name: 'Cases',
+            href: '/cases'
+        },
+        {
+            name: category.title,
+            href: '/case-category/[slug]/[index]',
+            as: `/case-category/${category.slug}/0`
+        },
+        {
+            name: title,
+            href: '/cases/[slug]',
+            as: `/cases/${slug}`
+        }
+    ]
+
     return (
-        <BasicPage context={context} title={title}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
             <div>{summary}</div>
             <Markdown source={description} />
         </BasicPage>
@@ -18,9 +36,14 @@ export const getStaticProps = async context => {
         case: {
             __aliasFor: 'caseBySlug',
             __args: { slug: context.params.slug },
+            slug: true,
             title: true,
             summary: true,
-            description: true
+            description: true,
+            categories: {
+                title: true,
+                slug: true
+            }
         }
     })
     const props = {

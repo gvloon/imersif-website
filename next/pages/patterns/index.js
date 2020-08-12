@@ -1,12 +1,18 @@
 import { React, api } from 'common'
-import { NestedColumnList, Markdown, Link } from 'components'
+import { NestedColumnList, Markdown, Link, Breadcrumb } from 'components'
 import { BasicPage } from 'components/page'
 
 export const Page = ({ context, data }) => {
     const { title, image, introduction } = data.page
+
+    const breadcrumb = [
+        {
+            name: 'Patterns',
+            href: '/patterns'
+        }
+    ]
     return (
-        <BasicPage context={context} title={title} image={image}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
             <Markdown source={introduction} />
             <CategoryList categories={data.categories} />
         </BasicPage>

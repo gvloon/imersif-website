@@ -3,11 +3,26 @@ import { Markdown, Specifications } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
-    const { title, description } = data.device
+    const { slug, title, description, device_type } = data.device
 
+    const breadcrumb = [
+        {
+            name: 'Hardware',
+            href: '/hardware'
+        },
+        {
+            name: device_type.name,
+            href: '/device-type/[slug]',
+            as: `/device-type/${device_type.slug}`
+        },
+        {
+            name: title,
+            href: '/device/[slug]',
+            as: `/device/${slug}`
+        }
+    ]
     return (
-        <BasicPage context={context} title={title}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
             <SpecificationList device={data.device} />
             <Markdown source={description} />
         </BasicPage>
@@ -34,9 +49,11 @@ export const getStaticProps = async context => {
         device: {
             __aliasFor: 'deviceBySlug',
             __args: { slug: context.params.slug },
+            slug: true,
             title: true,
             description: true,
             device_type: {
+                slug: true,
                 name: true
             },
             device_screen: {

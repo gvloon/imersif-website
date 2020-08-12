@@ -1,5 +1,5 @@
 import { React, api, withStyles, createSelector } from 'common'
-import { Markdown, Accordion, Toc } from 'components'
+import { Markdown, Accordion, Breadcrumb } from 'components'
 import { BasicPage } from 'components/page'
 import { SolutionBlock, PatternVariant } from 'components/patterns'
 
@@ -7,26 +7,11 @@ const styles = theme => ({
     solution: {
         marginTop: '1rem'
     },
-    variantsMobile: {
+    variants: {
         marginTop: '3rem',
         display: 'block',
-        // [theme.breakpoints.up('xs')]: {
-        //     display: 'none'
-        // }
     },
-    variantsDesktop: {
-        display: 'none',
-        // [theme.breakpoints.up('xs')]: {
-        //     display: 'block'
-        // }
-    },
-    containerDesktop: {
-        marginTop: '6rem'
-    },
-    variantDesktop: {
-        marginTop: '1rem'
-    },
-    variantMobile: {
+    variant: {
         marginBottom: '4rem'
     },
     toc: {
@@ -37,16 +22,31 @@ const styles = theme => ({
 class Page extends React.Component {
     render () {
         const { context, data, classes } = this.props
-        const { title, solution, image } = data.pattern
+        const { slug, title, solution, image, category } = data.pattern
 
+        const breadcrumb = [
+            {
+                name: 'Patterns',
+                href: '/patterns'
+            },
+            {
+                name: category.name,
+                href: '/pattern-category/[slug]',
+                as: `/pattern-category/${category.slug}`
+            },
+            {
+                name: title,
+                href: '/pattern/[slug]',
+                as: `/pattern/${slug}`
+            }
+        ]
         const variants = getVariants(this.state, this.props)
 
         return (
-            <BasicPage context={context} title={title}>
-                <h1>{title}</h1>
+            <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
                 <Markdown />
                 <SolutionBlock className={classes.solution} solution={solution} image={image} />
-                <div className={classes.variantsMobile}>
+                <div className={classes.variants}>
                     <Accordion>
                         {
                             variants.map((variant, index) => (
@@ -55,36 +55,22 @@ class Page extends React.Component {
                                         <h2>{variant.title}</h2>
                                     </Accordion.Summary>
                                     <Accordion.Details>
-                                        <PatternVariant key={index} className={classes.variantMobile} variant={variant} />
+                                        <PatternVariant key={index} className={classes.variant} variant={variant} />
                                     </Accordion.Details>
                                 </Accordion.Item>
                             ))
                         }
                     </Accordion>
                 </div>
-                <div className={classes.variantsDesktop}>
-                    <Toc className={classes.toc} title="Pattern variants">
-                        {
-                            variants.map((variant, index) => (
-                                <Toc.Item key={index} href={'#' + variant.slug}>{variant.title}</Toc.Item>
-                            ))
-                        }
-                    </Toc>
-                    {
-                        variants.map((variant, index) => (
-                            <>
-                                <a id={variant.slug} />
-                                <div key={index} className={classes.containerDesktop}>
-                                    <h2>{variant.title}</h2>
-                                    <PatternVariant key={index} className={classes.variantDesktop} variant={variant} />
-                                </div>
-                            </>
-                        ))
-                    }
-                </div>
             </BasicPage>
         )
     }
+}
+
+const PageBreadcrumb = ({ pattern }) => {
+    return (
+        <Breadcrumb links={links} />
+    )
 }
 
 const getVariants = createSelector(
@@ -116,6 +102,10 @@ export const getStaticProps = async context => {
             },
             image: {
                 url: true
+            },
+            category: {
+                name: true,
+                slug: true
             },
             variants: {
                 title: true,

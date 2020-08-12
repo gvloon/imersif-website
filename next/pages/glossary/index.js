@@ -5,9 +5,15 @@ import { Glossary } from 'components/glossary'
 
 export const Page = ({ context, data }) => {
     const { title, image, introduction } = data.page
+
+    const breadcrumb = [
+        {
+            name: 'Glossary',
+            href: '/glossary'
+        }
+    ]
     return (
-        <BasicPage context={context} title={title} image={image}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
             <Markdown source={introduction} />
             <Glossary items={data.items} />
         </BasicPage>

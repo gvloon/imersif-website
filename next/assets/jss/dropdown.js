@@ -1,6 +1,6 @@
 import { color, defaultFont } from 'jss/index'
 
-export default theme => ({
+const styles = theme => ({
     popperClose: {
         pointerEvents: 'none',
         display: 'none !important'
@@ -127,3 +127,5 @@ export default theme => ({
         }
     }
 })
+
+export default styles

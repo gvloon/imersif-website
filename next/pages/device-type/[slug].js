@@ -3,10 +3,21 @@ import { Link } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
-    const { name, devices } = data.deviceType
+    const { slug, name, devices } = data.deviceType
+
+    const breadcrumb = [
+        {
+            name: 'Hardware',
+            href: '/hardware'
+        },
+        {
+            name: name,
+            href: '/device-type/[slug]',
+            as: `/device-type/${slug}`
+        }
+    ]
     return (
-        <BasicPage context={context} title={name} >
-            <h1>{name}</h1>
+        <BasicPage context={context} title={name} breadcrumb={breadcrumb}>
             <DeviceList devices={devices} />
         </BasicPage>
     )
@@ -34,6 +45,7 @@ export const getStaticProps = async context => {
                 slug: context.params.slug
             },
             name: true,
+            slug: true,
             devices: {
                 slug: true,
                 title: true

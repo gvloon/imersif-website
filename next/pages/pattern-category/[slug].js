@@ -1,4 +1,5 @@
 import { React, api, withStyles, createSelector } from 'common'
+import { Breadcrumb } from 'components'
 import { BasicPage } from 'components/page'
 import { FilterList, PatternList } from 'components/patterns'
 
@@ -18,12 +19,23 @@ class Page extends React.PureComponent {
 
     render = () => {
         const { context, data, classes } = this.props
-        const { name } = data.patternCategory
+        const { slug, name } = data.patternCategory
+
+        const breadcrumb = [
+            {
+                name: 'Patterns',
+                href: '/patterns'
+            },
+            {
+                name: name,
+                href: '/pattern-category/[slug]',
+                as: `/pattern-category/${slug}`
+            }
+        ]
         const filters = getAvailableFilters(this.state, this.props)
         const patterns = getFilteredPatterns(this.state, this.props)
         return (
-            <BasicPage context={context} title={name}>
-                <h1>{name}</h1>
+            <BasicPage context={context} title={name} breadcrumb={breadcrumb}>
                 <FilterList values={filters} onChange={this.onFilterChange} />
                 <PatternList className={classes.patterns} patterns={patterns} />
             </BasicPage>

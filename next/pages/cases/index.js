@@ -1,26 +1,36 @@
-import { React, api } from 'common'
-import { CategoryList, Markdown, Link } from 'components'
+import { React, api, inspect } from 'common'
+import { Markdown, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
     const { title, image, introduction } = data.page
 
+    const breadcrumb = [
+        {
+            name: 'Cases',
+            href: '/cases'
+        }
+    ]
     return (
-        <BasicPage context={context} title={title} image={image}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
             <Markdown source={introduction} />
-            <Categories categories={data.categories} />
+            <CategoryList categories={data.categories} />
         </BasicPage>
     )
 }
 
-const Categories = ({ categories }) => {
-    const items = categories.map((category, index) =>
-        <Link key={index} href="/case-categories/[slug]/[index]" as={`/case-categories/${category.slug}/0`}>
-            <a>{category.title}</a>
-        </Link>
-    )
-    return <CategoryList categories={items} />
+const CategoryList = ({ categories }) => {
+    const items = categories.map((category, index) => ({
+        value: category.title,
+        children: category.children.map((child, index) => ({
+            value: (
+                <Link key={index} href="/case-category/[slug]/[index]" as={`/case-category/${child.slug}/0`}>
+                    <a>{child.title}</a>
+                </Link>
+            )
+        }))
+    }))
+    return <NestedColumnList items={items} />
 }
 
 export const getStaticProps = async context => {
@@ -42,7 +52,11 @@ export const getStaticProps = async context => {
                 }
             },
             slug: true,
-            title: true
+            title: true,
+            children: {
+                title: true,
+                slug: true
+            }
         }
     })
     const props = {

@@ -4,9 +4,15 @@ import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
     const { title, image, introduction } = data.page
+
+    const breadcrumb = [
+        {
+            name: 'Hardware',
+            href: '/hardware'
+        }
+    ]
     return (
-        <BasicPage context={context} title={title} image={image}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
             <Markdown source={introduction} />
             <CategoryList deviceTypes={data.deviceTypes} peripheralTypes={data.peripheralTypes} />
         </BasicPage>

@@ -3,10 +3,21 @@ import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
-    const { title, description } = data.tool
+    const { slug, title, description } = data.tool
+
+    const breadcrumb = [
+        {
+            name: 'Software',
+            href: '/software'
+        },
+        {
+            name: title,
+            href: '/software/[slug]',
+            as: `/software/${slug}`
+        }
+    ]
     return (
-        <BasicPage context={context} title={title}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
             <Markdown source={description} />
         </BasicPage>
     )
@@ -17,6 +28,7 @@ export const getStaticProps = async context => {
         tool: {
             __aliasFor: 'toolBySlug',
             __args: { slug: context.params.slug },
+            slug: true,
             title: true,
             description: true
         }

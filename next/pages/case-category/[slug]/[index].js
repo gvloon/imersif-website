@@ -1,14 +1,26 @@
 import { React, api } from 'common'
-import { Markdown, CaseList, CategoryList, Link} from 'components'
+import { Markdown, CaseList, CategoryList, Link } from 'components'
 import { BasicPage } from 'components/page'
 
 const pageSize = 10
 
 const Page = ({ context, data }) => {
-    const { title, description } = data.category
+    const { slug, title, description } = data.category
+
+    const breadcrumb = [
+        {
+            name: 'Cases',
+            href: '/cases'
+        },
+        {
+            name: title,
+            href: '/case/[slug]',
+            as: `/cases/${slug}`
+        }
+    ]
+
     return (
-        <BasicPage context={context} title={title}>
-            <h1>{title}</h1>
+        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
             <Markdown source={description} />
             <Categories categories={data.category.children} />
             <CaseList

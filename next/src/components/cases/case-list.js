@@ -29,8 +29,8 @@ const CaseList = ({ category, title, pageSize, pageIndex, ...rest }) => {
             className={classes.row}
             title={title}
             summary={summary}
-            href="/cases/[slug]"
-            as={`/cases/${slug}`}
+            href="/case/[slug]"
+            as={`/case/${slug}`}
         />
     )
     const renderNav = ({ text, index, disabled }) => {
