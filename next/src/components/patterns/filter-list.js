@@ -45,15 +45,6 @@ class FilterList extends React.Component {
         values: ['test1', 'test2']
     }
 
-    constructor(props) {
-        super(props)
-        console.log('Filterlist constructor')
-    }
-
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return false
-    }
-
     render = () => {
         const { values, classes, className } = this.props
         if (!values) {

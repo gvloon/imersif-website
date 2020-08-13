@@ -1,5 +1,5 @@
 const api = require('./api')
-const {keywords, stripHtml} = require('./transforms')
+const { merge, suggestions, stripHtml } = require('./transforms')
 
 class Search {
   async update(model) {
@@ -11,13 +11,13 @@ class Search {
 
   async index() {
     await api.createIndex('glossary', {
-      term: {type: 'text'},
+      title: {type: 'text'},
       explanation: {type: 'text'},
       keywords: {type: 'text'},
       suggest: {type: 'completion'}
     })
     const db = strapi.connections.default
-    const model = db.model('Glossary')
+    const model = db.model('GlossaryItem')
     const items = await model.find()
     for (let item of items) {
       await this._index(item)
@@ -25,27 +25,27 @@ class Search {
   }
 
   async fuzzy(text) {
-    const hits = await api.fuzzy('glossary', ['term', 'description', 'keywords'], text)
+    const hits = await api.fuzzy('glossary', ['title', 'description', 'keywords'], text)
     return hits.map(({_id, _source}) => ({
       id: _id,
-      term: _source.term,
+      title: _source.title,
       explanation: _source.explanation,
       keywords: _source.keywords
     }))
   }
 
   async suggest(text) {
-    const options = await api.suggest('glossary', text)
-    return options.map(({text}) => ({
-      text
-    }))
+    return await api.suggest('glossary', text)
   }
 
   async _index(doc) {
     const response = await api.index('glossary', doc._id, {
-      term: doc.term,
+      title: doc.term,
       explanation: stripHtml(doc.explanation),
-      suggest: keywords(doc.keywords)
+      suggest: merge(
+        suggestions(doc.term, /\W/, 20),
+        suggestions(doc.keywords, /,/, 10)
+      )
     })
     return response
   }

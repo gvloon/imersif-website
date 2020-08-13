@@ -1,5 +1,5 @@
 const api = require('./api')
-const {keywords, stripHtml} = require('./transforms')
+const { merge, suggestions, stripHtml } = require('./transforms')
 
 class Search {
   async update(model) {
@@ -12,7 +12,7 @@ class Search {
   async index() {
     await api.createIndex('pattern', {
       title: {type: 'text'},
-      content: {type: 'text'},
+      solution: {type: 'text'},
       keywords: {type: 'text'},
       suggest: {type: 'completion'}
     })
@@ -29,24 +29,24 @@ class Search {
     return hits.map(({_id, _source}) => ({
       id: _id,
       title: _source.title,
-      content: _source.content,
+      solution: _source.solution,
       keywords: _source.keywords
     }))
   }
 
   async suggest(text) {
-    const options = await api.suggest('pattern', text)
-    return options.map(({text}) => ({
-      text
-    }))
+    return await api.suggest('pattern', text)
   }
 
   async _index(doc) {
     await api.index('pattern', doc._id, {
       title: doc.title,
-      content: stripHtml(doc.content),
+      solution: doc.solution ? doc.solution.what + ' ' + doc.solution.why + ' ' + doc.solution.when + ' ' + doc.solution.how : null,
       keywords: doc.keywords,
-      suggest: keywords(doc.keywords)
+      suggest: merge(
+        suggestions(doc.title, /\W/, 20),
+        suggestions(doc.keywords, /,/, 10)
+      )
     })
   }
 }

@@ -1,5 +1,5 @@
 import { React, api, withStyles, createSelector } from 'common'
-import { Markdown, Accordion, Breadcrumb } from 'components'
+import { Markdown, Accordion } from 'components'
 import { BasicPage } from 'components/page'
 import { SolutionBlock, PatternVariant } from 'components/patterns'
 
@@ -22,28 +22,12 @@ const styles = theme => ({
 class Page extends React.Component {
     render () {
         const { context, data, classes } = this.props
-        const { slug, title, solution, image, category } = data.pattern
+        const { title, solution, image } = data.pattern
 
-        const breadcrumb = [
-            {
-                name: 'Patterns',
-                href: '/patterns'
-            },
-            {
-                name: category.name,
-                href: '/pattern-category/[slug]',
-                as: `/pattern-category/${category.slug}`
-            },
-            {
-                name: title,
-                href: '/pattern/[slug]',
-                as: `/pattern/${slug}`
-            }
-        ]
         const variants = getVariants(this.state, this.props)
 
         return (
-            <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
+            <BasicPage context={context} title={title} breadcrumb={getBreadcrumb(data.pattern)}>
                 <Markdown />
                 <SolutionBlock className={classes.solution} solution={solution} image={image} />
                 <div className={classes.variants}>
@@ -67,11 +51,39 @@ class Page extends React.Component {
     }
 }
 
-const PageBreadcrumb = ({ pattern }) => {
-    return (
-        <Breadcrumb links={links} />
-    )
+const getBreadcrumb = ({ title, slug, category }) => {
+    if (category) {
+        return [
+            {
+                name: 'Patterns',
+                href: '/patterns'
+            },
+            {
+                name: category.name,
+                href: '/pattern-category/[slug]',
+                as: `/pattern-category/${category.slug}`
+            },
+            {
+                name: title,
+                href: '/pattern/[slug]',
+                as: `/pattern/${slug}`
+            }
+        ]
+    } else {
+        return [
+            {
+                name: 'Patterns',
+                href: '/patterns'
+            },
+            {
+                name: title,
+                href: '/pattern/[slug]',
+                as: `/pattern/${slug}`
+            }
+        ]
+    }
 }
+
 
 const getVariants = createSelector(
     (state, props) => props.data.pattern.variants,

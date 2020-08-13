@@ -3,7 +3,10 @@ const {patterns: search} = require('../../../src/search')
 module.exports = {
   definition: `
     type PatternSuggestion {
-      text: String
+      type: String
+      id: String
+      score: Int
+      title: String
     }
   `,
   query: `

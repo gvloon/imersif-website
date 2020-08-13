@@ -42,7 +42,6 @@ class Api {
 
   async suggest(name, value) {
     const doc = {
-      _source: "suggest",
       suggest: {}
     }
     const tokens = value.split(/\s+/)
@@ -51,7 +50,6 @@ class Api {
         prefix: tokens[i],
         completion: {
           field: 'suggest',
-          skip_duplicates: true,
           fuzzy: {
             fuzziness: 2
           }
@@ -59,40 +57,30 @@ class Api {
       }
     }
     const data = await this._post(`/${name}/_search`, doc)
-    return this.mergeSuggestResult(tokens, data)
+    return this.mergeSuggestResult(data)
   }
 
-  mergeSuggestResult(tokens, data) {
-    const results = []
-    for (let i in tokens) {
-      const options = data.suggest[i.toString()][0].options
-      if (options.length > 0) {
-        if (results.length === 0) {
-          for (let option of options) {
-            results.push({
-              values: { [option.text]: true },
-              score: option._score,
-              text: option.text
-            })
-          }
-        } else {
-          for (let result of results) {
-            for (let option of options) {
-              if (!result.values.hasOwnProperty(option.text)) {
-                result.values[option.text] = true
-                result.score += option._score
-                result.text += ' ' + option.text
-              }
-            }
-          }
+  mergeSuggestResult(data) {
+    const map = {}
+    for (let index in data.suggest) {
+      let options = data.suggest[index][0].options
+      for (let option of options) {
+        const {_id: id, _score: score, _index: type, _source: source} = option
+        const result = map.hasOwnProperty(id) ? map[id] : map[id] = {
+          type,
+          id,
+          title: source.title,
+          score: 0
         }
+        result.score += score
       }
     }
-    results.sort((a, b) => a.score - b.score)
+    const results = Object.values(map)
+    results.sort((a, b) => b.score - a.score)
     return results.slice(0, 10)
   }
 
-  async _put (url, data) {
+  async _put(url, data) {
     const baseUrl = this.baseUrl
     url = `${baseUrl}${url}`
     data = JSON.stringify(data)
@@ -107,7 +95,7 @@ class Api {
     return response.data
   }
 
-  async _post (url, data) {
+  async _post(url, data) {
     const baseUrl = this.baseUrl
     url = `${baseUrl}${url}`
     data = JSON.stringify(data)

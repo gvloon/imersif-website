@@ -3,30 +3,47 @@ import { Markdown, Specifications } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
-    const { slug, title, description, device_type } = data.device
+    const { title, description } = data.device
 
-    const breadcrumb = [
-        {
-            name: 'Hardware',
-            href: '/hardware'
-        },
-        {
-            name: device_type.name,
-            href: '/device-type/[slug]',
-            as: `/device-type/${device_type.slug}`
-        },
-        {
-            name: title,
-            href: '/device/[slug]',
-            as: `/device/${slug}`
-        }
-    ]
     return (
-        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
+        <BasicPage context={context} title={title} breadcrumb={getBreadcrumb(data.device)}>
             <SpecificationList device={data.device} />
             <Markdown source={description} />
         </BasicPage>
     )
+}
+
+const getBreadcrumb = ({ title, slug, device_type }) => {
+    if (device_type) {
+        return [
+            {
+                name: 'Hardware',
+                href: '/hardware'
+            },
+            {
+                name: device_type.name,
+                href: '/device-type/[slug]',
+                as: `/device-type/${device_type.slug}`
+            },
+            {
+                name: title,
+                href: '/device/[slug]',
+                as: `/device/${slug}`
+            }
+        ]
+    } else {
+        return [
+            {
+                name: 'Hardware',
+                href: '/hardware'
+            },
+            {
+                name: title,
+                href: '/device/[slug]',
+                as: `/device/${slug}`
+            }
+        ]
+    }
 }
 
 const SpecificationList = ({ device }) => {

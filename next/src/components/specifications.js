@@ -27,9 +27,11 @@ const Row = ({ data }) => {
 const Specifications = ({ data }) => {
     return (
         <table>
+            <tbody>
             {
                 data.map((item, index) => <Row key={index} data={item} />)
             }
+            </tbody>
         </table>
     )
 }

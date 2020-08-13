@@ -3,7 +3,10 @@ const {tools: search} = require('../../../src/search')
 module.exports = {
   definition: `
     type ToolSuggestion {
-      text: String
+      type: String
+      id: String
+      score: Int
+      title: String
     }
   `,
   query: `

@@ -1,4 +1,4 @@
-const {devices, cases, patterns, tools} = require('../../../src/search')
+const {devices, cases, patterns, tools, glossary} = require('../../../src/search')
 const slug = require('../../../src/slug')
 const update = require('../../../src/update')
 
@@ -8,6 +8,7 @@ module.exports = {
     await devices.index()
     await patterns.index()
     await tools.index()
+    await glossary.index()
     return 'ok'
   },
 

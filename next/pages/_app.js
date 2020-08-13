@@ -60,8 +60,10 @@ const theme = createMuiTheme({
 
 export default ({ Component, pageProps }) => {
     return (
-        <ThemeProvider theme={theme}>
-            <Component {...pageProps} />
-        </ThemeProvider>
+        <>
+            <ThemeProvider theme={theme}>
+                <Component {...pageProps} />
+            </ThemeProvider>
+        </>
     )
 }

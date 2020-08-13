@@ -3,7 +3,10 @@ const {devices: search} = require('../../../src/search')
 module.exports = {
   definition: `
     type DeviceSuggestion {
-      text: String
+      type: String
+      id: String
+      score: Int
+      title: String
     }
   `,
   query: `

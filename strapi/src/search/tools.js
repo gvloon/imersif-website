@@ -1,5 +1,5 @@
 const api = require('./api')
-const {keywords, stripHtml} = require('./transforms')
+const { merge, suggestions, stripHtml } = require('./transforms')
 
 class Search {
   async update(model) {
@@ -11,7 +11,7 @@ class Search {
 
   async index() {
     await api.createIndex('tool', {
-      name: {type: 'text'},
+      title: {type: 'text'},
       description: {type: 'text'},
       keywords: {type: 'text'},
       suggest: {type: 'completion'}
@@ -25,28 +25,28 @@ class Search {
   }
 
   async fuzzy(text) {
-    const hits = await api.fuzzy('tool', ['name', 'description', 'keywords'], text)
+    const hits = await api.fuzzy('tool', ['title', 'description', 'keywords'], text)
     return hits.map(({_id, _source}) => ({
       id: _id,
-      name: _source.name,
+      title: _source.title,
       description: _source.description,
       keywords: _source.keywords
     }))
   }
 
   async suggest(text) {
-    const options = await api.suggest('tool', text)
-    return options.map(({text}) => ({
-      text
-    }))
+    return await api.suggest('tool', text)
   }
 
   async _index(doc) {
     const response = await api.index('tool', doc._id, {
-      name: doc.name,
+      title: doc.title,
       description: stripHtml(doc.description),
       keywords: doc.keywords,
-      suggest: keywords(doc.keywords)
+      suggest: merge(
+        suggestions(doc.title, /\W/, 20),
+        suggestions(doc.keywords, /,/, 10)
+      )
     })
     return response
   }

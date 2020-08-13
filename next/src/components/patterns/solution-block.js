@@ -46,7 +46,7 @@ const SolutionBlock = ({ solution, image, className }) => {
             }
             {
                 solution.when &&
-                <p className={className.paragraph}><span className={classes.label}>When: </span>{solution.when}{solution.when}{solution.when}</p>
+                <p className={className.paragraph}><span className={classes.label}>When: </span>{solution.when}</p>
             }
         </div>
     )

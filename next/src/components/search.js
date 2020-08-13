@@ -1,4 +1,4 @@
-import { React, PropTypes, makeStyles, classNames, _ } from 'common'
+import { React, PropTypes, makeStyles, classNames, _, api } from 'common'
 import { Dropdown } from 'components'
 import { Popper, Paper, InputBase, Divider, ClickAwayListener, IconButton } from '@material-ui/core'
 import { Search as SearchIcon, Close as CloseIcon } from '@material-ui/icons'
@@ -123,9 +123,23 @@ const Search = ({ className, context, optionsEnabled, mobile, onSearch, onClose 
     const [anchorEl, setAnchorEl] = React.useState(null)
     const [open, setOpen] = React.useState(false)
     const [value, setValue] = React.useState(optionIndex)
-    const onChange = ev => {
-        setAnchorEl(ev.target)
-        setOpen(!!ev.target.value)
+    const [results, setResults] = React.useState([])
+
+    const onChange = async ev => {
+        const text = ev.currentTarget.value
+        setAnchorEl(ev.currentTarget)
+        setOpen(!!text)
+        const data = await api({
+            results: {
+                __aliasFor: 'suggestAll',
+                __args: { text },
+                type: true,
+                id: true,
+                title: true,
+                score: true
+            }
+        })
+        setResults(data.results)
     }
 
     const onClickAway = ev => {
@@ -172,7 +186,7 @@ const Search = ({ className, context, optionsEnabled, mobile, onSearch, onClose 
                         placeholder={options[value].placeholder}
                         onChange={onChange}
                         onFocus={onChange}
-                        inputProps={{ 'aria-label': 'search google maps' }}
+                        inputProps={{ 'aria-label': 'search XR Patterns' }}
                     />
                     <Popper
                         className={classes.popper}
@@ -185,11 +199,11 @@ const Search = ({ className, context, optionsEnabled, mobile, onSearch, onClose 
                     >
                         <Paper className={classes.paper}>
                             <ul>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
-                                <li>test</li>
+                                {
+                                    results.map((result, index) => (
+                                        <li key={index}>{result.title}</li>
+                                    ))
+                                }
                             </ul>
                         </Paper>
                     </Popper>

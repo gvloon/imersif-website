@@ -1,34 +1,51 @@
 import { React, api } from 'common'
-import { Markdown, Breadcrumb } from 'components'
+import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ context, data }) => {
-    const { slug, title, summary, description, categories } = data.case
+    const { title, summary, description } = data.case
 
-    const category = categories[0]
-    const breadcrumb = [
-        {
-            name: 'Cases',
-            href: '/cases'
-        },
-        {
-            name: category.title,
-            href: '/case-category/[slug]/[index]',
-            as: `/case-category/${category.slug}/0`
-        },
-        {
-            name: title,
-            href: '/cases/[slug]',
-            as: `/cases/${slug}`
-        }
-    ]
 
     return (
-        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
+        <BasicPage context={context} title={title} breadcrumb={getBreadcrumb(data.case)}>
             <div>{summary}</div>
             <Markdown source={description} />
         </BasicPage>
     )
+}
+
+const getBreadcrumb = ({ slug, title, categories }) => {
+    if (categories.length) {
+        const category = categories[0]
+        return [
+            {
+                name: 'Cases',
+                href: '/cases'
+            },
+            {
+                name: category.title,
+                href: '/case-category/[slug]/[index]',
+                as: `/case-category/${category.slug}/0`
+            },
+            {
+                name: title,
+                href: '/cases/[slug]',
+                as: `/cases/${slug}`
+            }
+        ]
+    } else {
+        return [
+            {
+                name: 'Cases',
+                href: '/cases'
+            },
+            {
+                name: title,
+                href: '/cases/[slug]',
+                as: `/cases/${slug}`
+            }
+        ]
+    }
 }
 
 export const getStaticProps = async context => {
