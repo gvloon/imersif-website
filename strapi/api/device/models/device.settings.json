@@ -48,6 +48,10 @@
     },
     "fov": {
       "type": "string"
+    },
+    "tethering": {
+      "model": "device-tethering",
+      "via": "devices"
     }
   }
 }
