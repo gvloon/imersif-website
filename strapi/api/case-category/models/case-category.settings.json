@@ -9,10 +9,6 @@
     "timestamps": true
   },
   "attributes": {
-    "cases": {
-      "via": "categories",
-      "collection": "case"
-    },
     "description": {
       "type": "richtext"
     },
@@ -43,6 +39,10 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "cases": {
+      "via": "category",
+      "collection": "case"
     }
   }
 }

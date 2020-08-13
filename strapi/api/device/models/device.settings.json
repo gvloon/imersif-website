@@ -19,8 +19,8 @@
       "type": "string"
     },
     "device_type": {
-      "via": "devices",
-      "model": "device-type"
+      "model": "device-type",
+      "via": "devices"
     },
     "slug": {
       "type": "string",
@@ -31,21 +31,23 @@
       "required": true,
       "unique": true
     },
-    "device_screen": {
-      "via": "devices",
-      "model": "device-screen"
+    "screen": {
+      "model": "device-screen",
+      "via": "devices"
     },
-    "device_tethering": {
-      "via": "devices",
-      "model": "device-tethering"
+    "tracking_type": {
+      "model": "device-tracking-type",
+      "via": "devices"
     },
-    "device_tracking_type": {
-      "via": "devices",
-      "model": "device-tracking-type"
+    "dof": {
+      "model": "device-dof",
+      "via": "devices"
     },
-    "device_dof": {
-      "via": "devices",
-      "model": "device-dof"
+    "eye_tracking": {
+      "type": "boolean"
+    },
+    "fov": {
+      "type": "string"
     }
   }
 }

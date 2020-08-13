@@ -49,11 +49,11 @@ const getBreadcrumb = ({ title, slug, device_type }) => {
 const SpecificationList = ({ device }) => {
     const specs = [
         ['Type', 'device_type'],
-        ['Display type', 'device_screen'],
-        ['Tethering', 'device_tethering'],
-        ['Tracking', 'device_tracking_type'],
-        ['Degrees of freedom', 'device_dof'],
-        ['Field of view', 'device_fov']
+        ['Display type', 'screen'],
+        ['Tethering', 'tethering'],
+        ['Tracking', 'tracking_type'],
+        ['Degrees of freedom', 'dof'],
+        ['Field of view', 'fov']
     ].map(spec => ({
         label: spec[0],
         value: device[spec[1]] ? device[spec[1]].name : null
@@ -73,16 +73,16 @@ export const getStaticProps = async context => {
                 slug: true,
                 name: true
             },
-            device_screen: {
+            screen: {
                 name: true
             },
-            device_tethering: {
+            tethering: {
                 name: true
             },
-            device_tracking_type: {
+            tracking_type: {
                 name: true
             },
-            device_dof: {
+            dof: {
                 name: true
             }
         }

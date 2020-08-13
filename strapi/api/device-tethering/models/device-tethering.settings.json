@@ -13,10 +13,6 @@
       "type": "string",
       "unique": true,
       "required": true
-    },
-    "devices": {
-      "collection": "device",
-      "via": "device_tethering"
     }
   }
 }

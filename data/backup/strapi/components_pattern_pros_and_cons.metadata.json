@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.components_pattern_pros_and_cons"}],"uuid":"c63478da0a1e4e1e9f33a7a2177b435e"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.components_pattern_pros_and_cons"}],"uuid":"e2c54fcb99614e2e90ba0c9cf3207978"}

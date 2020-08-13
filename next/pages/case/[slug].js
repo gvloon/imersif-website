@@ -14,9 +14,8 @@ const Page = ({ context, data }) => {
     )
 }
 
-const getBreadcrumb = ({ slug, title, categories }) => {
-    if (categories.length) {
-        const category = categories[0]
+const getBreadcrumb = ({ slug, title, category }) => {
+    if (category) {
         return [
             {
                 name: 'Cases',
@@ -57,7 +56,7 @@ export const getStaticProps = async context => {
             title: true,
             summary: true,
             description: true,
-            categories: {
+            category: {
                 title: true,
                 slug: true
             }

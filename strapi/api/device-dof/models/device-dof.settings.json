@@ -13,8 +13,8 @@
       "type": "string"
     },
     "devices": {
-      "collection": "device",
-      "via": "device_dof"
+      "via": "dof",
+      "collection": "device"
     }
   }
 }

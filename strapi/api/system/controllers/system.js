@@ -24,7 +24,15 @@ module.exports = {
   },
 
   updateCases: async () => {
-    await update.items('Case', item => item.description = item.content)
+    const model = strapi.connections.default.model('Case')
+    model.collection.updateMany({}, {
+      $unset: {
+        categories: true,
+        platform_old: true,
+        platform: true,
+        content: true
+      }
+    })
   },
 
   updateCaseCategories: async () => {
@@ -32,15 +40,40 @@ module.exports = {
   },
 
   updateDevices: async () => {
-    await update.items('Device', item => item.title = item.name)
+    const model = strapi.connections.default.model('Device')
+    model.collection.updateMany({}, {
+      $unset: {
+        xr_type: true,
+        device_types: true
+      },
+      $rename: {
+        device_dof: 'dof',
+        device_screen: 'screen',
+        device_tracking_type: 'tracking_type',
+        device_tethering: 'tethering'
+      }
+    })
   },
 
   updatePatterns: async () => {
-    await update.items('Pattern', item => item.description = item.content)
+    const model = strapi.connections.default.model('Pattern')
+    model.collection.updateMany({}, {
+      $unset: {
+        description: true,
+        test: true,
+        supported: true,
+        media: true
+      }
+    })
   },
 
   updateTools: async () => {
-    await update.items('Tool', item => item.title = item.name)
+    const model = strapi.connections.default.model('Tool')
+    model.collection.updateMany({}, {
+      $unset: {
+        name: true
+      }
+    })
   },
 }
 

@@ -28,10 +28,9 @@
     "url": {
       "type": "string"
     },
-    "categories": {
-      "collection": "case-category",
-      "via": "cases",
-      "dominant": true
+    "category": {
+      "model": "case-category",
+      "via": "cases"
     },
     "thumbnail": {
       "type": "string"
