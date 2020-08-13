@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.device_dofs"}],"uuid":"980b8aae13a14ca49a2ff2157fbad357"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.device_dofs"}],"uuid":"2d7b09b1bcc745b59d8f059a05bf98ae"}
