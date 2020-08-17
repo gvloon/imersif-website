@@ -47,7 +47,7 @@ class FilterList extends React.Component {
 
     render = () => {
         const { values, classes, className } = this.props
-        if (!values) {
+        if (!values || !values.length) {
             return null
         }
         const rootClasses = classNames({
@@ -60,7 +60,7 @@ class FilterList extends React.Component {
         }
         return (
             <div className={rootClasses}>
-                <div className={classes.title}>Show: </div>
+                <div className={classes.title}>With: </div>
                 <FormGroup className={classes.input} row onChange={this.onChange}>
                     {
                         values.map((value, index) => (

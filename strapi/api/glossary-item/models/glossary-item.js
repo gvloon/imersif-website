@@ -3,7 +3,7 @@
 /**
  * Lifecycle callbacks for the `glossary` model.
  */
-const {glossary: search} = require('../../../src/search')
+const search = require('../../../src/search')
 const slug = require('../../../src/slug')
 
 module.exports = {
@@ -14,9 +14,9 @@ module.exports = {
     slug.beforeUpdate(model, 'term')
   },
   afterCreate: async model => {
-    await search.update(model)
+    await search.updateIndex('glossary', model)
   },
   afterUpdate: async model => {
-    await search.update(model)
+    await search.updateIndex('glossary', model)
   }
 };

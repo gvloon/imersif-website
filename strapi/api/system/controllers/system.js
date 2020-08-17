@@ -1,14 +1,19 @@
-const {devices, cases, patterns, tools, glossary} = require('../../../src/search')
+const search = require('../../../src/search')
 const slug = require('../../../src/slug')
 const update = require('../../../src/update')
 
 module.exports = {
   indexElastic: async () => {
-    await cases.index()
-    await devices.index()
-    await patterns.index()
-    await tools.index()
-    await glossary.index()
+    await search.deleteIndex('case')
+    await search.deleteIndex('device')
+    await search.deleteIndex('pattern')
+    await search.deleteIndex('tool')
+    await search.deleteIndex('glossary')
+    await search.indexAll('case')
+    await search.indexAll('device')
+    await search.indexAll('pattern')
+    await search.indexAll('tool')
+    await search.indexAll('glossary')
     return 'ok'
   },
 
@@ -21,6 +26,7 @@ module.exports = {
     await slug.updateAll('PatternVariant', 'title')
     await slug.updateAll('Tool', 'title')
     await slug.updateAll('DeviceType', 'name')
+    return 'ok'
   },
 
   updateCases: async () => {
@@ -33,10 +39,12 @@ module.exports = {
         content: true
       }
     })
+    return 'ok'
   },
 
   updateCaseCategories: async () => {
     await update.items('CaseCategory', item => item.title = item.name)
+    return 'ok'
   },
 
   updateDevices: async () => {
@@ -53,6 +61,7 @@ module.exports = {
         device_tethering: 'tethering'
       }
     })
+    return 'ok'
   },
 
   updatePatterns: async () => {
@@ -65,6 +74,7 @@ module.exports = {
         media: true
       }
     })
+    return 'ok'
   },
 
   updateTools: async () => {
@@ -74,6 +84,7 @@ module.exports = {
         name: true
       }
     })
+    return 'ok'
   },
 }
 

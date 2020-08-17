@@ -15,9 +15,6 @@
     "subtitle": {
       "type": "string"
     },
-    "platforms": {
-      "collection": "xr-category"
-    },
     "pattern": {
       "model": "pattern",
       "via": "variants"

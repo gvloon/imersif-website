@@ -1,31 +1,11 @@
 const {devices: search} = require('../../../src/search')
 
 module.exports = {
-  definition: `
-    type DeviceSuggestion {
-      type: String
-      id: String
-      score: Int
-      title: String
-    }
-  `,
   query: `
-    searchDevices(text: String!): [Device]
-    suggestDevices(text: String!): [DeviceSuggestion]
     deviceBySlug(slug: String!): Device
   `,
   resolver: {
     Query: {
-      searchDevices: {
-        description: 'Search devices',
-        resolverOf: 'application::device.device.find',
-        resolver: async (obj, {text}) => search.fuzzy(text)
-      },
-      suggestDevices: {
-        description: 'Suggest devices',
-        resolverOf: 'application::device.device.find',
-        resolver: async (obj, {text}) => search.suggest(text)
-      },
       deviceBySlug: {
         description: 'Returns a device by slug',
         resolverOf: 'application::device.device.findOne',

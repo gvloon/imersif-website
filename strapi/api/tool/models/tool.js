@@ -5,7 +5,7 @@
  */
 
 const slug = require('../../../src/slug')
-const { tools: search } = require('../../../src/search')
+const search = require('../../../src/search')
 
 module.exports = {
   beforeSave: async model => {
@@ -15,9 +15,9 @@ module.exports = {
     slug.beforeUpdate(model, 'name')
   },
   afterCreate: async model => {
-    await search.update(model)
+    await search.updateIndex('tool', model)
   },
   afterUpdate: async model => {
-    await search.update(model)
+    await search.updateIndex('tool', model)
   }
 }

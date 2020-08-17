@@ -12,11 +12,6 @@
     "title": {
       "type": "string"
     },
-    "sub_industries": {
-      "collection": "sub-industry",
-      "via": "cases",
-      "dominant": true
-    },
     "keywords": {
       "type": "string"
     },

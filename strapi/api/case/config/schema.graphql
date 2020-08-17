@@ -1,31 +1,9 @@
-const {cases: search} = require('../../../src/search')
-
 module.exports = {
-  definition: `
-    type CaseSuggestion {
-      type: String
-      id: String
-      score: Int
-      title: String
-    }
-  `,
   query: `
-    searchCases(text: String!): [Case]
-    suggestCases(text: String!): [CaseSuggestion]
     caseBySlug(slug: String!): Case
   `,
   resolver: {
     Query: {
-      searchCases: {
-        description: 'Search cases',
-        resolverOf: 'application::case.case.find',
-        resolver: async (obj, {text}) => search.fuzzy(text)
-      },
-      suggestCases: {
-        description: 'Suggest cases',
-        resolverOf: 'application::case.case.find',
-        resolver: async (obj, {text}) => search.suggest(text)
-      },
       caseBySlug: {
         description: 'Returns a case by slug',
         resolverOf: 'application::case.case.findOne',

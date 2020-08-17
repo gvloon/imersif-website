@@ -4,7 +4,7 @@
  * Lifecycle callbacks for the `pattern` model.
  */
 const slug = require('../../../src/slug')
-const { patterns: search } = require('../../../src/search')
+const search = require('../../../src/search')
 
 module.exports = {
   beforeSave: async model => {
@@ -14,9 +14,9 @@ module.exports = {
     slug.beforeUpdate(model, 'title')
   },
   afterCreate: async model => {
-    await search.update(model)
+    await search.updateIndex('pattern', model)
   },
   afterUpdate: async model => {
-    await search.update(model)
+    await search.updateIndex('pattern', model)
   }
 }

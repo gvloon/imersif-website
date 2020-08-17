@@ -1,0 +1,14 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/suggest",
+      "handler": "search.suggest"
+    },
+    {
+      "method": "GET",
+      "path": "/search",
+      "handler": "search.search"
+    }
+  ]
+}

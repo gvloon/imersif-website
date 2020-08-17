@@ -1,31 +1,9 @@
-const {patterns: search} = require('../../../src/search')
-
 module.exports = {
-  definition: `
-    type PatternSuggestion {
-      type: String
-      id: String
-      score: Int
-      title: String
-    }
-  `,
   query: `
-    searchPatterns(text: String!): [Pattern]
-    suggestPatterns(text: String!): [PatternSuggestion]
     patternBySlug(slug: String!): Pattern
   `,
   resolver: {
     Query: {
-      searchPatterns: {
-        description: 'Search patterns',
-        resolverOf: 'application::pattern.pattern.find',
-        resolver: async (obj, {text}) => search.fuzzy(text)
-      },
-      suggestPatterns: {
-        description: 'Suggest patterns',
-        resolverOf: 'application::patterns.patterns.find',
-        resolver: async (obj, {text}) => search.suggest(text)
-      },
       patternBySlug: {
         description: 'Returns a pattern by slug',
         resolverOf: 'application::pattern.pattern.findOne',

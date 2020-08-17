@@ -3,7 +3,7 @@
 /**
  * Lifecycle callbacks for the `case` model.
  */
-const {cases: search} = require('../../../src/search')
+const search = require('../../../src/search')
 const slug = require('../../../src/slug')
 
 module.exports = {
@@ -14,9 +14,9 @@ module.exports = {
     slug.beforeUpdate(model, 'name')
   },
   afterCreate: async model => {
-    await search.update(model)
+    await search.updateIndex('case', model)
   },
   afterUpdate: async model => {
-    await search.update(model)
+    await search.updateIndex('case', model)
   }
 }

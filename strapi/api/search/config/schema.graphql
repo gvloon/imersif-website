@@ -1,0 +1,57 @@
+const search = require('../../../src/search')
+
+module.exports = {
+  definition: `
+    type Suggestion {
+      type: String!
+      id: String!
+      score: Int!
+      title: String!
+    }
+    type PatternSearchResult {
+      id: String!
+      title: String!
+    }
+    type GlossarySearchResult {
+      id: String!
+      term: String!
+    }
+    type HardwareSearchResult {
+      id: String!
+      title: String!
+    }
+    type SoftwareSearchResult {
+      id: String!
+      title: String!
+    }
+    type CaseSearchResult {
+      id: String!
+      title: String!
+    }
+    type SearchResults {
+      patterns: [PatternSearchResult!]
+      glossary: [GlossarySearchResult!]
+      hardware: [HardwareSearchResult!]
+      software: [SoftwareSearchResult!]
+      cases: [CaseSearchResult!]
+    }
+  `,
+  query: `
+    suggest(type: String, text: String!): [Suggestion!]!
+    search(type: String, text: String!): SearchResults!
+  `,
+  resolver: {
+    Query: {
+      suggest: {
+        description: 'Suggest',
+        resolverOf: 'application::search.search.suggest',
+        resolver: async (obj, { type, text }) => await search.suggest(type, text)
+      },
+      search: {
+        description: 'Search',
+        resolverOf: 'application:search.search.search',
+        resolver: async (obj, { type, text }) => await search.search(type, text)
+      }
+    }
+  }
+}
