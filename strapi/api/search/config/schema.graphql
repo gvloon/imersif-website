@@ -2,55 +2,43 @@ const search = require('../../../src/search')
 
 module.exports = {
   definition: `
+    type Link {
+      href: String!
+      as: String
+    }
     type Suggestion {
       type: String!
-      id: String!
-      score: Int!
-      title: String!
-    }
-    type PatternSearchResult {
-      id: String!
-      title: String!
-    }
-    type GlossarySearchResult {
-      id: String!
-      term: String!
-    }
-    type HardwareSearchResult {
-      id: String!
-      title: String!
-    }
-    type SoftwareSearchResult {
-      id: String!
-      title: String!
-    }
-    type CaseSearchResult {
-      id: String!
+      link: Link!
       title: String!
     }
     type SearchResults {
-      patterns: [PatternSearchResult!]
-      glossary: [GlossarySearchResult!]
-      hardware: [HardwareSearchResult!]
-      software: [SoftwareSearchResult!]
-      cases: [CaseSearchResult!]
+      pageSize: Int!
+      pageIndex: Int!
+      resultCount: Int!
+      results: [SearchResult!]!
+    }
+    type SearchResult {
+      type: String!
+      link: Link!
+      title: String!
+      highlight: String!
     }
   `,
   query: `
-    suggest(type: String, text: String!): [Suggestion!]!
-    search(type: String, text: String!): SearchResults!
+    suggest(category: String, text: String!): [Suggestion!]!
+    search(category: String, text: String!, pageSize: Int, pageIndex: Int): SearchResults!
   `,
   resolver: {
     Query: {
       suggest: {
         description: 'Suggest',
         resolverOf: 'application::search.search.suggest',
-        resolver: async (obj, { type, text }) => await search.suggest(type, text)
+        resolver: async (obj, { category, text }) => await search.suggest(category, text)
       },
       search: {
         description: 'Search',
         resolverOf: 'application:search.search.search',
-        resolver: async (obj, { type, text }) => await search.search(type, text)
+        resolver: async (obj, { category, text, pageSize, pageIndex }) => await search.search(category, text, pageSize, pageIndex)
       }
     }
   }

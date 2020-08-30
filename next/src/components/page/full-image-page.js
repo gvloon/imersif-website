@@ -1,4 +1,4 @@
-import { React, PropTypes, config, makeStyles, inspect } from 'common'
+import { React, PropTypes, PageContext, makeStyles } from 'common'
 import { Layout, Menu, Footer, Image } from 'components'
 
 import { color, container, contentPadding } from 'jss/index'
@@ -29,22 +29,24 @@ const useStyles = makeStyles(theme => ({
 const FullImagePage = ({ context, title, image, children }) => {
     const classes = useStyles()
     return (
-        <Layout title={title}>
-            <Menu color="transparent" context={context} />
-            <Image className={classes.root} image={image}>
-                <div className={classes.container}>
-                    <div className={classes.content}>
-                        { children }
+        <PageContext.Provider value={context}>
+            <Layout>
+                <Menu color="transparent"/>
+                <Image className={classes.root} image={image}>
+                    <div className={classes.container}>
+                        <div className={classes.content}>
+                            { children }
+                        </div>
                     </div>
-                </div>
-            </Image>
-            <Footer color="gray" />
-        </Layout>
+                </Image>
+                <Footer color="gray" />
+            </Layout>
+        </PageContext.Provider>
     )
 }
 
 FullImagePage.propTypes = {
-    context: PropTypes.object,
+    pageContext: PropTypes.object,
     title: PropTypes.string,
     image: PropTypes.object
 }

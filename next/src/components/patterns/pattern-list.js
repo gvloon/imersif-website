@@ -51,9 +51,18 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'row',
         alignItems: 'flex-start'
     },
-    image: {
+    imageContainer: {
         width: '25%',
-        paddingTop: '20%'
+        position: 'relative',
+        paddingTop: '20%',
+        height: 0
+    },
+    image: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: '100%'
     },
     prosAndCons: {
         marginTop: '0.5rem',
@@ -67,7 +76,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const PatternList = ({ patterns, filters, className, ...rest }) => {
+const PatternList = ({ patterns, filters, className }) => {
     if (!patterns) {
         return null
     }
@@ -84,9 +93,13 @@ const PatternList = ({ patterns, filters, className, ...rest }) => {
                         <React.Fragment key={index}>
                             <div className={classes.patternMobile}>
                                 <div className={classes.top}>
-                                    <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
-                                        <Image className={classes.image} image={pattern.image} />
-                                    </Link>
+                                    <div className={classes.imageContainer}>
+                                        <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
+                                            <a>
+                                                <Image className={classes.image} image={pattern.image} />
+                                            </a>
+                                        </Link>
+                                    </div>
                                     <div className={classes.right}>
                                         <h3>{pattern.title}</h3>
                                     </div>
@@ -95,9 +108,13 @@ const PatternList = ({ patterns, filters, className, ...rest }) => {
                                 <Button className={classes.seeMore} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>See more</Button>
                             </div>
                             <div className={classes.patternDesktop}>
-                                <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
-                                    <Image className={classes.image} image={pattern.image} />
-                                </Link>
+                                <div className={classes.imageContainer}>
+                                    <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
+                                        <a>
+                                            <Image className={classes.image} image={pattern.image} />
+                                        </a>
+                                    </Link>
+                                </div>
                                 <div className={classes.right}>
                                     <h4>{pattern.title}</h4>
                                     <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />

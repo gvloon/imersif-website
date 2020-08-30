@@ -2,12 +2,22 @@ import { React, api } from 'common'
 import { Markdown, Specifications } from 'components'
 import { BasicPage } from 'components/page'
 
-const Page = ({ context, data }) => {
-    const { title, description } = data.device
+const Page = ({ device }) => {
+    const { title, description } = device
+
+    const context = {
+        title,
+        section: 'hardware',
+        search: {
+            desktop: 'hardware',
+            mobile: null
+        },
+        breadcrumb: getBreadcrumb(device)
+    }
 
     return (
-        <BasicPage context={context} title={title} breadcrumb={getBreadcrumb(data.device)}>
-            <SpecificationList device={data.device} />
+        <BasicPage context={context}>
+            <SpecificationList device={device} />
             <Markdown source={description} />
         </BasicPage>
     )
@@ -62,7 +72,7 @@ const SpecificationList = ({ device }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         device: {
             __aliasFor: 'deviceBySlug',
             __args: { slug: context.params.slug },
@@ -87,13 +97,6 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'hardware'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

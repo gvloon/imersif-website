@@ -2,19 +2,28 @@ import { React, api, inspect } from 'common'
 import { Markdown, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
-const Page = ({ context, data }) => {
-    const { title, image, introduction } = data.page
+const Page = ({ page, categories }) => {
+    const { title, image, introduction } = page
 
-    const breadcrumb = [
-        {
-            name: 'Cases',
-            href: '/cases'
-        }
-    ]
+    const context = {
+        title,
+        section: 'cases',
+        search: {
+            desktop: 'cases',
+            mobile: null
+        },
+        breadcrumb: [
+            {
+                name: 'Cases',
+                href: '/cases'
+            }
+        ]
+    }
+
     return (
-        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
+        <BasicPage context={context} image={image}>
             <Markdown source={introduction} />
-            <CategoryList categories={data.categories} />
+            <CategoryList categories={categories} />
         </BasicPage>
     )
 }
@@ -34,7 +43,7 @@ const CategoryList = ({ categories }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         page: {
             __aliasFor: 'casesPage',
             title: true,
@@ -59,13 +68,6 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'cases'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

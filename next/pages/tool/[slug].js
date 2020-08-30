@@ -2,29 +2,38 @@ import { React, api } from 'common'
 import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
-const Page = ({ context, data }) => {
-    const { slug, title, description } = data.tool
+const Page = ({ tool }) => {
+    const { slug, title, description } = tool
 
-    const breadcrumb = [
-        {
-            name: 'Software',
-            href: '/software'
+    const context = {
+        title,
+        section: 'software',
+        search: {
+            desktop: 'software',
+            mobile: null
         },
-        {
-            name: title,
-            href: '/software/[slug]',
-            as: `/software/${slug}`
-        }
-    ]
+        breadcrumb: [
+            {
+                name: 'Software',
+                href: '/software'
+            },
+            {
+                name: title,
+                href: '/tool/[slug]',
+                as: `/tool/${slug}`
+            }
+        ]
+    }
+
     return (
-        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
+        <BasicPage context={context}>
             <Markdown source={description} />
         </BasicPage>
     )
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         tool: {
             __aliasFor: 'toolBySlug',
             __args: { slug: context.params.slug },
@@ -33,13 +42,6 @@ export const getStaticProps = async context => {
             description: true
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'software'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

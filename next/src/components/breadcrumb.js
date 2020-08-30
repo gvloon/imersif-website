@@ -1,4 +1,4 @@
-import { React, makeStyles } from 'common'
+import { React, makeStyles, PageContext } from 'common'
 import { Link } from 'components'
 
 const useStyles = makeStyles(theme => ({
@@ -49,12 +49,16 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Breadcrumb = ({ links = [] }) => {
+const Breadcrumb = ({ }) => {
     const classes = useStyles()
-    links.unshift({
-        name: 'Home',
-        href: '/'
-    })
+    const pageContext = React.useContext(PageContext)
+    const links = [
+        {
+            name: 'Home',
+            href: '/'
+        },
+        ...pageContext.breadcrumb
+    ]
     return (
         <nav aria-label="breadcrumb">
             <BreadcrumbMobile links={links} classes={classes} />

@@ -23,13 +23,29 @@ class Tool extends Model {
     }
   }
 
-  getSuggestTitle(doc) {
-    return doc.title
+  getId(doc) {
+    return doc.slug
   }
 
-  getSearchSource(doc) {
+  getSuggestResult(id, { title }) {
     return {
-      title: doc.title
+      link: this._getLink(id),
+      title
+    }
+  }
+
+  getSearchResult(id, { title }, highlight) {
+    return {
+      link: this._getLink(id),
+      title,
+      highlight: highlight.title || highlight.description || highlight.keywords
+    }
+  }
+
+  _getLink(id) {
+    return {
+      href: '/tool/[slug]',
+      as: `/tool/${id}`
     }
   }
 }

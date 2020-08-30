@@ -1,20 +1,29 @@
 import { React, api } from 'common'
-import { NestedColumnList, Markdown, Link, Breadcrumb } from 'components'
+import { NestedColumnList, Markdown, Link } from 'components'
 import { BasicPage } from 'components/page'
 
-export const Page = ({ context, data }) => {
-    const { title, image, introduction } = data.page
+export const Page = ({ page, categories }) => {
+    const { title, image, introduction } = page
 
-    const breadcrumb = [
-        {
-            name: 'Patterns',
-            href: '/patterns'
-        }
-    ]
+    const context = {
+        title,
+        section: 'patterns',
+        search: {
+            desktop: 'patterns',
+            mobile: null
+        },
+        breadcrumb: [
+            {
+                name: 'Patterns',
+                href: '/patterns'
+            }
+        ]
+    }
+
     return (
-        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
+        <BasicPage context={context} image={image}>
             <Markdown source={introduction} />
-            <CategoryList categories={data.categories} />
+            <CategoryList categories={categories} />
         </BasicPage>
     )
 }
@@ -41,7 +50,7 @@ const CategoryList = ({ categories }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         page: {
             __aliasFor: 'patternsPage',
             title: true,
@@ -69,13 +78,6 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'patterns'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

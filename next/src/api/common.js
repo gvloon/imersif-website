@@ -1,6 +1,5 @@
 import { config, axios } from 'common'
 import { jsonToGraphQLQuery } from 'json-to-graphql-query'
-import delay from 'delay'
 
 export const api = async query => {
     const headers = {
@@ -10,7 +9,6 @@ export const api = async query => {
     const data = JSON.stringify({ query })
     let response
     try {
-//        await delay(3000)
         response = await axios.post(`${config.dockerApiUrl}/graphql`, data, { headers })
     } catch (error) {
         if (error.response && error.response.data && error.response.data.errors) {

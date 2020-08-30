@@ -4,29 +4,37 @@ import { BasicPage } from 'components/page'
 
 const pageSize = 10
 
-const Page = ({ context, data }) => {
-    const { slug, title, description } = data.category
+const Page = ({ category, pageIndex }) => {
+    const { slug, title, description, children } = category
 
-    const breadcrumb = [
-        {
-            name: 'Cases',
-            href: '/cases'
+    const context = {
+        title,
+        section: 'cases',
+        search: {
+            desktop: 'cases',
+            mobile: null
         },
-        {
-            name: title,
-            href: '/case/[slug]',
-            as: `/cases/${slug}`
-        }
-    ]
+        breadcrumb: [
+            {
+                name: 'Cases',
+                href: '/cases'
+            },
+            {
+                name: title,
+                href: '/case/[slug]',
+                as: `/cases/${slug}`
+            }
+        ]
+    }
 
     return (
-        <BasicPage context={context} title={title} breadcrumb={breadcrumb}>
+        <BasicPage context={context}>
             <Markdown source={description} />
-            <Categories categories={data.category.children} />
+            <Categories categories={children} />
             <CaseList
-                category={data.category}
+                category={category}
                 pageSize={pageSize}
-                pageIndex={parseInt(context.params.index)}
+                pageIndex={pageIndex}
             />
         </BasicPage>
     )
@@ -42,7 +50,7 @@ const Categories = ({ categories }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         category: {
             __aliasFor: 'caseCategoryBySlug',
             __args: { slug: context.params.slug },
@@ -60,13 +68,7 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'cases'
-        }
-    }
+    props.pageIndex = parseInt(context.params.index)
     return { props, revalidate: 1 }
 }
 

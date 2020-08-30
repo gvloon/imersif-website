@@ -2,12 +2,21 @@ import { React, api } from 'common'
 import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
-const Page = ({ context, data }) => {
-    const { title, summary, description } = data.case
+const Page = ({ case: useCase }) => {
+    const { title, summary, description } = useCase
 
+    const context = {
+        title,
+        section: 'cases',
+        search: {
+            desktop: 'cases',
+            mobile: null
+        },
+        breadcrumb: getBreadcrumb(useCase)
+    }
 
     return (
-        <BasicPage context={context} title={title} breadcrumb={getBreadcrumb(data.case)}>
+        <BasicPage context={context}>
             <div>{summary}</div>
             <Markdown source={description} />
         </BasicPage>
@@ -48,7 +57,7 @@ const getBreadcrumb = ({ slug, title, category }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         case: {
             __aliasFor: 'caseBySlug',
             __args: { slug: context.params.slug },
@@ -62,13 +71,6 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'cases'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

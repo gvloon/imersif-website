@@ -17,7 +17,7 @@ const Image = ({ image, className, children }) => {
         [className]: !!className,
         [classes.image]: true
     })
-    const backgroundImage = image ? 'url(' + config.publicApiUrl + image.url + ')' : null
+    const backgroundImage = image ? 'url(\'' + config.publicApiUrl + image.url + '\')' : null
     return (
         <div className={rootClasses} style={{ backgroundImage }}>
             { children }

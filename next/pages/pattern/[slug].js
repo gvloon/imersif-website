@@ -1,4 +1,4 @@
-import { React, api, withStyles, createSelector } from 'common'
+import { React, api, withStyles, memoize } from 'common'
 import { Markdown, Accordion } from 'components'
 import { BasicPage } from 'components/page'
 import { SolutionBlock, PatternVariant } from 'components/patterns'
@@ -21,19 +21,28 @@ const styles = theme => ({
 
 class Page extends React.Component {
     render () {
-        const { context, data, classes } = this.props
-        const { title, solution, image } = data.pattern
+        const { pattern, classes } = this.props
+        const { title, solution, image, variants } = pattern
 
-        const variants = getVariants(this.state, this.props)
+        const context = {
+            title,
+            section: 'patterns',
+            search: {
+                desktop: 'patterns',
+                mobile: null
+            },
+            breadcrumb: getBreadcrumb(pattern)
+        }
 
+        const preparedVariants = prepareVariants(variants)
         return (
-            <BasicPage context={context} title={title} breadcrumb={getBreadcrumb(data.pattern)}>
+            <BasicPage context={context}>
                 <Markdown />
                 <SolutionBlock className={classes.solution} solution={solution} image={image} />
                 <div className={classes.variants}>
                     <Accordion>
                         {
-                            variants.map((variant, index) => (
+                            preparedVariants.map((variant, index) => (
                                 <Accordion.Item key={index}>
                                     <Accordion.Summary>
                                         <h2>{variant.title}</h2>
@@ -85,23 +94,20 @@ const getBreadcrumb = ({ title, slug, category }) => {
 }
 
 
-const getVariants = createSelector(
-    (state, props) => props.data.pattern.variants,
-    variants => {
-        variants.forEach(variant => {
-            let index = 1
-            variant.interaction.forEach(step => {
-                step.annotations.forEach(annotation => {
-                    annotation.index = index++
-                })
+const prepareVariants = memoize(variants => {
+    variants.forEach(variant => {
+        let index = 1
+        variant.interaction.forEach(step => {
+            step.annotations.forEach(annotation => {
+                annotation.index = index++
             })
         })
-        return variants
-    }
-)
+    })
+    return variants
+})
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         pattern: {
             __aliasFor: 'patternBySlug',
             __args: { slug: context.params.slug },
@@ -141,13 +147,6 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'patterns'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

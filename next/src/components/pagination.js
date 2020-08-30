@@ -8,14 +8,15 @@ const useStyles = makeStyles(theme => {
             display: 'flex',
             paddingLeft: '0',
             listStyle: 'none',
-            borderRadius: '0.25rem'
+            borderRadius: '0.25rem',
+            justifyContent: 'center'
         },
         paginationItem: {
             display: 'inline'
         },
         paginationLink: {
             ':first-of-type': {
-                marginleft: '0'
+                marginLeft: '0'
             },
             letterSpacing: 'unset',
             border: '0',
@@ -47,10 +48,13 @@ const useStyles = makeStyles(theme => {
                 cursor: 'pointer'
             }
         },
+        number: {
+            width: '30px'
+        },
         active: {
             '&,&:hover,&:focus': {
-                backgroundColor: color.black,
-                borderColor: color.black,
+                backgroundColor: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
                 color: color.white,
                 boxShadow:
                     '0 4px 5px 0 rgba(' +
@@ -77,13 +81,15 @@ const useStyles = makeStyles(theme => {
     }
 })
 
-const Pagination = ({ pageIndex, pageCount, className, renderNav, indicatorCount }) => {
-    const start = Math.max(0, pageIndex - Math.floor(indicatorCount / 2))
-    const end = Math.min(pageCount - 1, pageIndex + Math.ceil(indicatorCount / 2) - 1)
+const Pagination = ({ pageIndex, pageCount, className, onClick, indicatorCount }) => {
+    if (pageCount <= 1) {
+        return null
+    }
+    const { min, max } = getBoundaries(pageIndex, indicatorCount, pageCount)
     const pages = []
     pages.push({ text: 'Previous', disabled: pageIndex === 0, index: pageIndex - 1 })
-    for (let i = start; i <= end; i++) {
-        pages.push({ text: i.toString(), active: i === pageIndex, index: i })
+    for (let i = min; i <= max; i++) {
+        pages.push({ text: (i + 1).toString(), active: i === pageIndex, index: i, number: true })
     }
     pages.push({ text: 'Next', disabled: pageIndex === pageCount - 1, index: pageIndex + 1 })
 
@@ -91,31 +97,63 @@ const Pagination = ({ pageIndex, pageCount, className, renderNav, indicatorCount
     const paginationClasses = classNames(classes.pagination, className)
     return (
         <ul className={paginationClasses}>
-            {pages.map((prop, key) => {
-                const paginationLink = classNames({
-                    [classes.paginationLink]: true,
-                    [classes.active]: prop.active,
-                    [classes.disabled]: prop.disabled
+            {
+                pages.map((prop, index) => {
+                    const paginationLink = classNames({
+                        [classes.paginationLink]: true,
+                        [classes.active]: prop.active,
+                        [classes.disabled]: prop.disabled,
+                        [classes.number]: prop.number
+                    })
+                    return (
+                        <li className={classes.paginationItem} key={index}>
+                            <Button
+                                className={paginationLink}
+                                disabled={prop.disabled}
+                                value={index}
+                                onClick={(!prop.disabled && !prop.active) ? () => onClick(prop.index) : null}
+                            >
+                                { prop.text }
+                            </Button>
+                        </li>
+                    )
                 })
-                return (
-                    <li className={classes.paginationItem} key={key}>
-                        <Button
-                            className={paginationLink}
-                            disabled={prop.disabled}
-                        >
-                            {
-                                renderNav(prop)
-                            }
-                        </Button>
-                    </li>
-                )
-            })}
+            }
         </ul>
     )
 }
 
+const getBoundaries = (index, count, max) => {
+    let up = true
+    const data = { min: index, max: index }
+    while (count > 1) {
+        if (up) {
+            if (data.max < max - 1) {
+                data.max++
+            } else if (data.min > 0) {
+                data.min--
+            } else {
+                break
+            }
+        } else {
+            if (data.min > 0) {
+                data.min--
+            } else if (data.max < max - 1) {
+                data.max++
+            } else {
+                break
+            }
+        }
+        up = !up
+        count--
+    }
+    return data
+}
+
 Pagination.defaultProps = {
-    indicatorCount: 10
+    pageIndex: 0,
+    pageCount: 1,
+    indicatorCount: 5
 }
 
 Pagination.propTypes = {

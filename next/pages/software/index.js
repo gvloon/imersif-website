@@ -2,19 +2,28 @@ import { React, api } from 'common'
 import { Link, Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
-const Page = ({ context, data }) => {
-    const { title, image, content } = data.page
+const Page = ({ page, tools }) => {
+    const { title, image, content } = page
 
-    const breadcrumb = [
-        {
-            name: 'Software',
-            href: '/software'
-        }
-    ]
+    const context = {
+        title,
+        section: 'software',
+        search: {
+            desktop: 'software',
+            mobile: null
+        },
+        breadcrumb: [
+            {
+                name: 'Software',
+                href: '/software'
+            }
+        ]
+    }
+
     return (
-        <BasicPage title={title} image={image} context={context} breadcrumb={breadcrumb}>
+        <BasicPage context={context} image={image}>
             <Markdown source={content} />
-            <ToolList tools={data.tools} />
+            <ToolList tools={tools} />
         </BasicPage>
     )
 }
@@ -25,7 +34,7 @@ const ToolList = ({ tools }) => {
             {
                 tools.map(({ slug, title }, index) => (
                     <li key={index}>
-                        <Link href="/software/[slug]" as={`/software/${slug}`}>
+                        <Link href="/tool/[slug]" as={`/tool/${slug}`}>
                             <a>{title}</a>
                         </Link>
                     </li>
@@ -36,7 +45,7 @@ const ToolList = ({ tools }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         page: {
             __aliasFor: 'softwarePage',
             title: true,
@@ -50,13 +59,6 @@ export const getStaticProps = async context => {
             title: true
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'software'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

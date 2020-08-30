@@ -25,14 +25,29 @@ class Case extends Model {
     }
   }
 
-  getSuggestTitle(doc) {
-    return doc.title
+  getId(doc) {
+    return doc.slug
   }
 
-  getSearchSource(doc) {
+  getSuggestResult(id, { title }) {
     return {
-      title: doc.title,
-      summary: doc.summary
+      link: this._getLink(id),
+      title
+    }
+  }
+
+  getSearchResult(id, { title }, highlight) {
+    return {
+      link: this._getLink(id),
+      title,
+      highlight: highlight.title || highlight.summary || highlight.description || highlight.keywords
+    }
+  }
+
+  _getLink(id) {
+    return {
+      href: '/case/[slug]',
+      as: `/case/${id}`
     }
   }
 }

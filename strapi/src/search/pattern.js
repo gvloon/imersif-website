@@ -1,5 +1,5 @@
 const Model = require('./model')
-const { suggestions, merge, stripHtml } = require('./transforms')
+const { suggestions, merge } = require('./transforms')
 
 class Pattern extends Model {
   constructor() {
@@ -14,7 +14,8 @@ class Pattern extends Model {
   index(doc) {
     return {
       title: doc.title,
-      solution: doc.solution,
+      solution: doc.solution && doc.solution.length ? doc.solution[0].ref : null,
+      keywords: doc.keywords,
       suggest: merge(
         suggestions(doc.title, /\W/, 20),
         suggestions(doc.keywords, /,/, 10)
@@ -22,14 +23,34 @@ class Pattern extends Model {
     }
   }
 
-  getSuggestTitle(doc) {
-    return doc.title
+  getId(doc) {
+    return doc.slug
   }
 
-  getSearchSource(doc) {
+  getSuggestResult(id, { title }) {
     return {
-      title: doc.title,
-      solution: doc.solution
+      link: this._getLink(id),
+      title
+    }
+  }
+
+  getSearchResult(id, { title, solution }, highlight) {
+    return {
+      link: this._getLink(id),
+      title,
+      highlight: highlight.title
+                  || highlight['solution.what']
+                  || highlight['solution.how']
+                  || highlight['solution.why']
+                  || highlight['solution.when']
+                  || highlight.keywords
+    }
+  }
+
+  _getLink(id) {
+    return {
+      href: '/pattern/[slug]',
+      as: `/pattern/${id}`
     }
   }
 }

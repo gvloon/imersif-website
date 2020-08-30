@@ -1,7 +1,7 @@
 class Model {
-  constructor(type, name, definition) {
-    this.type = type
+  constructor(name, mongoName, definition) {
     this.name = name
+    this.mongoName = mongoName
     this.definition = definition
   }
 }

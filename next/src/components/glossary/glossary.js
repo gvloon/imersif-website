@@ -57,7 +57,7 @@ const GlossaryItem = ({ item }) => {
     const classes = useStyles()
     return (
         <>
-            <div className={classes.term}><a href={`#${item.slug}`}>{item.term}</a></div>
+            <div className={classes.term}><a id={`${item.slug}`}>{item.term}</a></div>
             <Markdown source={item.explanation} />
         </>
     )

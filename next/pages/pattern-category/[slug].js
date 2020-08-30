@@ -1,7 +1,7 @@
-import { React, api, withStyles, createSelector } from 'common'
-import { Breadcrumb } from 'components'
+import { React, api, withStyles, memoize } from 'common'
+import { CheckboxList } from 'components'
 import { BasicPage } from 'components/page'
-import { FilterList, PatternList } from 'components/patterns'
+import { PatternList } from 'components/patterns'
 
 const styles = theme => ({
     patterns: {
@@ -18,26 +18,37 @@ class Page extends React.PureComponent {
     }
 
     render = () => {
-        const { context, data, classes } = this.props
-        const { slug, name } = data.patternCategory
+        const { patternCategory, classes } = this.props
+        const { selectedFilters } = this.state
+        const { slug, name, patterns } = patternCategory
 
-        const breadcrumb = [
-            {
-                name: 'Patterns',
-                href: '/patterns'
+        const context = {
+            title: name,
+            section: 'patterns',
+            search: {
+                desktop: 'patterns',
+                mobile: null
             },
-            {
-                name: name,
-                href: '/pattern-category/[slug]',
-                as: `/pattern-category/${slug}`
-            }
-        ]
-        const filters = getAvailableFilters(this.state, this.props)
-        const patterns = getFilteredPatterns(this.state, this.props)
+            breadcrumb: [
+                {
+                    name: 'Patterns',
+                    href: '/patterns'
+                },
+                {
+                    name: name,
+                    href: '/pattern-category/[slug]',
+                    as: `/pattern-category/${slug}`
+                }
+            ]
+        }
+
+        const filters = getAvailableFilters(patterns)
+        const preparedPatterns = preparePatterns(patterns)
+        const filteredPatterns = getFilteredPatterns(preparedPatterns, selectedFilters)
         return (
-            <BasicPage context={context} title={name} breadcrumb={breadcrumb}>
-                <FilterList values={filters} onChange={this.onFilterChange} />
-                <PatternList className={classes.patterns} patterns={patterns} />
+            <BasicPage context={context}>
+                <CheckboxList title="With: " values={filters} onChange={this.onFilterChange} />
+                <PatternList className={classes.patterns} patterns={filteredPatterns} />
             </BasicPage>
         )
     }
@@ -47,53 +58,44 @@ class Page extends React.PureComponent {
     }
 }
 
-const getAvailableFilters = createSelector(
-    (state, props) => props.data.patternCategory.patterns,
-    patterns => {
-        const map = {}
-        patterns.forEach(pattern => {
-            pattern.filters.forEach(filter => {
-                map[filter.name] = true
-            })
+const getAvailableFilters = memoize(patterns => {
+    const map = {}
+    patterns.forEach(pattern => {
+        pattern.filters.forEach(filter => {
+            map[filter.name] = true
         })
-        return Object.keys(map)
-    }
-)
+    })
+    return Object.keys(map)
+})
 
-const getPatterns = createSelector(
-    (state, props) => props.data.patternCategory.patterns,
-    patterns => {
-        return patterns.map(pattern => {
-            const item = Object.assign({}, pattern)
-            item.filterMap = {}
-            pattern.filters.forEach(filter => {
-                item.filterMap[filter.name] = true
-            })
-            return item
+const preparePatterns = memoize(patterns => {
+    return patterns.map(pattern => {
+        const item = Object.assign({}, pattern)
+        item.filterMap = {}
+        pattern.filters.forEach(filter => {
+            item.filterMap[filter.name] = true
         })
-    }
-)
+        return item
+    })
+})
 
-const getFilteredPatterns = createSelector(
-    getPatterns,
-    (state, props) => state.selectedFilters,
-    (patterns, filters) => {
-        return patterns.filter(pattern => {
-            if (filters.length === 0) {
+const getFilteredPatterns = memoize((patterns, filters) => {
+    console.log('getFilteredPatterns: ' + filters)
+    return patterns.filter(pattern => {
+        if (filters.length === 0) {
+            return true
+        }
+        for (const filter of filters) {
+            if (pattern.filterMap.hasOwnProperty(filter)) {
                 return true
             }
-            for (const filter of filters) {
-                if (pattern.filterMap.hasOwnProperty(filter)) {
-                    return true
-                }
-            }
-            return false
-        })
-    }
-)
+        }
+        return false
+    })
+})
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         patternCategory: {
             __aliasFor: 'patternCategoryBySlug',
             __args: { slug: context.params.slug },
@@ -118,13 +120,6 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'patterns'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

@@ -22,13 +22,28 @@ class Glossary extends Model {
     }
   }
 
-  getSuggestTitle(doc) {
-    return doc.term
+  getId(doc) {
+    return doc.slug
   }
 
-  getSearchSource(doc) {
+  getSuggestResult(id, { term }) {
     return {
-      term: doc.term
+      link: this._getLink(id),
+      title: term
+    }
+  }
+
+  getSearchResult(id, { term }, highlight) {
+    return {
+      link: this._getLink(id),
+      title: term,
+      highlight: highlight.term || highlight.explanation
+    }
+  }
+
+  _getLink(id) {
+    return {
+      href: `/glossary#${id}`
     }
   }
 }

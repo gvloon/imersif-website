@@ -3,25 +3,34 @@ import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 import { Glossary } from 'components/glossary'
 
-export const Page = ({ context, data }) => {
-    const { title, image, introduction } = data.page
+export const Page = ({ page, items }) => {
+    const { title, image, introduction } = page
 
-    const breadcrumb = [
-        {
-            name: 'Glossary',
-            href: '/glossary'
-        }
-    ]
+    const context = {
+        title,
+        section: 'glossary',
+        search: {
+            desktop: 'glossary',
+            mobile: null
+        },
+        breadcrumb: [
+            {
+                name: 'Glossary',
+                href: '/glossary'
+            }
+        ]
+    }
+
     return (
-        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
+        <BasicPage context={context} image={image}>
             <Markdown source={introduction} />
-            <Glossary items={data.items} />
+            <Glossary items={items} />
         </BasicPage>
     )
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         page: {
             __aliasFor: 'glossaryPage',
             title: true,
@@ -33,16 +42,10 @@ export const getStaticProps = async context => {
         items: {
             __aliasFor: 'glossaryItems',
             term: true,
+            slug: true,
             explanation: true
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'glossary'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

@@ -1,7 +1,7 @@
-import { React, PropTypes, classNames, makeStyles } from 'common'
+import { React, PropTypes, classNames, makeStyles, _ } from 'common'
 
-const verticalItemSpacing = 0.6
-const horizontalItemSpacing = 0.4
+const verticalItemSpacing = 0.8
+const horizontalItemSpacing = 0.8
 const verticalSubItemsPadding = 0.4
 const horizontalItemPadding = 0.8
 const titleHeight = 2.5
@@ -12,6 +12,7 @@ const List = ({ items, title, className }) => {
     if (!items || !items.length) {
         return null
     }
+
     const data = analyzeItems(items)
     const useStyles = makeStyles(theme => ({
         root: {
@@ -41,6 +42,11 @@ const List = ({ items, title, className }) => {
             },
             [theme.breakpoints.up('sm')]: {
                 width: '33.3333%'
+            }
+        },
+        threeColumnFix: {
+            [theme.breakpoints.up('sm')]: {
+                marginRight: '33.3333%'
             }
         },
         content: {
@@ -90,9 +96,12 @@ const List = ({ items, title, className }) => {
             }
             <div className={classes.list}>
                 {
-                    items.map((item, index) => (
-                        <Item key={index} classes={classes} item={item} />
-                    ))
+                    items.map((item, index) => {
+                        const className = items.length === 2 && index === 1 ? classes.threeColumnFix : undefined
+                        return (
+                            <Item key={index} classes={classes} className={className} item={item} index={index} />
+                        )
+                    })
                 }
             </div>
         </div>
@@ -153,6 +162,8 @@ const isValidHeight = (items, columnCount, height) => {
 }
 
 const getHeightForItem = (item) => {
+    if (!item)
+        return 1
     let height = 2 * verticalSubItemsPadding + item.children.length * itemHeight + titleHeight
     item.children.forEach(child => {
         if (child.children) {
@@ -167,9 +178,13 @@ List.propTypes = {
     title: PropTypes.string
 }
 
-const Item = ({ classes, item }) => {
+const Item = ({ classes, className, item }) => {
+    const rootClasses = classNames({
+        [classes.container]: !!classes.container,
+        [className]: !!className
+    })
     return (
-        <div className={classes.container}>
+        <div className={rootClasses}>
             <div className={classes.content}>
                 <div className={classes.title}>{item.value}</div>
                 <div className={classes.items}>

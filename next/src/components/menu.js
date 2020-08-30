@@ -1,5 +1,6 @@
-import { React, PropTypes, makeStyles } from 'common'
-import { Link, Dropdown, SearchInput } from 'components'
+import { React, PropTypes, makeStyles, PageContext } from 'common'
+import { Link, Dropdown } from 'components'
+import { SearchInput } from 'components/search'
 import { button, container, contentPadding, color } from 'jss/index'
 import { AppBar, Box, IconButton, Drawer, Button } from '@material-ui/core'
 import { Apps, Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
@@ -16,7 +17,6 @@ const useStyles = makeStyles(theme => ({
             ', 0.12), 0 7px 10px -5px rgba(' +
             color.hexToRgb(color.black) +
             ', 0.15)',
-        transition: 'all 150ms ease 0s',
         alignItems: 'center'
     },
     toolbar: {
@@ -120,9 +120,10 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Menu = ({ context }) => {
+const Menu = () => {
+    const pageContext = React.useContext(PageContext)
     const [drawerVisible, setDrawerVisible] = React.useState(false)
-    const [searchVisible, setSearchVisible] = React.useState(false)
+    const [searchVisible, setSearchVisible] = React.useState(pageContext.section === 'search')
     const toggleDrawer = () => setDrawerVisible(!drawerVisible)
     const toggleSearch = () => setSearchVisible(!searchVisible)
     const classes = useStyles()
@@ -134,13 +135,13 @@ const Menu = ({ context }) => {
                     <Link href="/">
                         <Button className={classes.brand}>XR Patterns</Button>
                     </Link>
-                    <SearchInput className={classes.search} context={context} optionsEnabled={true} />
+                    <SearchInput key={pageContext.search.desktop} className={classes.search} categoriesEnabled={true} />
                     <Box className={classes.nav} display="flex" flexDirection="row">
                         <Link href="/patterns">
                             <Button className={classes.navLink}>Patterns</Button>
                         </Link>
                         <Dropdown
-                            buttonText="Database"
+                            buttonText="Explore"
                             buttonProps={{
                                 className: classes.navLinkRight
                             }}
@@ -158,7 +159,7 @@ const Menu = ({ context }) => {
                     <Link href="/">
                         <Button className={classes.brand}>XR Patterns</Button>
                     </Link>
-                    <SearchInput className={classes.search} context={context} />
+                    <SearchInput key={pageContext.search.desktop} className={classes.search} />
                     <IconButton className={classes.menu} color="inherit" aria-label="show drawer" onClick={toggleDrawer}>
                         <MenuIcon />
                     </IconButton>
@@ -166,7 +167,7 @@ const Menu = ({ context }) => {
                 <div className={classes.mobileNavShort}>
                     {
                         searchVisible
-                            ? <SearchInput className={classes.searchMobile} mobile={true} context={context} onClose={toggleSearch} />
+                            ? <SearchInput key={pageContext.search.mobile} className={classes.searchMobile} mobile={true} onClose={toggleSearch} />
                             : <>
                                 <Box flex={1}>
                                     <Link href="/">
@@ -195,19 +196,19 @@ const Menu = ({ context }) => {
             >
                 <Box display="flex" flexDirection="column" alignItems="center">
                     <Link href="/patterns">
-                        <Button className={classes.drawerLink}>Patterns</Button>
+                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Patterns</Button>
                     </Link>
                     <Link href="/glossary">
-                        <Button className={classes.drawerLink}>Glossary</Button>
+                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Glossary</Button>
                     </Link>
                     <Link href="/hardware">
-                        <Button className={classes.drawerLink}>Hardware</Button>
+                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Hardware</Button>
                     </Link>
                     <Link href="/software">
-                        <Button className={classes.drawerLink}>Software</Button>
+                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Software</Button>
                     </Link>
                     <Link href="/cases">
-                        <Button className={classes.drawerLink}>Cases</Button>
+                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Cases</Button>
                     </Link>
                 </Box>
             </Drawer>
@@ -216,7 +217,6 @@ const Menu = ({ context }) => {
 }
 
 Menu.propTypes = {
-    context: PropTypes.object
 }
 
 export default Menu

@@ -35,18 +35,18 @@ const styles = theme => ({
     }
 })
 
-class FilterList extends React.Component {
+class CheckboxList extends React.Component {
 
     static propTypes = {
         values: PropTypes.array
     }
 
     static defaultProps = {
-        values: ['test1', 'test2']
+        values: []
     }
 
     render = () => {
-        const { values, classes, className } = this.props
+        const { values, title, classes, className } = this.props
         if (!values || !values.length) {
             return null
         }
@@ -60,7 +60,7 @@ class FilterList extends React.Component {
         }
         return (
             <div className={rootClasses}>
-                <div className={classes.title}>With: </div>
+                <div className={classes.title}>{title}</div>
                 <FormGroup className={classes.input} row onChange={this.onChange}>
                     {
                         values.map((value, index) => (
@@ -96,7 +96,7 @@ class FilterList extends React.Component {
     }
 }
 
-FilterList.propTypes = {
+CheckboxList.propTypes = {
 }
 
-export default withStyles(styles)(FilterList)
+export default withStyles(styles)(CheckboxList)

@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     },
     annotationIndex: {
         fontWeight: 400,
-        color: theme.palette.secondary.main
+        color: theme.palette.primary.main
     }
 }))
 

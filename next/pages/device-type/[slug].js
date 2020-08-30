@@ -2,22 +2,31 @@ import { React, api } from 'common'
 import { Link } from 'components'
 import { BasicPage } from 'components/page'
 
-const Page = ({ context, data }) => {
-    const { slug, name, devices } = data.deviceType
+const Page = ({ deviceType }) => {
+    const { slug, name, devices } = deviceType
 
-    const breadcrumb = [
-        {
-            name: 'Hardware',
-            href: '/hardware'
+    const context = {
+        title: name,
+        section: 'hardware',
+        search: {
+            desktop: 'hardware',
+            mobile: null
         },
-        {
-            name: name,
-            href: '/device-type/[slug]',
-            as: `/device-type/${slug}`
-        }
-    ]
+        breadcrumb: [
+            {
+                name: 'Hardware',
+                href: '/hardware'
+            },
+            {
+                name: name,
+                href: '/device-type/[slug]',
+                as: `/device-type/${slug}`
+            }
+        ]
+    }
+
     return (
-        <BasicPage context={context} title={name} breadcrumb={breadcrumb}>
+        <BasicPage context={context}>
             <DeviceList devices={devices} />
         </BasicPage>
     )
@@ -38,7 +47,7 @@ const DeviceList = ({ devices }) => (
 )
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         deviceType: {
             __aliasFor: 'deviceTypeBySlug',
             __args: {
@@ -52,13 +61,6 @@ export const getStaticProps = async context => {
             }
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'hardware'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

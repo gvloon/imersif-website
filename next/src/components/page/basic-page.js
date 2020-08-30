@@ -1,6 +1,5 @@
-import { React, PropTypes, makeStyles } from 'common'
+import { React, PropTypes, PageContext, makeStyles } from 'common'
 import { Layout, Menu, Footer, Image, Breadcrumb } from 'components'
-
 import { color, container, contentPadding, merge } from 'jss/index'
 
 const useStyles = makeStyles(theme => ({
@@ -38,21 +37,23 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const BasicPage = ({ context, title, image, breadcrumb, children }) => {
+const BasicPage = ({ context, image, breadcrumb, children }) => {
     const classes = useStyles()
     return (
-        <Layout title={title}>
-            <Menu context={context} />
-            <div className={classes.container}>
-                <Image className={classes.image} image={image} />
-                <div className={classes.content}>
-                    <Breadcrumb links={breadcrumb} />
-                    <h1>{title}</h1>
-                    { children }
+        <PageContext.Provider value={context}>
+            <Layout>
+                <Menu />
+                <div className={classes.container}>
+                    <Image className={classes.image} image={image} />
+                    <div className={classes.content}>
+                        <Breadcrumb links={breadcrumb} />
+                        <h1>{context.title}</h1>
+                        { children }
+                    </div>
                 </div>
-            </div>
-            <Footer/>
-        </Layout>
+                <Footer/>
+            </Layout>
+        </PageContext.Provider>
     )
 }
 

@@ -4,6 +4,7 @@ const { suggestions, merge, stripHtml } = require('./transforms')
 class Device extends Model {
   constructor() {
     super('device', 'Device', {
+      slug: {type: 'text'},
       title: {type: 'text'},
       description: {type: 'text'},
       keywords: {type: 'text'},
@@ -23,13 +24,29 @@ class Device extends Model {
     }
   }
 
-  getSuggestTitle(doc) {
-    return doc.title
+  getId(doc) {
+    return doc.slug
   }
 
-  getSearchSource(doc) {
+  getSuggestResult(id, { title }) {
     return {
-      title: doc.title
+      link: this._getLink(id),
+      title
+    }
+  }
+
+  getSearchResult(id, { title }, highlight) {
+    return {
+      link: this._getLink(id),
+      title,
+      highlight: highlight.title || highlight.description || highlight.keywords
+    }
+  }
+
+  _getLink(id) {
+    return {
+      href: '/device/[slug]',
+      as: `/device/${id}`
     }
   }
 }

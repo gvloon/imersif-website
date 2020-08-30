@@ -2,10 +2,19 @@ import { React, api } from 'common'
 import { Markdown } from 'components'
 import { FullImagePage } from 'components/page'
 
-const Page = ({ data, context }) => {
-    const { title, image, content } = data.page
+const Page = ({ page }) => {
+    const { title, image, content } = page
+
+    const context = {
+        title,
+        search: {
+            desktop: null,
+            mobile: null
+        }
+    }
+
     return (
-        <FullImagePage title={title} image={image} context={context} >
+        <FullImagePage context={context} image={image}>
             <h1>{title}</h1>
             <Markdown source={content} />
         </FullImagePage>
@@ -13,7 +22,7 @@ const Page = ({ data, context }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         page: {
             __aliasFor: 'homePage',
             title: true,
@@ -23,13 +32,6 @@ export const getStaticProps = async context => {
             content: true
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'home'
-        }
-    }
     return { props, revalidate: 1 }
 }
 

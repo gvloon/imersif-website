@@ -2,19 +2,28 @@ import { React, api } from 'common'
 import { Markdown, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
-const Page = ({ context, data }) => {
-    const { title, image, introduction } = data.page
+const Page = ({ page, deviceTypes, peripheralTypes }) => {
+    const { title, image, introduction } = page
 
-    const breadcrumb = [
-        {
-            name: 'Hardware',
-            href: '/hardware'
-        }
-    ]
+    const context = {
+        title,
+        section: 'hardware',
+        search: {
+            desktop: 'hardware',
+            mobile: null
+        },
+        breadcrumb: [
+            {
+                name: 'Hardware',
+                href: '/hardware'
+            }
+        ]
+    }
+
     return (
-        <BasicPage context={context} title={title} image={image} breadcrumb={breadcrumb}>
+        <BasicPage context={context} image={image}>
             <Markdown source={introduction} />
-            <CategoryList deviceTypes={data.deviceTypes} peripheralTypes={data.peripheralTypes} />
+            <CategoryList deviceTypes={deviceTypes} peripheralTypes={peripheralTypes} />
         </BasicPage>
     )
 }
@@ -46,7 +55,7 @@ const CategoryList = ({ deviceTypes, peripheralTypes }) => {
 }
 
 export const getStaticProps = async context => {
-    const data = await api({
+    const props = await api({
         page: {
             __aliasFor: 'hardwarePage',
             title: true,
@@ -64,13 +73,6 @@ export const getStaticProps = async context => {
             name: true
         }
     })
-    const props = {
-        data,
-        context: {
-            ...context,
-            section: 'hardware'
-        }
-    }
     return { props, revalidate: 1 }
 }
 
