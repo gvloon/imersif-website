@@ -70,6 +70,7 @@ const pages = {
     exit: {
         opacity: 0,
         transition: {
+            delay: 0.15,
             duration: 0.3
         }
     }
