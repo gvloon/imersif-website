@@ -1,15 +1,9 @@
 'use strict';
 
 /**
- * Lifecycle callbacks for the `pattern-variant` model.
+ * Read the documentation (https://strapi.io/documentation/v3.x/concepts/models.html#lifecycle-hooks)
+ * to customize this model
  */
-const slug = require('../../../src/slug')
 
 module.exports = {
-  beforeSave: async model => {
-    slug.beforeSave(model, 'title')
-  },
-  beforeUpdate: async model => {
-    slug.beforeUpdate(model, 'title')
-  },
 };

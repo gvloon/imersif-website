@@ -7,22 +7,6 @@
       "config": {
         "policies": []
       }
-    },
-    {
-      "method": "PUT",
-      "path": "/hardware-page",
-      "handler": "hardware-page.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/hardware-page",
-      "handler": "hardware-page.delete",
-      "config": {
-        "policies": []
-      }
     }
   ]
 }

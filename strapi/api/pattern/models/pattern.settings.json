@@ -32,7 +32,6 @@
       "component": "pattern.pros-and-cons"
     },
     "variants": {
-      "via": "pattern",
       "collection": "pattern-variant"
     },
     "category": {

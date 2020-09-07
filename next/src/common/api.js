@@ -1,17 +1,18 @@
-import { config, axios } from 'common'
-import { jsonToGraphQLQuery } from 'json-to-graphql-query'
-import delay from 'delay'
+import axios from 'axios'
+import { config } from 'common'
 
-export const api = async query => {
-    const headers = {
-        'Content-Type': 'application/json'
+const fetch = async options => {
+    if (options.headers) {
+        options.headers['Content-Type'] = 'application/json'
+    } else {
+        options.headers = {
+            'Content-Type': 'application/json'
+        }
     }
-    query = jsonToGraphQLQuery({ query }, { includeFalsyKeys: true })
-    const data = JSON.stringify({ query })
+    options.url = `${config.apiUrl}${options.url}`
     let response
     try {
-//        await delay(3000)
-        response = await axios.post(`${config.dockerApiUrl}/graphql`, data, { headers })
+        response = await axios(options)
     } catch (error) {
         if (error.response && error.response.data && error.response.data.errors) {
             throw error.response.data.errors[0]
@@ -22,5 +23,17 @@ export const api = async query => {
     if (response.data.errors && response.data.errors.length) {
         throw new Error(response.data.errors[0].message)
     }
-    return response.data.data
+    return response.data
+}
+
+const get = async url => {
+    return fetch({
+        method: 'get',
+        url
+    })
+}
+
+export default {
+    fetch,
+    get
 }

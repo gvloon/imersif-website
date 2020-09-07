@@ -57,29 +57,17 @@ const getBreadcrumb = ({ slug, title, category }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        case: {
-            __aliasFor: 'caseBySlug',
-            __args: { slug: context.params.slug },
-            slug: true,
-            title: true,
-            summary: true,
-            description: true,
-            category: {
-                title: true,
-                slug: true
-            }
-        }
-    })
+    const [useCase] = await Promise.all([
+        api.get(`/cases/${context.params.slug}`)
+    ])
+    const props = {
+        case: useCase
+    }
     return { props, revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
-    const { cases } = await api({
-        cases: {
-            slug: true
-        }
-    })
+    const cases = await api.get(`/cases`)
     const paths = cases.map(({ slug }) => ({
         params: { slug }
     }))

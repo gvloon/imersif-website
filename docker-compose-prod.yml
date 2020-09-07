@@ -8,9 +8,6 @@ services:
     container_name: imersif_next
     depends_on:
       - strapi
-    environment:
-      NEXT_PUBLIC_STRAPI_URL: http://$HOST:$STRAPI_PORT
-      NEXT_DOCKER_STRAPI_URL: http://imersif_strapi:$STRAPI_PORT
     command: bash -c 'yarn && /home/scripts/wait.sh http://imersif_strapi:$STRAPI_PORT && yarn build && yarn start'
     expose:
       - '$NEXT_PORT'

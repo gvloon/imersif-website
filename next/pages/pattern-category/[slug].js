@@ -80,7 +80,6 @@ const preparePatterns = memoize(patterns => {
 })
 
 const getFilteredPatterns = memoize((patterns, filters) => {
-    console.log('getFilteredPatterns: ' + filters)
     return patterns.filter(pattern => {
         if (filters.length === 0) {
             return true
@@ -95,40 +94,15 @@ const getFilteredPatterns = memoize((patterns, filters) => {
 })
 
 export const getStaticProps = async context => {
-    const props = await api({
-        patternCategory: {
-            __aliasFor: 'patternCategoryBySlug',
-            __args: { slug: context.params.slug },
-            name: true,
-            patterns: {
-                title: true,
-                slug: true,
-                image: {
-                    url: true
-                },
-                pros_and_cons: {
-                    pros: {
-                        text: true
-                    },
-                    cons: {
-                        text: true
-                    }
-                },
-                filters: {
-                    name: true
-                }
-            }
-        }
-    })
+    const [patternCategory] = await Promise.all([
+        api.get(`/pattern-categories/${context.params.slug}`)
+    ])
+    const props = { patternCategory }
     return { props, revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
-    const { patternCategories } = await api({
-        patternCategories: {
-            slug: true
-        }
-    })
+    const patternCategories = await api.get(`/pattern-categories`)
     const paths = patternCategories.map(({ slug }) => ({
         params: { slug }
     }))

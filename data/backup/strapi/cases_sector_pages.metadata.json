@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.cases_sector_pages"}],"uuid":"c34ee8e6ccf445a0854a6b7cb58eb6ab"}

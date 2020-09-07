@@ -1,10 +1,9 @@
 // noinspection ES6CheckImport
 export { default as React } from 'react'
-export { default as axios } from 'axios'
 export { default as _ } from 'lodash'
 export { default as classNames } from 'classnames'
 export { default as config } from 'config'
-export * from './api'
+export { default as api } from './api'
 export { template, first, paginate, categorize } from './helpers'
 export { useMediaQuery } from '@material-ui/core'
 export { makeStyles, withStyles, useTheme } from '@material-ui/core/styles'

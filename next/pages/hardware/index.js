@@ -55,24 +55,11 @@ const CategoryList = ({ deviceTypes, peripheralTypes }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        page: {
-            __aliasFor: 'hardwarePage',
-            title: true,
-            image: {
-                url: true
-            },
-            introduction: true
-        },
-        deviceTypes: {
-            slug: true,
-            name: true
-        },
-        peripheralTypes: {
-            slug: true,
-            name: true
-        }
-    })
+    const props = {
+        page: await api.get('/hardware-page'),
+        deviceTypes: await api.get('/device-types'),
+        peripheralTypes: await api.get('/peripheral-types')
+    }
     return { props, revalidate: 1 }
 }
 

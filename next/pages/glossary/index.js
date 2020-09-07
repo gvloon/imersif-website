@@ -30,23 +30,11 @@ export const Page = ({ page, items }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        page: {
-            __aliasFor: 'glossaryPage',
-            title: true,
-            image: {
-                url: true
-            },
-            introduction: true
-        },
-        items: {
-            __aliasFor: 'glossaryItems',
-            term: true,
-            slug: true,
-            explanation: true
-        }
-    })
-    return { props, revalidate: 1 }
+    const [page, items] = await Promise.all([
+        api.get('/glossary-page'),
+        api.get('/glossary-items')
+    ])
+    return { props: { page, items }, revalidate: 1 }
 }
 
 export default Page

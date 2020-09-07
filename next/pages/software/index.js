@@ -45,21 +45,11 @@ const ToolList = ({ tools }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        page: {
-            __aliasFor: 'softwarePage',
-            title: true,
-            image: {
-                url: true
-            },
-            introduction: true
-        },
-        tools: {
-            slug: true,
-            title: true
-        }
-    })
-    return { props, revalidate: 1 }
+    const [page, tools] = await Promise.all([
+        api.get('/software-page'),
+        api.get('/tools')
+    ])
+    return { props: { page, tools }, revalidate: 1 }
 }
 
 export default Page

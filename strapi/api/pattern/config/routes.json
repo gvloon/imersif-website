@@ -3,50 +3,12 @@
     {
       "method": "GET",
       "path": "/patterns",
-      "handler": "pattern.find",
-      "config": {
-        "policies": []
-      }
+      "handler": "pattern.find"
     },
     {
       "method": "GET",
-      "path": "/patterns/count",
-      "handler": "pattern.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/patterns/:id",
-      "handler": "pattern.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/patterns",
-      "handler": "pattern.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/patterns/:id",
-      "handler": "pattern.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/patterns/:id",
-      "handler": "pattern.delete",
-      "config": {
-        "policies": []
-      }
+      "path": "/patterns/:slug",
+      "handler": "pattern.findBySlug"
     }
   ]
 }

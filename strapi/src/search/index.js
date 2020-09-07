@@ -43,14 +43,14 @@ class Search {
     }3
   }
 
-  async updateIndex(modelName, doc) {
+  async afterCreate(modelName, result) {
     const model = this._model(modelName)
-    if (!model)
-      return
+    await this._index(model, result)
+  }
 
-    if (doc._update) {
-      await this._index(model, doc._update)
-    }
+  async afterUpdate(modelName, result) {
+    const model = this._model(modelName)
+    await this._index(model, result)
   }
 
   async deleteIndex(modelName) {
@@ -66,15 +66,17 @@ class Search {
     return this._suggestResponse(response)
   }
 
-  async search(category, text, pageSize, pageIndex) {
+  async search(categoryName, text, pageSize, pageIndex) {
+    const category = this._category(categoryName)
     pageSize = pageSize || 10
     pageIndex = pageIndex || 0
     const response = await this._searchRequest(category, text, pageSize, pageIndex)
-    console.log('search response: ' + util.inspect(response))
     const data = this._searchResponse(response)
+    data.text = text
+    data.category = category ? category.name : null
     data.pageSize = pageSize
+    data.pageCount = Math.ceil(data.resultCount / pageSize),
     data.pageIndex = pageIndex
-    console.log('search: ' + util.inspect(data))
     return data
   }
 
@@ -169,8 +171,7 @@ class Search {
     return results.slice(0, 10)
   }
 
-  async _searchRequest(categoryName, text, size, page) {
-    const category = this._category(categoryName)
+  async _searchRequest(category, text, size, page) {
     const data = {
       size,
       from: page * size,

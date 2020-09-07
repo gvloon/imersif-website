@@ -10,40 +10,8 @@
     },
     {
       "method": "GET",
-      "path": "/devices/count",
-      "handler": "device.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/devices/:id",
-      "handler": "device.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/devices",
-      "handler": "device.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/devices/:id",
-      "handler": "device.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/devices/:id",
-      "handler": "device.delete",
+      "path": "/devices/:slug",
+      "handler": "device.findBySlug",
       "config": {
         "policies": []
       }

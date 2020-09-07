@@ -7,22 +7,6 @@
       "config": {
         "policies": []
       }
-    },
-    {
-      "method": "PUT",
-      "path": "/patterns-page",
-      "handler": "patterns-page.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/patterns-page",
-      "handler": "patterns-page.delete",
-      "config": {
-        "policies": []
-      }
     }
   ]
 }

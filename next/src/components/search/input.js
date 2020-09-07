@@ -262,22 +262,12 @@ class Input extends React.Component
             })
             return
         }
-
-        const data = await api({
-            results: {
-                __aliasFor: 'suggest',
-                __args: { category: category.value, text },
-                type: true,
-                title: true,
-                link: {
-                    href: true,
-                    as: true
-                }
-            }
+        const tmp = url.format({
+            pathname: '/suggest',
+            query: { text, category: category.value }
         })
-        this.setState({
-            results: data.results
-        })
+        const results = await api.get(tmp)
+        this.setState({ results })
     }
 }
 

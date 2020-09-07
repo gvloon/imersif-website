@@ -72,40 +72,15 @@ const SpecificationList = ({ device }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        device: {
-            __aliasFor: 'deviceBySlug',
-            __args: { slug: context.params.slug },
-            slug: true,
-            title: true,
-            description: true,
-            device_type: {
-                slug: true,
-                name: true
-            },
-            screen: {
-                name: true
-            },
-            tethering: {
-                name: true
-            },
-            tracking_type: {
-                name: true
-            },
-            dof: {
-                name: true
-            }
-        }
-    })
+    const [device] = await Promise.all([
+        api.get(`/devices/${context.params.slug}`)
+    ])
+    const props = { device }
     return { props, revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
-    const { devices } = await api({
-        devices: {
-            slug: true
-        }
-    })
+    const devices = await api.get(`/devices`)
     const paths = devices.map(({ slug }) => ({
         params: { slug }
     }))

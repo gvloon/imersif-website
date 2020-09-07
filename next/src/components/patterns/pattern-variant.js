@@ -50,7 +50,7 @@ const PatternVariant = ({ variant, className }) => {
     if (!variant) {
         return null
     }
-    const { interaction, examples, additions } = variant
+    const { interactions, examples, additions } = variant
     const classes = useStyles()
     const rootClasses = classNames({
         [className]: !!className,
@@ -59,24 +59,24 @@ const PatternVariant = ({ variant, className }) => {
     return (
         <div className={rootClasses}>
             <h3>How this pattern works</h3>
-            <InteractionSteps interaction={interaction} classes={classes} />
+            <InteractionSteps interactions={interactions} classes={classes} />
             <Examples examples={examples} classes={classes} />
             <Additions additions={additions} classes={classes} />
         </div>
     )
 }
 
-const InteractionSteps = ({ interaction, classes }) => {
+const InteractionSteps = ({ interactions, classes }) => {
     return (
         <div className={classes.steps}>
             {
-                _.chunk(interaction, 2).map((chunk, index) => (
+                _.chunk(interactions, 2).map((chunk, index) => (
                     <div key={index} className={classes.interactionPair}>
                         {
-                            chunk.map((step, index) => (
+                            chunk.map((interaction, index) => (
                                 <div key={index} className={classes.interactionStep}>
-                                    <Image className={classes.interactionImage} image={step.image} />
-                                    <Annotations annotations={step.annotations} classes={classes} />
+                                    <Image className={classes.interactionImage} image={interaction.image} />
+                                    <Annotations annotations={interaction.annotations} classes={classes} />
                                 </div>
                             ))
                         }

@@ -4,6 +4,8 @@ set -a
 . .env
 set +a
 
+cp config/prod.js next/src/properties.js
+
 docker-compose -f docker-compose.yml -f docker-compose-prod.yml down --remove-orphans
 docker-compose -f docker-compose.yml -f docker-compose-prod.yml build --no-cache
 docker-compose -f docker-compose.yml -f docker-compose-prod.yml up -d

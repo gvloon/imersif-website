@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.xr_categories"}],"uuid":"86a0550d0c3c4d43971bfaad1a58ed29"}

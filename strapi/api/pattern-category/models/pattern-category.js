@@ -1,22 +1,19 @@
 'use strict';
 
 /**
- * Lifecycle callbacks for the `pattern-category` model.
+ * Read the documentation (https://strapi.io/documentation/v3.x/concepts/models.html#lifecycle-hooks)
+ * to customize this model
  */
+
 const slug = require('../../../src/slug')
-const util = require('util')
 
 module.exports = {
-  beforeSave: async (model, attrs, options) => {
-    console.log('model: ' + util.inspect(model))
-    console.log('attrs: ' + util.inspect(attrs))
-    console.log('options: ' + util.inspect(options))
-    slug.beforeSave(model, 'name')
-  },
-  beforeUpdate: async (model, attrs, options) => {
-    console.log('model: ' + util.inspect(model))
-    console.log('attrs: ' + util.inspect(attrs))
-    console.log('options: ' + util.inspect(options))
-    slug.beforeUpdate(model, 'name')
+  lifecycles: {
+    beforeCreate: async (...params) => {
+      slug.beforeCreate('name', ...params)
+    },
+    beforeUpdate: async (...params) => {
+      slug.beforeUpdate('name', ...params)
+    }
   }
 }

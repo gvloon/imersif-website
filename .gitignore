@@ -4,3 +4,4 @@ yarn-error.log
 data/db
 .idea/
 /.env
+next/src/properties.js

@@ -10,40 +10,8 @@
     },
     {
       "method": "GET",
-      "path": "/case-categories/count",
-      "handler": "case-category.count",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/case-categories/:id",
-      "handler": "case-category.findOne",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "POST",
-      "path": "/case-categories",
-      "handler": "case-category.create",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "PUT",
-      "path": "/case-categories/:id",
-      "handler": "case-category.update",
-      "config": {
-        "policies": []
-      }
-    },
-    {
-      "method": "DELETE",
-      "path": "/case-categories/:id",
-      "handler": "case-category.delete",
+      "path": "/case-categories/:slug",
+      "handler": "case-category.findBySlug",
       "config": {
         "policies": []
       }

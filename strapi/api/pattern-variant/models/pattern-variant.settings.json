@@ -12,13 +12,6 @@
     "title": {
       "type": "string"
     },
-    "subtitle": {
-      "type": "string"
-    },
-    "pattern": {
-      "model": "pattern",
-      "via": "variants"
-    },
     "interaction": {
       "type": "component",
       "repeatable": true,
@@ -30,8 +23,13 @@
     "additions": {
       "collection": "pattern-example"
     },
-    "slug": {
-      "type": "string"
+    "label": {
+      "type": "string",
+      "required": false,
+      "unique": false
+    },
+    "order": {
+      "type": "integer"
     }
   }
 }

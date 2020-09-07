@@ -33,24 +33,14 @@ const Page = ({ tool }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        tool: {
-            __aliasFor: 'toolBySlug',
-            __args: { slug: context.params.slug },
-            slug: true,
-            title: true,
-            description: true
-        }
-    })
-    return { props, revalidate: 1 }
+    const [tool] = await Promise.all([
+        api.get(`/tools/${context.params.slug}`)
+    ])
+    return { props: { tool }, revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
-    const { tools } = await api({
-        tools: {
-            slug: true
-        }
-    })
+    const tools = await api.get('/tools')
     const paths = tools.map(({ slug }) => ({
         params: { slug }
     }))

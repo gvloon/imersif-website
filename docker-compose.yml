@@ -20,12 +20,12 @@ services:
             DATABASE_NAME: strapi
             DATABASE_HOST: mongo
             DATABASE_PORT: $MONGO_PORT
+            PORT: $STRAPI_PORT
             DATABASE_USERNAME: strapi
             DATABASE_PASSWORD: strapi
-            HOST: $HOST
-            PORT: $STRAPI_PORT
             ELASTIC_HOST: elastic
             ELASTIC_PORT: $ELASTIC_PORT
+            NODE_PATH: src/
         volumes:
             - ./strapi:/srv/app
         links:

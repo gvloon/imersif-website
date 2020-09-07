@@ -50,34 +50,11 @@ const CategoryList = ({ categories }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        page: {
-            __aliasFor: 'patternsPage',
-            title: true,
-            image: {
-                url: true
-            },
-            introduction: true
-        },
-        categories: {
-            __aliasFor: 'patternCategories',
-            __args: {
-                sort: 'name',
-                where: {
-                    parent_null: true
-                }
-            },
-            name: true,
-            children: {
-                name: true,
-                slug: true,
-                children: {
-                    name: true,
-                    slug: true
-                }
-            }
-        }
-    })
+    const [page, categories] = await Promise.all([
+        api.get('/patterns-page'),
+        api.get('/pattern-categories?parent_null=true&_sort=name:ASC')
+    ])
+    const props = { page, categories }
     return { props, revalidate: 1 }
 }
 

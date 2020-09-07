@@ -1,4 +1,4 @@
-import { React, api, inspect } from 'common'
+import { React, api } from 'common'
 import { Markdown, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
@@ -43,31 +43,11 @@ const CategoryList = ({ categories }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        page: {
-            __aliasFor: 'casesPage',
-            title: true,
-            image: {
-                url: true
-            },
-            introduction: true
-        },
-        categories: {
-            __aliasFor: 'caseCategories',
-            __args: {
-                sort: 'title',
-                where: {
-                    parent_null: true
-                }
-            },
-            slug: true,
-            title: true,
-            children: {
-                title: true,
-                slug: true
-            }
-        }
-    })
+    const [page, categories] = await Promise.all([
+        api.get(`/cases-page`),
+        api.get('/case-categories?parent_null=true&_sort=title:ASC')
+    ])
+    const props = { page, categories }
     return { props, revalidate: 1 }
 }
 

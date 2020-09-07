@@ -22,16 +22,9 @@ const Page = ({ page }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        page: {
-            __aliasFor: 'homePage',
-            title: true,
-            image: {
-                url: true
-            },
-            content: true
-        }
-    })
+    const props = {
+        page: await api.get('/home-page')
+    }
     return { props, revalidate: 1 }
 }
 

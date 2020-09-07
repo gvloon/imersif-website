@@ -50,40 +50,21 @@ const Categories = ({ categories }) => {
 }
 
 export const getStaticProps = async context => {
-    const props = await api({
-        category: {
-            __aliasFor: 'caseCategoryBySlug',
-            __args: { slug: context.params.slug },
-            slug: true,
-            title: true,
-            description: true,
-            children: {
-                slug: true,
-                title: true
-            },
-            cases: {
-                slug: true,
-                title: true,
-                summary: true
-            }
-        }
-    })
-    props.pageIndex = parseInt(context.params.index)
+    const [category] = await Promise.all([
+        api.get(`/case-categories/${context.params.slug}`)
+    ])
+    const props = {
+        category,
+        pageIndex: parseInt(context.params.index)
+    }
     return { props, revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
-    const { caseCategories } = await api({
-        caseCategories: {
-            slug: true,
-            cases: {
-                slug: true
-            }
-        }
-    })
+    const categories = await api.get(`/case-categories`)
     const paths = []
-    caseCategories.forEach(({ slug, cases }) => {
-        const pageCount = Math.ceil(cases.length / pageSize)
+    categories.forEach(({ slug, caseCount }) => {
+        const pageCount = Math.ceil(caseCount / pageSize)
         for (let index = 0; index < pageCount; index++) {
             paths.push({ params: { slug, index: index.toString() } })
         }

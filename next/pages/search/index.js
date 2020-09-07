@@ -1,5 +1,4 @@
-import { React, config, withStyles, withRouter, _, inspect, LoaderContext } from 'common'
-import { search } from 'api'
+import { React, config, withStyles, withRouter, _, inspect, LoaderContext, api } from 'common'
 import { Pagination } from 'components'
 import { BasicPage } from 'components/page'
 import { SearchResult, MobileFilter, DesktopFilter, LoadMore } from 'components/search'
@@ -30,6 +29,14 @@ const styles = theme => ({
         marginTop: '3rem'
     }
 })
+
+const search = async (text, category, pageSize, pageIndex) => {
+    const tmp = url.format({
+        pathname: '/search',
+        query: { text, category, pageSize, pageIndex }
+    })
+    return await api.get(tmp)
+}
 
 class Page extends React.Component
 {
@@ -161,6 +168,7 @@ class Page extends React.Component
             })
         }
     }
+
 }
 
 export const getServerSideProps = async context => {

@@ -10,18 +10,15 @@ class Slug {
     this.regex = /[^\w]/g
   }
 
-  beforeSave(model, name) {
-    if (model[name]) {
-      model.slug = this._slugify(model[name])
+  beforeCreate(name, data) {
+    if (data[name]) {
+      data.slug = this._slugify(data[name])
     }
   }
 
-  beforeUpdate(model, name) {
-    const update = model.getUpdate()
-    if (update && update[name]) {
-      model.update({
-        slug: this._slugify(update[name])
-      })
+  beforeUpdate(name, params, data) {
+    if (data[name]) {
+      data.slug = this._slugify(data[name])
     }
   }
 
@@ -39,6 +36,6 @@ class Slug {
     value = value.replace(this.regex, ' ')
     return slugify(value, this.options)
   }
-}
+}``
 
 module.exports = new Slug()

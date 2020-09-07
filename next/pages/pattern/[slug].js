@@ -1,4 +1,4 @@
-import { React, api, withStyles, memoize } from 'common'
+import { React, api, withStyles } from 'common'
 import { Markdown, Accordion } from 'components'
 import { BasicPage } from 'components/page'
 import { SolutionBlock, PatternVariant } from 'components/patterns'
@@ -34,7 +34,6 @@ class Page extends React.Component {
             breadcrumb: getBreadcrumb(pattern)
         }
 
-        const preparedVariants = prepareVariants(variants)
         return (
             <BasicPage context={context}>
                 <Markdown />
@@ -42,7 +41,7 @@ class Page extends React.Component {
                 <div className={classes.variants}>
                     <Accordion>
                         {
-                            preparedVariants.map((variant, index) => (
+                            variants.map((variant, index) => (
                                 <Accordion.Item key={index}>
                                     <Accordion.Summary>
                                         <h2>{variant.title}</h2>
@@ -93,69 +92,16 @@ const getBreadcrumb = ({ title, slug, category }) => {
     }
 }
 
-
-const prepareVariants = memoize(variants => {
-    variants.forEach(variant => {
-        let index = 1
-        variant.interaction.forEach(step => {
-            step.annotations.forEach(annotation => {
-                annotation.index = index++
-            })
-        })
-    })
-    return variants
-})
-
 export const getStaticProps = async context => {
-    const props = await api({
-        pattern: {
-            __aliasFor: 'patternBySlug',
-            __args: { slug: context.params.slug },
-            title: true,
-            solution: {
-                what: true,
-                why: true,
-                how: true,
-                when: true
-            },
-            image: {
-                url: true
-            },
-            category: {
-                name: true,
-                slug: true
-            },
-            variants: {
-                title: true,
-                slug: true,
-                interaction: {
-                    image: {
-                        url: true
-                    },
-                    annotations: {
-                        text: true
-                    }
-                },
-                examples: {
-                    title: true,
-                    content: true
-                },
-                additions: {
-                    title: true,
-                    content: true
-                }
-            }
-        }
-    })
+    const [pattern] = await Promise.all([
+        api.get(`/patterns/${context.params.slug}`)
+    ])
+    const props = { pattern }
     return { props, revalidate: 1 }
 }
 
 export const getStaticPaths = async () => {
-    const { patterns } = await api({
-        patterns: {
-            slug: true
-        }
-    })
+    const patterns = await api.get(`/patterns`)
     const paths = patterns.map(({ slug }) => ({
         params: { slug }
     }))
