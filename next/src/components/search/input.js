@@ -164,7 +164,7 @@ class Input extends React.Component
                             placeholder={category.placeholder}
                             onChange={this.onChangeText}
                             onFocus={this.onFocus}
-                            onBlur={this.onBlur}
+//                            onBlur={this.onBlur}
                             onKeyUp={this.onKeyUp}
                             autoFocus={true}
                             value={text}
