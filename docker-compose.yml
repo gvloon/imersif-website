@@ -26,6 +26,7 @@ services:
             ELASTIC_HOST: elastic
             ELASTIC_PORT: $ELASTIC_PORT
             NODE_PATH: src/
+            ADMIN_JWT_SECRET: $ADMIN_JWT_SECRET
         volumes:
             - ./strapi:/srv/app
         links:
