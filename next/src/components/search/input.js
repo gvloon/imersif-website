@@ -164,7 +164,6 @@ class Input extends React.Component
                             placeholder={category.placeholder}
                             onChange={this.onChangeText}
                             onFocus={this.onFocus}
-//                            onBlur={this.onBlur}
                             onKeyUp={this.onKeyUp}
                             autoFocus={true}
                             value={text}
@@ -180,7 +179,7 @@ class Input extends React.Component
                             role="presentation"
                         >
                             <div className={classes.suggestions}>
-                                <Results results={results} classes={classes} />
+                                <Results results={results} classes={classes} onClick={this.onResult} />
                             </div>
                         </Popper>
                     </div>
@@ -221,7 +220,7 @@ class Input extends React.Component
         })
     }
 
-    onBlur = ev => {
+    onResult = ev => {
         this.setState({
             focus: false
         })
@@ -272,7 +271,7 @@ class Input extends React.Component
 }
 
 
-const Results = ({ results, classes }) => {
+const Results = ({ results, classes, onClick }) => {
     if (!results || !results.length) {
         return (
             <div className={classes.suggestion}>
@@ -283,7 +282,7 @@ const Results = ({ results, classes }) => {
     return results.map((result, index) => (
         <div key={index} className={classes.suggestion}>
             <Link href={result.link.href} as={result.link.as}>
-                <a>
+                <a onClick={onClick}>
                     <div className={classes.suggestionTitle}>{result.title}</div>
                     <div className={classes.suggestionType}>{result.type}</div>
                 </a>
