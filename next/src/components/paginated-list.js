@@ -1,60 +1,33 @@
-import { React, PropTypes, withStyles } from 'common'
+import { React, PropTypes, makeStyles } from 'common'
 import Pagination from './pagination'
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     pagination: {
         marginTop: '20px',
         marginLeft: '-14px'
     }
-})
+}))
 
-class PaginatedList extends React.Component {
-    constructor (props) {
-        super(props)
-
-        this.state = {
-            pageIndex: 0
-        }
-    }
-
-    render () {
-        const { columns, items, className, indicatorCount, classes } = this.props
-        const { pageIndex } = this.state
-        return (
-            <div className={className}>
-                { this.renderHeaders() }
-                { this.renderRows() }
-                { this.renderPagination() }
-            </div>
-        )
-    }
-
-    renderHeaders() {
-        const { columns } = this.props
-        return columns.map(column => (
-            <div>{column.label}</div>
-        ))
-    }
-
-    renderRows() {
-        const { columns, items, pageSize } = this.props
-    }
-
-    renderPagination() {
-        const { items, pageSize, classes } = this.props
-        const { pageIndex } = this.state
-        const pageCount = 0
-
-        return (
-            <Pagination
-                className={classes.pagination}
-                pageIndex={pageIndex}
-                pageCount={pageCount}
-            />
-        )
-    }
+const PaginatedList = ({ data, pageIndex, pageCount, renderRow, renderNav, className, indicatorCount }) => {
+    const classes = useStyles()
+    return (
+        <div className={className}>
+            {
+                data.map(renderRow)
+            }
+            {
+                pageCount > 1 &&
+                <Pagination
+                    className={classes.pagination}
+                    pageIndex={pageIndex}
+                    pageCount={pageCount}
+                    renderNav={renderNav}
+                    indicatorCount={indicatorCount}
+                />
+            }
+        </div>
+    )
 }
-
 
 PaginatedList.defaultProps = {
     indicatorCount: 10
@@ -70,4 +43,4 @@ PaginatedList.propTypes = {
     indicatorCount: PropTypes.number
 }
 
-export default withStyles(styles)(PaginatedList)
+export default PaginatedList
