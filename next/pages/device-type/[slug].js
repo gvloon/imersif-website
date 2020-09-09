@@ -39,6 +39,7 @@ const DeviceList = ({ devices }) => {
             value: device =>  device.title
         }
     ]
+    return null
 }
 
 export const getStaticProps = async context => {
