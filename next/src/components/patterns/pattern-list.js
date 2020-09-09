@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     patternMobile: {
         marginTop: marginPattern + 'rem',
         marginBottom: marginPattern + 'rem',
-        backgroundColor: '#fafafa',
+        backgroundColor: theme.palette.secondary.main,
         padding: '0.5rem',
         border: '1px solid #e9e9e9',
         borderRadius: '3px',
@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     patternDesktop: {
         marginTop: marginPattern + 'rem',
         marginBottom: marginPattern + 'rem',
-        backgroundColor: '#fafafa',
+        backgroundColor: theme.palette.secondary.main,
         border: '1px solid #e9e9e9',
         borderRadius: '3px',
         flexDirection: 'row',
@@ -72,7 +72,8 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 'bold'
     },
     seeMore: {
-        marginLeft: 'auto'
+        marginLeft: 'auto',
+        marginTop: '1rem'
     }
 }))
 
@@ -90,38 +91,32 @@ const PatternList = ({ patterns, filters, className }) => {
             <div className={classes.container}>
                 {
                     patterns.map((pattern, index) => (
-                        <React.Fragment key={index}>
-                            <div className={classes.patternMobile}>
-                                <div className={classes.top}>
+                        <Link key={index} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
+                            <a>
+                                <div className={classes.patternMobile}>
+                                    <div className={classes.top}>
+                                        <div className={classes.imageContainer}>
+                                            <Image className={classes.image} image={pattern.image} />
+                                        </div>
+                                        <div className={classes.right}>
+                                            <h3>{pattern.title}</h3>
+                                        </div>
+                                    </div>
+                                    <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
+                                    <Button className={classes.seeMore}>See more</Button>
+                                </div>
+                                <div className={classes.patternDesktop}>
                                     <div className={classes.imageContainer}>
-                                        <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
-                                            <a>
-                                                <Image className={classes.image} image={pattern.image} />
-                                            </a>
-                                        </Link>
+                                        <Image className={classes.image} image={pattern.image} />
                                     </div>
                                     <div className={classes.right}>
-                                        <h3>{pattern.title}</h3>
+                                        <h4>{pattern.title}</h4>
+                                        <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
+                                        <Button className={classes.seeMore}>See more</Button>
                                     </div>
                                 </div>
-                                <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
-                                <Button className={classes.seeMore} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>See more</Button>
-                            </div>
-                            <div className={classes.patternDesktop}>
-                                <div className={classes.imageContainer}>
-                                    <Link href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
-                                        <a>
-                                            <Image className={classes.image} image={pattern.image} />
-                                        </a>
-                                    </Link>
-                                </div>
-                                <div className={classes.right}>
-                                    <h4>{pattern.title}</h4>
-                                    <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
-                                    <Button className={classes.seeMore} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>See more</Button>
-                                </div>
-                            </div>
-                        </React.Fragment>
+                            </a>
+                        </Link>
                     ))
                 }
             </div>

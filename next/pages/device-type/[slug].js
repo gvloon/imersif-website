@@ -32,19 +32,14 @@ const Page = ({ deviceType }) => {
     )
 }
 
-const DeviceList = ({ devices }) => (
-    <ul>
+const DeviceList = ({ devices }) => {
+    const columns = [
         {
-            devices.map(({ slug, title }, key) => (
-                <li key={key}>
-                    <Link href="/device/[slug]" as={`/device/${slug}`}>
-                        <a>{title}</a>
-                    </Link>
-                </li>
-            ))
+            label: 'Title',
+            value: device =>  device.title
         }
-    </ul>
-)
+    ]
+}
 
 export const getStaticProps = async context => {
     const [deviceType] = await Promise.all([

@@ -2,8 +2,6 @@ import { React, makeStyles, PropTypes, classNames } from 'common'
 import { Add as AddIcon, Remove as RemoveIcon } from '@material-ui/icons'
 import { color } from 'jss/index'
 
-const spacing = 0
-
 const useStyles = makeStyles(theme => ({
     prosAndCons: {
         display: 'flex',
@@ -11,22 +9,18 @@ const useStyles = makeStyles(theme => ({
     },
     list: {
         flex: 1,
-        marginTop: '-' + spacing + 'rem',
-        marginBottom: '-' + spacing + 'rem',
         '&:last-child': {
             marginLeft: '1rem'
         }
     },
     label: {
-        marginTop: spacing + 'rem',
-        marginBottom: spacing + 'rem',
-        fontWeight: 500
+        fontWeight: 500,
+        marginBottom: '0.25rem'
     },
     row: {
-        marginTop: spacing + 'rem',
-        marginBottom: spacing + 'rem',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'flex-start',
+        lineHeight: '1.5rem'
     },
     disabled: {
         color: color.gray[17]
@@ -34,7 +28,8 @@ const useStyles = makeStyles(theme => ({
     icon: {
         fontSize: '1rem',
         color: color.black,
-        marginRight: '0.3rem'
+        marginRight: '0.3rem',
+        marginTop: '0.25rem'
     }
 }))
 

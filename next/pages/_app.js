@@ -31,7 +31,7 @@ const theme = createMuiTheme({
             dark: '#1a0dab'
         },
         secondary: {
-            main: '#3eb489'
+            main: '#fafafa'
         }
     },
     breakpoints: {

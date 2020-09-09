@@ -41,8 +41,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: '0.5rem'
     },
     annotationIndex: {
-        fontWeight: 400,
-        color: theme.palette.primary.main
+        fontWeight: 500
     }
 }))
 
@@ -92,7 +91,7 @@ const Annotations = ({ annotations, classes }) => {
         <div className={classes.annotations}>
             {
                 annotations.map((annotation, index) => (
-                    <div key={index}><span className={classes.annotationIndex}>{annotation.index + ') '}</span>{annotation.text}</div>
+                    <div key={index}><span className={classes.annotationIndex}>{annotation.index + '. '}</span>{annotation.text}</div>
                 ))
             }
         </div>

@@ -1,5 +1,5 @@
 import { React, api } from 'common'
-import { Markdown, CaseList, CategoryList, Link } from 'components'
+import { Markdown, CaseList } from 'components'
 import { BasicPage } from 'components/page'
 
 const pageSize = 10
@@ -30,7 +30,6 @@ const Page = ({ category, pageIndex }) => {
     return (
         <BasicPage context={context}>
             <Markdown source={description} />
-            <Categories categories={children} />
             <CaseList
                 category={category}
                 pageSize={pageSize}
@@ -38,15 +37,6 @@ const Page = ({ category, pageIndex }) => {
             />
         </BasicPage>
     )
-}
-
-const Categories = ({ categories }) => {
-    const items = categories.map((child, index) => (
-        <Link key={index} href="/case-categories/[slug]/[index]" as={`/case-categories/${child.slug}/0`}>
-            <a>{child.title}</a>
-        </Link>
-    ))
-    return <CategoryList categories={items} />
 }
 
 export const getStaticProps = async context => {
