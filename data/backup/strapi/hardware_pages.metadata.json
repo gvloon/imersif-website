@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"c55be7a1a3604f7cb3dbb29e11749ca2","collectionName":"hardware_pages"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.hardware_pages"}],"uuid":"c517748d5b924aa99ed50ccf2aad14fe"}
