@@ -1,4 +1,4 @@
-import { React, api, validate, href, withStyles, label } from 'common'
+import { React, api, validate, href, withStyles, debug } from 'common'
 import { Table, Pagination } from 'components'
 import { BasicPage } from 'components/page'
 import url from 'url'
@@ -103,7 +103,7 @@ class Page extends React.Component {
                 className={classes.pagination}
                 pageIndex={params.pageIndex}
                 pageCount={pageCount}
-                getLink={index => this.getLink({ i: index })}
+                getLink={index => this.getLink({ p: index })}
             />
         )
     }
@@ -121,6 +121,10 @@ class Page extends React.Component {
             } else {
                 delete query.d
             }
+            delete query.p
+        }
+        if (query.s === 'title') {
+            delete query.s
         }
         delete query.slug
         const tmp = url.format({
@@ -137,13 +141,12 @@ class Page extends React.Component {
 
 export const getServerSideProps = async context => {
     const params = {
-        slug: validate.text(context.params.slug, null),
-        pageIndex: validate.number(context.query.i, 0),
-        pageSize: validate.number(context.query.c, 10),
+        pageIndex: validate.number(context.query.p, 0),
+        pageSize: validate.number(context.query.c, 20),
         sort: validate.text(context.query.s, 'title'),
         direction: validate.map(context.query.d, { asc: 'asc', desc: 'desc' }, 'asc')
     }
-    const deviceType = await api.get(`/device-types/${params.slug}`)
+    const deviceType = await api.get(`/device-types/${context.params.slug}`)
     const devices = await api.get(`/devices?device_type=${deviceType.id}&_start=${params.pageIndex * params.pageSize}&_limit=${params.pageSize}&_sort=${params.sort}:${params.direction}`)
 
     const props = { deviceType, devices, query: context.query, params  }
