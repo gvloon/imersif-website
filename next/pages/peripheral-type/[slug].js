@@ -91,6 +91,10 @@ class Page extends React.Component {
             } else {
                 delete query.d
             }
+            delete query.p
+        }
+        if (query.s === 'title') {
+            delete query.s
         }
         delete query.slug
         const tmp = url.format({
