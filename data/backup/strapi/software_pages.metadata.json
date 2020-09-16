@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.software_pages"}],"uuid":"3d66b0ce94d34471a52b1348bb5138c2"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"8a08090076dd49b1b986994147b90b11","collectionName":"software_pages"}
