@@ -1,5 +1,6 @@
-import { React, config, makeStyles, classNames } from 'common'
+import { React, makeStyles, classNames } from 'common'
 import { RadioGroup } from 'components'
+import config from 'config'
 
 const useStyles = makeStyles(theme => ({
     filter: {
