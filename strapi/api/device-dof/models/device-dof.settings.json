@@ -11,10 +11,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "devices": {
-      "via": "dof",
-      "collection": "device"
     }
   }
 }

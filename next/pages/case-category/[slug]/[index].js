@@ -1,4 +1,4 @@
-import { React, api } from 'common'
+import { React, api, href } from 'common'
 import { Markdown, CaseList } from 'components'
 import { BasicPage } from 'components/page'
 
@@ -21,8 +21,7 @@ const Page = ({ category, pageIndex }) => {
             },
             {
                 name: title,
-                href: '/case/[slug]',
-                as: `/cases/${slug}`
+                href: href('/case/[slug]', slug)
             }
         ]
     }

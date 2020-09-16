@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_hardware_resolutions",
+  "info": {
+    "name": "resolution",
+    "icon": "equals"
+  },
+  "options": {},
+  "attributes": {
+    "width": {
+      "type": "integer"
+    },
+    "height": {
+      "type": "integer"
+    }
+  }
+}

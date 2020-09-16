@@ -1,4 +1,5 @@
-import { React, config, withStyles, withRouter, _, inspect, LoaderContext, api } from 'common'
+import { React, withStyles, withRouter, _, LoaderContext, api } from 'common'
+import config from 'config'
 import { Pagination } from 'components'
 import { BasicPage } from 'components/page'
 import { SearchResult, MobileFilter, DesktopFilter, LoadMore } from 'components/search'
@@ -78,8 +79,8 @@ class Page extends React.Component
 
     render = () => {
         const { search, classes } = this.props
-        const { mobile, results, pageIndex } = this.state
-        const { text, category, pageCount, resultCount } = search
+        const { results } = this.state
+        const { text, category, resultCount } = search
 
         const context = {
             title: `${resultCount} results for ${text}`,
@@ -109,14 +110,23 @@ class Page extends React.Component
                             }
                         </div>
                         {
-                            mobile
-                                ? pageIndex < pageCount - 1 ? <LoadMore onClick={this.onLoadMore} /> : null
-                                : <Pagination className={classes.pagination} onClick={this.onPagination} pageIndex={pageIndex} pageCount={pageCount} />
+                            this.renderPagination()
                         }
                     </div>
                 </div>
             </BasicPage>
         )
+    }
+
+    renderPagination = () => {
+        const { pageIndex, pageCount, classes } = this.props
+        const { mobile } = this.state
+
+        if (mobile) {
+            return pageIndex < pageCount - 1 ? <LoadMore onClick={this.onLoadMore} /> : null
+        } else {
+            return <Pagination className={classes.pagination} pageCount={pageCount} pageIndex={pageIndex} onClick={this.onPagination} />
+        }
     }
 
     onChangeCategory = category => {

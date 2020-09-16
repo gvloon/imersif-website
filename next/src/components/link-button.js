@@ -2,8 +2,8 @@ import { React, PropTypes } from 'common'
 import { Button } from '@material-ui/core'
 import Link from 'next/link'
 
-const Component = ({ href, as, children }) => (
-    <Link href={href} as={as}>
+const Component = ({ href, children }) => (
+    <Link href={href}>
         <a>
             {children}
         </a>
@@ -12,7 +12,6 @@ const Component = ({ href, as, children }) => (
 
 Component.propTypes = {
     href: PropTypes.string,
-    as: PropTypes.string,
     children: PropTypes.node
 }
 

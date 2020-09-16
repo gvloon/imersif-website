@@ -12,7 +12,7 @@ class Case extends Model {
     })
   }
 
-  index(doc) {
+  serialize(doc) {
     return {
       title: doc.title,
       summary: doc.summary,
@@ -46,7 +46,7 @@ class Case extends Model {
 
   _getLink(id) {
     return {
-      href: '/case/[slug]',
+      url: '/case/[slug]',
       as: `/case/${id}`
     }
   }

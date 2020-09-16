@@ -1,4 +1,4 @@
-import { React, api, withStyles, memoize } from 'common'
+import { React, api, withStyles, memoize, href } from 'common'
 import { CheckboxList } from 'components'
 import { BasicPage } from 'components/page'
 import { PatternList } from 'components/patterns'
@@ -36,8 +36,7 @@ class Page extends React.PureComponent {
                 },
                 {
                     name: name,
-                    href: '/pattern-category/[slug]',
-                    as: `/pattern-category/${slug}`
+                    href: ('/pattern-category/[slug]', slug)
                 }
             ]
         }

@@ -5,15 +5,6 @@
  * to customize this model
  */
 
-const slug = require('slug')
+const lifecycles = require('lifecycles')('case-category')
 
-module.exports = {
-  lifecycles: {
-    beforeCreate: async (...params) => {
-      slug.beforeCreate('name', ...params)
-    },
-    beforeUpdate: async (...params) => {
-      slug.beforeUpdate('name', ...params)
-    }
-  }
-}
+module.exports = { lifecycles }

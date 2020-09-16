@@ -30,8 +30,10 @@ const styles = theme => ({
         fontSize: '1rem'
     },
     checkbox: {
-        padding: 0,
-        paddingRight: '0.2rem'
+        '&.MuiCheckbox-root': {
+            padding: 0,
+            paddingRight: '0.2rem'
+        }
     }
 })
 

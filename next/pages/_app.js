@@ -1,37 +1,22 @@
-/*!
-
-=========================================================
-* NextJS Material Kit v1.1.0 based on Material Kit Free - v2.0.2 (Bootstrap 4.0.0 Final Edition) and Material Kit React v1.8.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/nextjs-material-kit
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/nextjs-material-kit/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from 'react'
 import Router from 'next/router'
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import { withStyles, LoaderContext } from 'common'
-import { Loader } from 'components'
-import { motion, AnimatePresence } from 'framer-motion'
+import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles'
+import {withStyles, LoaderContext} from 'common'
+import {Loader} from 'components'
+import {motion, AnimatePresence} from 'framer-motion'
 
 import '../assets/scss/index.scss'
+import {Head} from "next/document";
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: '#1976d2',
-            dark: '#1a0dab'
+            main: '#002f6c'
         },
         secondary: {
-            main: '#fafafa'
+            light: '#fcfcfc',
+            main: '#fafafa',
+            dark: '#f3f3f3'
         }
     },
     breakpoints: {
@@ -94,10 +79,8 @@ const loader = {
     }
 }
 
-class App extends React.Component
-{
-    constructor(props)
-    {
+class App extends React.Component {
+    constructor(props) {
         super(props)
         this.loaderContext = {
             setLoading: this.setLoading
@@ -109,27 +92,27 @@ class App extends React.Component
 
     componentDidMount() {
         Router.events.on('routeChangeStart', this.showLoading)
-        Router.events.on('routeChangeComplete',this.hideLoading)
+        Router.events.on('routeChangeComplete', this.hideLoading)
         Router.events.on('routeChangeError', this.hideLoading)
     }
 
     componentWillUnmount() {
         Router.events.off('routeChangeStart', this.showLoading)
-        Router.events.off('routeChangeComplete',this.hideLoading)
+        Router.events.off('routeChangeComplete', this.hideLoading)
         Router.events.off('routeChangeError', this.hideLoading)
     }
 
     render() {
         return (
             <ThemeProvider theme={theme}>
-                { this.renderPage() }
-                { this.renderLoader() }
+                {this.renderPage()}
+                {this.renderLoader()}
             </ThemeProvider>
         )
     }
 
     renderPage = () => {
-        const { Component, pageProps, router, classes } = this.props
+        const {Component, pageProps, router, classes} = this.props
         return (
             <AnimatePresence initial={false}>
                 <motion.div
@@ -149,7 +132,7 @@ class App extends React.Component
     }
 
     renderLoader = () => {
-        const { loading } = this.state
+        const {loading} = this.state
         return (
             <AnimatePresence>
                 {
@@ -160,7 +143,7 @@ class App extends React.Component
                         animate="animate"
                         exit="exit"
                     >
-                        <Loader />
+                        <Loader/>
                     </motion.div>
                 }
             </AnimatePresence>
@@ -168,15 +151,15 @@ class App extends React.Component
     }
 
     setLoading = loading => {
-        this.setState({ loading })
+        this.setState({loading})
     }
 
     showLoading = () => {
-        this.setState({ loading: true })
+        this.setState({loading: true})
     }
 
     hideLoading = () => {
-        this.setState({ loading: false })
+        this.setState({loading: false})
     }
 }
 

@@ -1,8 +1,8 @@
-import { React, PropTypes, classNames, paginate, makeStyles } from 'common'
-import { Link, PaginatedList, Preview } from 'components'
+import { React, PropTypes, paginate, withStyles, href } from 'common'
+import { Pagination, Preview } from 'components'
 import { color } from 'jss/index'
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
     list: {
         marginTop: '-1rem',
         marginBottom: '-1rem'
@@ -14,54 +14,72 @@ const useStyles = makeStyles(theme => ({
     disabled: {
         color: color.gray[17]
     }
-}))
+})
 
-const CaseList = ({ category, title, pageSize, pageIndex, ...rest }) => {
-    if (!category || !category.cases || !category.cases.length) {
-        return null
-    }
+class CaseList extends React.Component {
+    render () {
+        const { category } = this.props
 
-    const classes = useStyles()
-    const pageCount = Math.ceil(category.cases.length / pageSize)
-    const renderRow = ({ slug, title, summary }) => (
-        <Preview
-            key={slug}
-            className={classes.row}
-            title={title}
-            summary={summary}
-            href="/case/[slug]"
-            as={`/case/${slug}`}
-        />
-    )
-    const renderNav = ({ text, index, disabled }) => {
-        const className = classNames({
-            [classes.disabled]: disabled === true
-        })
+        if (!category || !category.cases || !category.cases.length) {
+            return null
+        }
         return (
-            <Link href="/case-categories/[slug]/[index]" as={`/case-categories/${category.slug}/${index}`}>
-                <a className={className}>{text}</a>
-            </Link>
+            <div>
+                { this.renderTitle() }
+                { this.renderRows() }
+                { this.renderPagination() }
+            </div>
         )
     }
-    return (
-        <div>
-            {
-                title &&
-                <h2>{title}</h2>
-            }
-            <PaginatedList
-                className={classes.list}
-                data={paginate(category.cases, pageSize, pageIndex)}
-                renderRow={renderRow}
-                renderNav={renderNav}
-                pageIndex={pageIndex}
+
+    renderTitle = () => {
+        const { title } = this.props
+        if (!title)
+            return null
+
+        return <h2>{title}</h2>
+    }
+
+    renderRows = () => {
+        const { category, pageSize, pageIndex, classes } = this.props
+
+        const items = paginate(category.cases, pageSize, pageIndex)
+
+        return items.map(({ slug, title, summary }) => {
+            return (
+                <Preview
+                    key={slug}
+                    className={classes.row}
+                    title={title}
+                    summary={summary}
+                    link={href('/case/[slug]', slug)}
+                />
+            )
+        })
+    }
+
+    renderPagination = () => {
+        const { category, classes, pageIndex, pageSize } = this.props
+
+        const pageCount = Math.ceil(category.cases.length / pageSize)
+        return (
+            <Pagination
+                className={classes.pagination}
                 pageCount={pageCount}
+                pageIndex={pageIndex}
+                getLink={this.getPaginationLink}
             />
-        </div>
-    )
+        )
+    }
+
+    getPaginationLink = index => {
+        const { category } = this.props
+        return href('/case-category/[slug]/[index]', category.slug, index)
+    }
 }
 
 CaseList.defaultProps = {
+    pageIndex: 0,
     pageSize: 10
 }
 
@@ -71,4 +89,4 @@ CaseList.propTypes = {
     pageIndex: PropTypes.number
 }
 
-export default CaseList
+export default withStyles(styles)(CaseList)

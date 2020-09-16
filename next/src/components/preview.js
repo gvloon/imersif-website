@@ -15,11 +15,11 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Preview = ({ className, title, summary, href, as }) => {
+const Preview = ({ className, title, summary, link }) => {
     const classes = useStyles()
     return (
         <div className={className}>
-            <Link href={href} as={as}>
+            <Link href={link}>
                 <a className={classes.title}>{title}</a>
             </Link>
             {
@@ -41,8 +41,7 @@ Preview.propTypes = {
     className: PropTypes.string,
     title: PropTypes.string,
     summary: PropTypes.string,
-    href: PropTypes.string,
-    as: PropTypes.string
+    link: PropTypes.string.isRequired
 }
 
 export default Preview

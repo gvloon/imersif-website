@@ -11,7 +11,7 @@ class Glossary extends Model {
     })
   }
 
-  index(doc) {
+  serialize(doc) {
     return {
       term: doc.term,
       explanation: stripHtml(doc.explanation),
@@ -43,7 +43,7 @@ class Glossary extends Model {
 
   _getLink(id) {
     return {
-      href: `/glossary#${id}`
+      url: `/glossary#${id}`
     }
   }
 }

@@ -57,7 +57,7 @@ const List = ({ items, title, className }) => {
             height: titleHeight + 'rem',
             paddingLeft: horizontalItemPadding + 'rem',
             paddingRight: horizontalItemPadding + 'rem',
-            backgroundColor: 'black',
+            backgroundColor: theme.palette.primary.main,
             color: 'white',
             display: 'flex',
             fontWeight: '400',

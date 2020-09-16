@@ -1,4 +1,4 @@
-import { React, api } from 'common'
+import { React, api, href } from 'common'
 import { Markdown, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
@@ -34,7 +34,7 @@ const CategoryList = ({ deviceTypes, peripheralTypes }) => {
             value: 'Head mounted devices',
             children: deviceTypes.map((type, index) => ({
                 value: (
-                    <Link key={index} href="/device-type/[slug]" as={`/device-type/${type.slug}`}>
+                    <Link key={index} href={href('/device-type/[slug]', type.slug)}>
                         <a>{type.name}</a>
                     </Link>
                 )
@@ -44,7 +44,7 @@ const CategoryList = ({ deviceTypes, peripheralTypes }) => {
             value: 'Peripherals',
             children: peripheralTypes.map((type, index) => ({
                 value: (
-                    <Link key={index} href="/peripheral-type/[slug]" as={`/peripheral-type/${type.slug}`}>
+                    <Link key={index} href={href('/peripheral-type/[slug]', type.slug)}>
                         <a>{type.name}</a>
                     </Link>
                 )

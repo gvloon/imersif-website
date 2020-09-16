@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "CHOKIDAR_USEPOLLING=true node --inspect ./node_modules/next/dist/bin/next dev",
+    "inspect": "CHOKIDAR_USEPOLLING=true node --inspect ./node_modules/next/dist/bin/next dev",
+    "dev": "CHOKIDAR_USEPOLLING=true node ./node_modules/next/dist/bin/next dev",
     "build": "next build",
     "start": "next start"
   },
@@ -20,7 +21,7 @@
     "json-to-graphql-query": "^2.0.0",
     "loaders.css": "^0.1.2",
     "moment": "2.25.3",
-    "next": "^9.5.2",
+    "next": "^9.5.3",
     "next-compose-plugins": "^2.2.0",
     "next-images": "^1.4.0",
     "nextjs-redirect": "2.0.2",

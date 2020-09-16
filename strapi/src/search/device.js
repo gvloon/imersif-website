@@ -12,7 +12,7 @@ class Device extends Model {
     })
   }
 
-  index(doc) {
+  serialize(doc) {
     return {
       title: doc.title,
       description: stripHtml(doc.description),
@@ -45,7 +45,7 @@ class Device extends Model {
 
   _getLink(id) {
     return {
-      href: '/device/[slug]',
+      url: '/device/[slug]',
       as: `/device/${id}`
     }
   }

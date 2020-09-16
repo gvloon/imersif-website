@@ -37,7 +37,7 @@ const SearchResult = ({ result, className }) => {
     })
 
     return (
-        <Link href={result.link.href} as={result.link.as}>
+        <Link href={result.link}>
             <a className={resultClasses}>
                 <div className={classes.type}>{getTypeLabel(result.type)}</div>
                 <div className={classes.title}>{result.title}</div>

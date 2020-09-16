@@ -11,10 +11,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "devices": {
-      "via": "tracking_type",
-      "collection": "device"
     }
   }
 }

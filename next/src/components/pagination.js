@@ -1,15 +1,17 @@
 import { color } from 'jss/index'
-import { React, PropTypes, makeStyles, classNames } from 'common'
+import { React, PropTypes, withStyles, classNames, memoize, debug } from 'common'
+import { Link } from 'components'
 import { Button } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => {
+const styles = theme => {
     return {
         pagination: {
             display: 'flex',
             paddingLeft: '0',
             listStyle: 'none',
             borderRadius: '0.25rem',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            paddingRight: '26px'
         },
         paginationItem: {
             display: 'inline'
@@ -79,75 +81,106 @@ const useStyles = makeStyles(theme => {
             }
         }
     }
-})
-
-const Pagination = ({ pageIndex, pageCount, className, onClick, indicatorCount }) => {
-    if (pageCount <= 1) {
-        return null
-    }
-    const { min, max } = getBoundaries(pageIndex, indicatorCount, pageCount)
-    const pages = []
-    pages.push({ text: 'Previous', disabled: pageIndex === 0, index: pageIndex - 1 })
-    for (let i = min; i <= max; i++) {
-        pages.push({ text: (i + 1).toString(), active: i === pageIndex, index: i, number: true })
-    }
-    pages.push({ text: 'Next', disabled: pageIndex === pageCount - 1, index: pageIndex + 1 })
-
-    const classes = useStyles()
-    const paginationClasses = classNames(classes.pagination, className)
-    return (
-        <ul className={paginationClasses}>
-            {
-                pages.map((prop, index) => {
-                    const paginationLink = classNames({
-                        [classes.paginationLink]: true,
-                        [classes.active]: prop.active,
-                        [classes.disabled]: prop.disabled,
-                        [classes.number]: prop.number
-                    })
-                    return (
-                        <li className={classes.paginationItem} key={index}>
-                            <Button
-                                className={paginationLink}
-                                disabled={prop.disabled}
-                                value={index}
-                                onClick={(!prop.disabled && !prop.active) ? () => onClick(prop.index) : null}
-                            >
-                                { prop.text }
-                            </Button>
-                        </li>
-                    )
-                })
-            }
-        </ul>
-    )
 }
 
-const getBoundaries = (index, count, max) => {
-    let up = true
-    const data = { min: index, max: index }
-    while (count > 1) {
-        if (up) {
-            if (data.max < max - 1) {
-                data.max++
-            } else if (data.min > 0) {
-                data.min--
-            } else {
-                break
-            }
-        } else {
-            if (data.min > 0) {
-                data.min--
-            } else if (data.max < max - 1) {
-                data.max++
-            } else {
-                break
-            }
+class Pagination extends React.Component {
+    render () {
+        const { pageCount, pageIndex, indicatorCount, className, classes } = this.props
+        if (pageCount < 2) {
+            return null
         }
-        up = !up
-        count--
+
+        const buttons = this.getButtons(pageCount, pageIndex, indicatorCount)
+        const paginationClasses = classNames(classes.pagination, className)
+        return (
+            <ul className={paginationClasses}>
+                {
+                    buttons.map((button, index) => {
+                        return (
+                            <li className={classes.paginationItem} key={index}>
+                                {
+                                    this.renderButton(button, index)
+                                }
+                            </li>
+                        )
+                    })
+                }
+            </ul>
+        )
     }
-    return data
+
+    getButtons = memoize((pageCount, pageIndex, indicatorCount) => {
+        const { min, max } = this.getBoundaries(pageIndex, indicatorCount, pageCount)
+        const buttons = []
+        buttons.push({ text: 'Previous', disabled: pageIndex === 0, index: pageIndex - 1 })
+        for (let i = min; i <= max; i++) {
+            buttons.push({ text: (i + 1).toString(), active: i === pageIndex, index: i, number: true })
+        }
+        buttons.push({ text: 'Next', disabled: pageIndex === pageCount - 1, index: pageIndex + 1 })
+        return buttons
+    })
+
+    getBoundaries = memoize((index, count, max) => {
+        let up = true
+        const data = { min: index, max: index }
+        while (count > 1) {
+            if (up) {
+                if (data.max < max - 1) {
+                    data.max++
+                } else if (data.min > 0) {
+                    data.min--
+                } else {
+                    break
+                }
+            } else {
+                if (data.min > 0) {
+                    data.min--
+                } else if (data.max < max - 1) {
+                    data.max++
+                } else {
+                    break
+                }
+            }
+            up = !up
+            count--
+        }
+        return data
+    })
+
+    renderButton = (button, index) => {
+        const { classes, getLink, onClick } = this.props
+        const className = classNames({
+            [classes.paginationLink]: true,
+            [classes.active]: button.active,
+            [classes.disabled]: button.disabled,
+            [classes.number]: button.number
+        })
+        if (button.disabled || button.active) {
+            return (
+                <Button className={className} disabled={button.disabled} value={index}>
+                    {button.text}
+                </Button>
+            )
+        } else if (getLink) {
+            const href = getLink(button.index)
+            console.log('href: ' + debug(href))
+            return (
+                <Link href={href}>
+                    <Button className={className} disabled={button.disabled} value={index}>
+                        {button.text}
+                    </Button>
+                </Link>
+            )
+        } else {
+            return (
+                <Button className={className} disabled={button.disabled} value={index} onClick={onClick}>
+                    { button.text }
+                </Button>
+            )
+        }
+    }
+
+
 }
 
 Pagination.defaultProps = {
@@ -164,4 +197,4 @@ Pagination.propTypes = {
     indicatorCount: PropTypes.number
 }
 
-export default Pagination
+export default withStyles(styles)(Pagination)

@@ -44,7 +44,7 @@ class Tool extends Model {
 
   _getLink(id) {
     return {
-      href: '/tool/[slug]',
+      url: '/tool/[slug]',
       as: `/tool/${id}`
     }
   }

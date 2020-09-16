@@ -1,4 +1,4 @@
-import { React, makeStyles, PropTypes, classNames } from 'common'
+import { React, makeStyles, PropTypes, classNames, href } from 'common'
 import { Button, Link, Image } from 'components'
 import ProConList from './pro-con-list'
 
@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
         marginTop: marginPattern + 'rem',
         marginBottom: marginPattern + 'rem',
         backgroundColor: theme.palette.secondary.main,
-        border: '1px solid #e9e9e9',
+        border: '1px solid ' + theme.palette.secondary.dark,
         borderRadius: '3px',
         flexDirection: 'row',
         alignItems: 'flex-start',
@@ -91,7 +91,7 @@ const PatternList = ({ patterns, filters, className }) => {
             <div className={classes.container}>
                 {
                     patterns.map((pattern, index) => (
-                        <Link key={index} href="/pattern/[slug]" as={`/pattern/${pattern.slug}`}>
+                        <Link key={index} href={href('/pattern/[slug]', pattern.slug)}>
                             <a>
                                 <div className={classes.patternMobile}>
                                     <div className={classes.top}>

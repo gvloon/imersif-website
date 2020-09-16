@@ -7,21 +7,15 @@ const db = require('db')
  * to customize this controller
  */
 
-const getDeviceTypeShort = ({ slug, name }) => ({ slug, name })
-const getDeviceTypeLong = ({ slug, name, devices }) => ({
-  slug,
-  name,
-  devices: devices.map(device => getDevice(device))
-})
-const getDevice = ({ slug, title }) => ({ slug, title })
+const getDeviceType = ({ id, slug, name, devices }) => ({ id, slug, name, deviceCount: devices.length })
 
 module.exports = {
   async find(ctx) {
     const entities = await db.find('device-type', ctx)
-    return entities.map(entity => getDeviceTypeShort(entity))
+    return entities.map(entity => getDeviceType(entity))
   },
   async findBySlug(ctx) {
     const entity = await db.findBySlug('device-type', ctx)
-    return getDeviceTypeLong(entity)
+    return getDeviceType(entity)
   }
 }

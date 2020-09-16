@@ -1,5 +1,6 @@
-import { React, config, makeStyles, classNames } from 'common'
+import { React, makeStyles, classNames } from 'common'
 import { Select } from 'components'
+import config from 'config'
 
 const useStyles = makeStyles(theme => ({
     filter: {

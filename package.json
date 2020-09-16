@@ -7,5 +7,6 @@
   "scripts": {
     "start": "docker-compose up"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }

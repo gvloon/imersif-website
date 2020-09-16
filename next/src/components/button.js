@@ -18,13 +18,13 @@ const StyledButton = withStyles((theme) => ({
     }
 }))(_Button)
 
-const Button = ({ children, href, as, className }) => {
+const Button = ({ children, href, className }) => {
     const button = <StyledButton variant="contained" color="primary" className={className} component="a" disableElevation>{children}</StyledButton>
     if (!href)
         return button
 
     return (
-        <Link href={href} as={as} passHref>
+        <Link href={href} passHref>
             { button }
         </Link>
     )

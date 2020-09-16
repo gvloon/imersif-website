@@ -1,4 +1,5 @@
-import { config, memoize } from 'common'
+import { memoize } from 'common'
+import config from 'config'
 
 export const getTypeMap = memoize(() => {
     const map = {}

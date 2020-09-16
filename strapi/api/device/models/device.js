@@ -5,22 +5,7 @@
  * to customize this model
  */
 
-const slug = require('../../../src/slug')
-const search = require('../../../src/search')
+const util = require('util')
+const lifecycles = require('lifecycles')('device')
 
-module.exports = {
-  lifecycles: {
-    beforeCreate: async (...params) => {
-      slug.beforeCreate('name', ...params)
-    },
-    beforeUpdate: async (...params) => {
-      slug.beforeUpdate('name', ...params)
-    },
-    afterCreate: async (...params) => {
-      await search.afterCreate('device', ...params)
-    },
-    afterUpdate: async (...params) => {
-      await search.afterUpdate('device', ...params)
-    }
-  }
-}
+module.exports = { lifecycles }

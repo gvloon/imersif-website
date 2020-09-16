@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_hardware_field_of_views",
+  "info": {
+    "name": "field of view",
+    "icon": "bars"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "sort": {
+      "type": "integer"
+    }
+  }
+}

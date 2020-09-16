@@ -1,4 +1,4 @@
-import { React, api } from 'common'
+import { React, api, href } from 'common'
 import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
@@ -32,13 +32,11 @@ const getBreadcrumb = ({ slug, title, category }) => {
             },
             {
                 name: category.title,
-                href: '/case-category/[slug]/[index]',
-                as: `/case-category/${category.slug}/0`
+                href: href('/case-category/[slug]/[index]', category.slug, 0)
             },
             {
                 name: title,
-                href: '/cases/[slug]',
-                as: `/cases/${slug}`
+                href: href('/cases/[slug]', slug)
             }
         ]
     } else {
@@ -49,8 +47,7 @@ const getBreadcrumb = ({ slug, title, category }) => {
             },
             {
                 name: title,
-                href: '/cases/[slug]',
-                as: `/cases/${slug}`
+                href: href('/cases/[slug]', slug)
             }
         ]
     }

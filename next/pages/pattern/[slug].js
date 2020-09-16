@@ -1,4 +1,4 @@
-import { React, api, withStyles } from 'common'
+import { React, api, withStyles, href } from 'common'
 import { Markdown, Accordion } from 'components'
 import { BasicPage } from 'components/page'
 import { SolutionBlock, PatternVariant } from 'components/patterns'
@@ -68,13 +68,11 @@ const getBreadcrumb = ({ title, slug, category }) => {
             },
             {
                 name: category.name,
-                href: '/pattern-category/[slug]',
-                as: `/pattern-category/${category.slug}`
+                href: href('/pattern-category/[slug]', category.slug)
             },
             {
                 name: title,
-                href: '/pattern/[slug]',
-                as: `/pattern/${slug}`
+                href: href('/pattern/[slug]', slug)
             }
         ]
     } else {
@@ -85,8 +83,7 @@ const getBreadcrumb = ({ title, slug, category }) => {
             },
             {
                 name: title,
-                href: '/pattern/[slug]',
-                as: `/pattern/${slug}`
+                href: href('/pattern/[slug]', slug)
             }
         ]
     }

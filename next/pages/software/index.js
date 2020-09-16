@@ -1,4 +1,4 @@
-import { React, api } from 'common'
+import { React, api, href } from 'common'
 import { Link, Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
@@ -34,7 +34,7 @@ const ToolList = ({ tools }) => {
             {
                 tools.map(({ slug, title }, index) => (
                     <li key={index}>
-                        <Link href="/tool/[slug]" as={`/tool/${slug}`}>
+                        <Link href={href('/tool/[slug]', slug)}>
                             <a>{title}</a>
                         </Link>
                     </li>

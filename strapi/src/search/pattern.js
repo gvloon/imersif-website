@@ -49,7 +49,7 @@ class Pattern extends Model {
 
   _getLink(id) {
     return {
-      href: '/pattern/[slug]',
+      url: '/pattern/[slug]',
       as: `/pattern/${id}`
     }
   }

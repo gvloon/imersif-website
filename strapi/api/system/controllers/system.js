@@ -1,30 +1,15 @@
-const search = require('../../../src/search')
-const slug = require('../../../src/slug')
-const update = require('../../../src/update')
+const search = require('search')
+const slug = require('slug')
+const update = require('update')
 
 module.exports = {
   indexElastic: async () => {
-    await search.deleteIndex('case')
-    await search.deleteIndex('device')
-    await search.deleteIndex('pattern')
-    await search.deleteIndex('tool')
-    await search.deleteIndex('glossary')
-    await search.indexAll('case')
-    await search.indexAll('device')
-    await search.indexAll('pattern')
-    await search.indexAll('tool')
-    await search.indexAll('glossary')
+    await search.indexAll()
     return 'ok'
   },
 
   updateSlugs: async () => {
-    await slug.updateAll('Case', 'title')
-    await slug.updateAll('CaseCategory', 'title')
-    await slug.updateAll('Device', 'title')
-    await slug.updateAll('Pattern', 'title')
-    await slug.updateAll('PatternCategory', 'name')
-    await slug.updateAll('Tool', 'title')
-    await slug.updateAll('DeviceType', 'name')
+    await slug.updateAll()
     return 'ok'
   },
 
@@ -50,17 +35,17 @@ module.exports = {
     const model = strapi.connections.default.model('Device')
     model.collection.updateMany({}, {
       $unset: {
-        xr_type: true,
-        device_types: true
-      },
-      $rename: {
-        device_dof: 'dof',
-        device_screen: 'screen',
-        device_tracking_type: 'tracking_type',
-        device_tethering: 'tethering'
+        dof: true,
+        tethering: true,
+        screen: true,
+        resolution: true,
+        resolution_sort: true,
+        tracking_type: true,
+        fov: true,
+        fov_sort: true
       }
     })
-    return 'ok'
+    return 'ok1'
   },
 
   updatePatterns: async () => {

@@ -5,22 +5,8 @@
  * to customize this model
  */
 
-const search = require('../../../src/search')
-const slug = require('../../../src/slug')
+const lifecycles = require('lifecycles')('glossary-items')
 
 module.exports = {
-  lifecycles: {
-    beforeCreate: async (...params) => {
-      slug.beforeCreate('term', ...params)
-    },
-    beforeUpdate: async (...params) => {
-      slug.beforeUpdate('term', ...params)
-    },
-    afterCreate: async (...params) => {
-      await search.afterCreate('glossary', ...params)
-    },
-    afterUpdate: async (...params) => {
-      await search.afterUpdate('glossary', ...params)
-    }
-  }
-};
+  lifecycles
+}

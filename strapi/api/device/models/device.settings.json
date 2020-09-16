@@ -31,27 +31,30 @@
       "required": true,
       "unique": true
     },
-    "screen": {
-      "model": "device-screen",
-      "via": "devices"
-    },
-    "tracking_type": {
-      "model": "device-tracking-type",
-      "via": "devices"
-    },
-    "dof": {
-      "model": "device-dof",
-      "via": "devices"
-    },
     "eye_tracking": {
       "type": "boolean"
     },
-    "fov": {
-      "type": "string"
-    },
     "tethering": {
-      "model": "device-tethering",
-      "via": "devices"
+      "model": "device-tethering"
+    },
+    "dof": {
+      "model": "device-dof"
+    },
+    "display": {
+      "model": "device-screen"
+    },
+    "tracking_type": {
+      "model": "device-tracking-type"
+    },
+    "fov": {
+      "type": "component",
+      "repeatable": false,
+      "component": "hardware.field-of-view"
+    },
+    "resolution": {
+      "type": "component",
+      "repeatable": false,
+      "component": "hardware.resolution"
     }
   }
 }

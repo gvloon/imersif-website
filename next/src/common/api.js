@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { config } from 'common'
+import config from 'config'
 
-const fetch = async options => {
+export const fetch = async options => {
     if (options.headers) {
         options.headers['Content-Type'] = 'application/json'
     } else {
@@ -26,14 +26,9 @@ const fetch = async options => {
     return response.data
 }
 
-const get = async url => {
+export const get = async url => {
     return fetch({
         method: 'get',
         url
     })
-}
-
-export default {
-    fetch,
-    get
 }

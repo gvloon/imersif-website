@@ -1,4 +1,4 @@
-import { React, api } from 'common'
+import { React, api, href } from 'common'
 import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
@@ -19,8 +19,7 @@ const Page = ({ tool }) => {
             },
             {
                 name: title,
-                href: '/tool/[slug]',
-                as: `/tool/${slug}`
+                href: href('/tool/[slug]', slug)
             }
         ]
     }

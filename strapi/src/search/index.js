@@ -1,19 +1,17 @@
-const axios = require('axios')
+const axios = require('./axios')
+const Module = require('../module')
 const Category = require('./category')
 const Pattern = require('./pattern')
 const Glossary = require('./glossary')
 const Tool = require('./tool')
 const Device = require('./device')
 const Case = require('./case')
-const util = require('util')
 
-class Search {
+class Search extends Module {
   constructor() {
-    const host = process.env.ELASTIC_HOST || 'localhost'
-    const port = process.env.ELASTIC_PORT || 9200
-    this.baseUrl = `http://${host}:${port}`
+    super()
+
     this.categories = {}
-    this.models = {}
     this._initCategory(new Category('patterns', new Pattern()))
     this._initCategory(new Category('glossary', new Glossary()))
     this._initCategory(new Category('software', new Tool()))
@@ -21,43 +19,9 @@ class Search {
     this._initCategory(new Category('cases', new Case()))
   }
 
-  async indexAll(modelName) {
-    const model = this._model(modelName)
-    if (!model)
-      return
-
-    try {
-      await this._axios('put', `/${modelName}`, {
-        mappings: {
-          properties: model.definition
-        }
-      })
-      const db = strapi.connections.default
-      const dbModel = db.model(model.mongoName)
-      const docs = await dbModel.find()
-      for (let doc of docs) {
-        await this._index(model, doc)
-      }
-    } catch (error) {
-      console.error(error)
-    }3
-  }
-
-  async afterCreate(modelName, result) {
-    const model = this._model(modelName)
-    await this._index(model, result)
-  }
-
-  async afterUpdate(modelName, result) {
-    const model = this._model(modelName)
-    await this._index(model, result)
-  }
-
-  async deleteIndex(modelName) {
-    try {
-      return await this._axios('delete', `/${modelName}`)
-    } catch (error) {
-      console.error(error)
+  async indexAll() {
+    for (let name in this.models) {
+      await this.models[name].indexAll()
     }
   }
 
@@ -67,7 +31,7 @@ class Search {
   }
 
   async search(categoryName, text, pageSize, pageIndex) {
-    const category = this._category(categoryName)
+    const category = this.category(categoryName)
     pageSize = pageSize || 10
     pageIndex = pageIndex || 0
     const response = await this._searchRequest(category, text, pageSize, pageIndex)
@@ -83,21 +47,12 @@ class Search {
   _initCategory(category) {
     this.categories[category.name] = category
     for (let model of category.models) {
-      this.models[model.name] = model
+      this.register(model)
     }
   }
 
-  _model(modelName) {
-    if (!modelName) {
-      return null
-    }
-    if (this.models.hasOwnProperty(modelName)) {
-      return this.models[modelName]
-    }
-    throw new Error('Unknown model name: ' + modelName)
-  }
 
-  _category(categoryName) {
+  category(categoryName) {
     if (!categoryName) {
       return null
     }
@@ -107,33 +62,8 @@ class Search {
     throw new Error('Unknown category name: ' + categoryName)
   }
 
-  async _index(model, doc) {
-    try {
-      const id = model.getId(doc)
-      return await this._axios('put',`/${model.name}/_doc/${id}`, model.index(doc))
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  async _axios(method, url, data) {
-    try {
-      const response = await axios({
-        method,
-        url: `${this.baseUrl}${url}`,
-        data: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      return response.data
-    } catch (error) {
-      console.log(error && error.response && error.response.data && error.response.data.error ? error.response.data.error : error)
-    }
-  }
-
   async _suggestRequest(categoryName, text) {
-    const category = this._category(categoryName)
+    const category = this.category(categoryName)
     const doc = {
       suggest: {}
     }
@@ -149,7 +79,7 @@ class Search {
         }
       }
     }
-    return await this._axios('post', category ? category.getPath() : '/_search', doc)
+    return await axios('post', category ? category.getPath() : '/_search', doc)
   }
 
   _suggestResponse(data) {
@@ -157,7 +87,7 @@ class Search {
     for (let index in data.suggest) {
       let options = data.suggest[index][0].options
       for (let option of options) {
-        const model = this._model(option._index)
+        const model = this.model(option._index)
         if (model) {
           const id = `${option._index}_${option._id}`
           const result = map.hasOwnProperty(id) ? map[id] : map[id] = model.getSuggestResult(option._id, option._source)
@@ -204,7 +134,7 @@ class Search {
         order: 'score'
       }
     }
-    return await this._axios('post', category ? category.getPath() : '/_search', data)
+    return await axios('post', category ? category.getPath() : '/_search', data)
   }
 
   _searchResponse(data) {
@@ -213,7 +143,7 @@ class Search {
       results: []
     }
     data.hits.hits.forEach(hit => {
-      const model = this._model(hit._index)
+      const model = this.model(hit._index)
       if (model) {
         const result = model.getSearchResult(hit._id, hit._source, hit.highlight)
         result.highlight = result.highlight && result.highlight.length ? result.highlight[0] : ''

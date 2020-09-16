@@ -5,5 +5,7 @@
  * to customize this model
  */
 
-module.exports = {
-};
+const util = require('util')
+const lifecycles = require('lifecycles')('peripheral')
+
+module.exports = { lifecycles }

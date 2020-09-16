@@ -1,41 +1,28 @@
-const slugify = require('slugify')
+const Module = require('../module')
+const Model = require('./model')
+const util = require('util')
 
-class Slug {
+class Slug extends Module {
   constructor()
   {
-    this.options = {
-      lower: true,
-      strict: true
-    }
-    this.regex = /[^\w]/g
+    super()
+
+    this.register(new Model('case', 'Case', 'title'))
+    this.register(new Model('case-category', 'CaseCategory', 'title'))
+    this.register(new Model('device', 'Device', 'title'))
+    this.register(new Model('device-type', 'DeviceType', 'name'))
+    this.register(new Model('peripheral', 'Peripheral', 'title'))
+    this.register(new Model('peripheral-type', 'PeripheralType', 'name'))
+    this.register(new Model('pattern', 'Pattern', 'title'))
+    this.register(new Model('pattern-category', 'PatternCategory', 'name'))
+    this.register(new Model('tool', 'Tool', 'title'))
   }
 
-  beforeCreate(name, data) {
-    if (data[name]) {
-      data.slug = this._slugify(data[name])
+  async updateAll() {
+    for (let model of this.models) {
+      await model.updateAll()
     }
   }
-
-  beforeUpdate(name, params, data) {
-    if (data[name]) {
-      data.slug = this._slugify(data[name])
-    }
-  }
-
-  async updateAll(modelName, name) {
-    const db = strapi.connections.default
-    const model = db.model(modelName)
-    const items = await model.find()
-    for (let item of items) {
-      item.slug = this._slugify(item[name])
-      await item.save()
-    }
-  }
-
-  _slugify(value) {
-    value = value.replace(this.regex, ' ')
-    return slugify(value, this.options)
-  }
-}``
+}
 
 module.exports = new Slug()

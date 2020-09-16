@@ -74,7 +74,7 @@ const BreadcrumbMobile = ({ links, classes }) => {
     const link = links[links.length-2]
     return (
         <div className={classes.breadcrumbMobile}>
-            <Link href={link.href} as={link.as}>
+            <Link href={link.href}>
                 <a>{link.name}</a>
             </Link>
         </div>
@@ -86,20 +86,20 @@ const BreadcrumbDesktop = ({ links, classes }) => {
         <ol className={classes.breadcrumbDesktop}>
             {
                 links.map((link, index) => (
-                    <ItemDesktop key={index} name={link.name} href={link.href} as={link.as} current={index === links.length - 1} classes={classes} />
+                    <ItemDesktop key={index} name={link.name} href={link.href} current={index === links.length - 1} classes={classes} />
                 ))
             }
         </ol>
     )
 }
 
-const ItemDesktop = ({ name, href, as, current, classes }) => {
+const ItemDesktop = ({ name, href, current, classes }) => {
     if (current) {
         return <li className={classes.itemDesktop}>{name}</li>
     }
     return (
         <li className={classes.itemDesktop}>
-            <Link href={href} as={as}>
+            <Link href={href}>
                 <a>{name}</a>
             </Link>
         </li>

@@ -23,6 +23,10 @@
     },
     "slug": {
       "type": "string"
+    },
+    "peripheral_type": {
+      "model": "peripheral-type",
+      "via": "peripherals"
     }
   }
 }

@@ -7,21 +7,15 @@ const db = require('db')
  * to customize this controller
  */
 
-const getPeripheralTypeShort = ({ slug, name }) => ({ slug, name })
-const getPeripheralTypeLong = ({ slug, name, peripherals }) => ({
-  slug,
-  name,
-  peripherals: peripherals.map(peripheral => getPeripheral(peripheral))
-})
-const getPeripheral = ({ slug, title }) => ({ slug, title })
+const getPeripheralType = ({ id, slug, name, peripherals }) => ({ id, slug, name, peripheralCount: peripherals.length })
 
 module.exports = {
   async find(ctx) {
     const entities = await db.find('peripheral-type', ctx)
-    return entities.map(entity => getPeripheralTypeShort(entity))
+    return entities.map(entity => getPeripheralType(entity))
   },
   async findBySlug(ctx) {
     const entity = await db.findBySlug('peripheral-type', ctx)
-    return getPeripheralTypeLong(entity)
+    return getPeripheralType(entity)
   }
 }

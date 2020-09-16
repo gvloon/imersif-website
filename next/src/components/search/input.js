@@ -1,8 +1,9 @@
-import { React, PropTypes, classNames, config, _, api, withStyles, withRouter, PageContext } from 'common'
+import { React, PropTypes, classNames, _, api, withStyles, withRouter, PageContext } from 'common'
 import { Link, Select } from 'components'
 import { Popper, InputBase, Divider, ClickAwayListener, IconButton } from '@material-ui/core'
 import { Search as SearchIcon, Close as CloseIcon } from '@material-ui/icons'
 import { color } from 'jss/index'
+import config from 'config'
 import url from 'url'
 
 const styles = theme => ({
@@ -281,7 +282,7 @@ const Results = ({ results, classes, onClick }) => {
     }
     return results.map((result, index) => (
         <div key={index} className={classes.suggestion}>
-            <Link href={result.link.href} as={result.link.as}>
+            <Link href={result.link}>
                 <a onClick={onClick}>
                     <div className={classes.suggestionTitle}>{result.title}</div>
                     <div className={classes.suggestionType}>{result.type}</div>

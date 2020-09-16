@@ -1,4 +1,5 @@
-import { React, makeStyles, config, classNames } from 'common'
+import { React, makeStyles, classNames } from 'common'
+import config from 'config'
 
 const useStyles = makeStyles(theme => ({
     image: {

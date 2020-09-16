@@ -2,7 +2,7 @@
   "kind": "collectionType",
   "collectionName": "device_screens",
   "info": {
-    "name": "device-screen"
+    "name": "device-display"
   },
   "options": {
     "increments": true,
@@ -11,10 +11,6 @@
   "attributes": {
     "name": {
       "type": "string"
-    },
-    "devices": {
-      "via": "screen",
-      "collection": "device"
     }
   }
 }

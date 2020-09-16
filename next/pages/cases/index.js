@@ -1,4 +1,4 @@
-import { React, api } from 'common'
+import { React, api, href } from 'common'
 import { Markdown, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
@@ -33,7 +33,7 @@ const CategoryList = ({ categories }) => {
         value: category.title,
         children: category.children.map((child, index) => ({
             value: (
-                <Link key={index} href="/case-category/[slug]/[index]" as={`/case-category/${child.slug}/0`}>
+                <Link key={index} href={href("/case-category/[slug]/[index]", child.slug, 0)}>
                     <a>{child.title}</a>
                 </Link>
             )
