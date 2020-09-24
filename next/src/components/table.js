@@ -18,7 +18,9 @@ const styles = theme => ({
         fontSize: '0.9rem',
         '& a': {
             color: 'white',
-            display: 'flex'
+            display: 'flex',
+            height: '100%',
+            alignItems: 'center'
         },
     },
     row: {
@@ -76,8 +78,7 @@ const styles = theme => ({
         }
     },
     icon: {
-        height: '0px',
-        marginTop: '-2px'
+        marginTop: '5px'
     }
 })
 

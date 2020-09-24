@@ -43,7 +43,7 @@ const getFov = ({ text }) => text
 const getSorter = field => {
   switch (field) {
     case 'title':
-      return 'title'
+      return ({ title }) => title
     case 'display':
       return ({ display }) => display ? display.name : null
     case 'tethering':
@@ -73,9 +73,15 @@ module.exports = {
       const sorter = getSorter(field)
       if (sorter) {
         if (direction === 'desc') {
-          entities = sort(entities).desc(sorter)
+          entities = sort(entities).by([
+            { desc: sorter },
+            { asc: device => device.title }
+          ])
         } else {
-          entities = sort(entities).asc(sorter)
+          entities = sort(entities).by([
+            { asc: sorter },
+            { asc: device => device.title }
+          ])
         }
       }
     }

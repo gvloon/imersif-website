@@ -148,7 +148,7 @@ class Pagination extends React.Component {
     })
 
     renderButton = (button, index) => {
-        const { classes, getLink, onClick } = this.props
+        const { classes, getLink } = this.props
         const className = classNames({
             [classes.paginationLink]: true,
             [classes.active]: button.active,
@@ -157,26 +157,32 @@ class Pagination extends React.Component {
         })
         if (button.disabled || button.active) {
             return (
-                <Button className={className} disabled={button.disabled} value={index}>
+                <Button className={className} disabled={button.disabled} value={button.index}>
                     {button.text}
                 </Button>
             )
         } else if (getLink) {
             const href = getLink(button.index)
-            console.log('href: ' + debug(href))
             return (
                 <Link href={href}>
-                    <Button className={className} disabled={button.disabled} value={index}>
+                    <Button className={className} disabled={button.disabled} value={button.index}>
                         {button.text}
                     </Button>
                 </Link>
             )
         } else {
             return (
-                <Button className={className} disabled={button.disabled} value={index} onClick={onClick}>
+                <Button className={className} disabled={button.disabled} value={button.index} onClick={this.onClick}>
                     { button.text }
                 </Button>
             )
+        }
+    }
+
+    onClick = evt => {
+        const { onClick } = this.props
+        if (onClick) {
+            onClick(parseInt(evt.currentTarget.value))
         }
     }
 

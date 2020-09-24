@@ -119,8 +119,9 @@ class Page extends React.Component
     }
 
     renderPagination = () => {
-        const { pageIndex, pageCount, classes } = this.props
-        const { mobile } = this.state
+        const { search, classes } = this.props
+        const { pageCount } = search
+        const { mobile, pageIndex } = this.state
 
         if (mobile) {
             return pageIndex < pageCount - 1 ? <LoadMore onClick={this.onLoadMore} /> : null
