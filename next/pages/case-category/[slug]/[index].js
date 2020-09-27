@@ -53,7 +53,7 @@ export const getStaticPaths = async () => {
     const categories = await api.get(`/case-categories`)
     const paths = []
     categories.forEach(({ slug, caseCount }) => {
-        const pageCount = Math.ceil(caseCount / pageSize)
+        const pageCount = Math.ceil(caseCount / pageSize) || 1
         for (let index = 0; index < pageCount; index++) {
             paths.push({ params: { slug, index: index.toString() } })
         }
