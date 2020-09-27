@@ -10,9 +10,9 @@ const db = require('db')
 const getPatternShort = ({ slug, title }) => ({ slug, title })
 const getPatternLong = ({ title, solution, image, category, variants }) => ({
   title,
-  solution: getSolution(solution),
-  image: getImage(image),
-  category: getCategory(category),
+  solution: solution ? getSolution(solution) : null,
+  image: image ? getImage(image) : null,
+  category: category ? getCategory(category) : null,
   variants: variants.map(variant => getVariant(variant)),
 })
 const getSolution = ({ what, why, when, how }) => ({ what, why, when, how })
