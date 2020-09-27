@@ -11,7 +11,7 @@ class Pattern extends Model {
     })
   }
 
-  index(doc) {
+  serialize(doc) {
     return {
       title: doc.title,
       solution: doc.solution && doc.solution.length ? doc.solution[0].ref : null,
