@@ -3,6 +3,9 @@ import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ case: useCase }) => {
+    if (!useCase)
+        return null
+
     const { title, summary, description } = useCase
 
     const context = {
