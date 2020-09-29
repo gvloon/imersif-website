@@ -29,7 +29,7 @@ const getVariant = ({ title, slug, interaction: interactions, examples, addition
   }
 }
 const getInteraction = ({ image, annotations }, data) => ({
-  image: getImage(image),
+  image: image ? getImage(image) : null,
   annotations: annotations.map(annotation => getAnnotation(annotation, data))
 })
 const getAnnotation = ({ text }, data) => ({ text, index: ++data.annotationIndex })
