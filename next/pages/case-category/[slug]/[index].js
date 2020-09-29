@@ -5,7 +5,10 @@ import { BasicPage } from 'components/page'
 const pageSize = 10
 
 const Page = ({ category, pageIndex }) => {
-    const { slug, title, description, children } = category
+    if (!category)
+        return null
+
+    const { slug, title, description } = category
 
     const context = {
         title,

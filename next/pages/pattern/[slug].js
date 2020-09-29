@@ -22,6 +22,9 @@ const styles = theme => ({
 class Page extends React.Component {
     render () {
         const { pattern, classes } = this.props
+        if (!pattern)
+            return null
+
         const { title, solution, image, variants } = pattern
 
         const context = {

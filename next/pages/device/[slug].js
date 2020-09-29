@@ -3,6 +3,9 @@ import { Markdown, Specifications } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ device }) => {
+    if (!device)
+        return null
+
     const { title, description } = device
 
     const context = {

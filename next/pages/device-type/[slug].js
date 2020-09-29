@@ -13,6 +13,9 @@ class Page extends React.Component {
 
     render () {
         const { deviceType } = this.props
+        if (!deviceType)
+            return null
+
         const { slug, name } = deviceType
 
         const context = {

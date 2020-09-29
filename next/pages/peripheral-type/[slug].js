@@ -13,6 +13,9 @@ class Page extends React.Component {
 
     render () {
         const { peripheralType } = this.props
+        if (!peripheralType)
+            return null
+
         const { slug, name } = peripheralType
 
         const context = {

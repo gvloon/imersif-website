@@ -3,6 +3,9 @@ import { Markdown, Specifications } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ peripheral }) => {
+    if (!peripheral)
+        return null
+
     const { title, description } = peripheral
 
     const context = {

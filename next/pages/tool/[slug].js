@@ -3,6 +3,9 @@ import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ tool }) => {
+    if (!tool)
+        return null
+
     const { slug, title, description } = tool
 
     const context = {

@@ -19,6 +19,9 @@ class Page extends React.PureComponent {
 
     render = () => {
         const { patternCategory, classes } = this.props
+        if (!patternCategory)
+            return null
+
         const { selectedFilters } = this.state
         const { slug, name, patterns } = patternCategory
 
