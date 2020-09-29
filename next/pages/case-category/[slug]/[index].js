@@ -58,7 +58,7 @@ export const getStaticPaths = async () => {
             paths.push({ params: { slug, index: index.toString() } })
         }
     })
-    return { paths, fallback: false }
+    return { paths, fallback: true }
 }
 
 export default Page

@@ -66,9 +66,9 @@ export const getStaticProps = async context => {
 export const getStaticPaths = async () => {
     const cases = await api.get(`/cases`)
     const paths = cases.map(({ slug }) => ({
-        params: { slug }
+        params: { slug },
     }))
-    return { paths, fallback: false }
+    return { paths, fallback: true }
 }
 
 export default Page

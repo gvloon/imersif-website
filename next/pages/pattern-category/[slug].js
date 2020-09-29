@@ -105,7 +105,7 @@ export const getStaticPaths = async () => {
     const paths = patternCategories.map(({ slug }) => ({
         params: { slug }
     }))
-    return { paths, fallback: false }
+    return { paths, fallback: true }
 }
 
 export default withStyles(styles)(Page)

@@ -81,7 +81,7 @@ export const getStaticPaths = async () => {
     const paths = peripherals.map(({ slug }) => ({
         params: { slug }
     }))
-    return { paths, fallback: false }
+    return { paths, fallback: true }
 }
 
 export default Page
