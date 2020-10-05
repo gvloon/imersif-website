@@ -2,6 +2,9 @@ import { React, api, href } from 'common'
 import { PatternPage } from 'components/patterns'
 
 const Page = ({ pattern }) => {
+    if (!pattern)
+        return null
+
     const { title } = pattern
     const context = {
         title,

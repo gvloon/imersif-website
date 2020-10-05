@@ -2,6 +2,9 @@ import { React, api } from 'common'
 import { PatternCategoryPage, PatternPage } from 'components/patterns'
 
 const Page = ({ patternCategory, pattern }) => {
+    if (!patternCategory)
+        return null
+
     const { slug, name } = patternCategory
     const context = {
         title: name,
