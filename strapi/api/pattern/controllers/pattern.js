@@ -18,14 +18,15 @@ const getPatternLong = ({ title, solution, image, category, variants }) => ({
 const getSolution = ({ what, why, when, how }) => ({ what, why, when, how })
 const getImage = ({ url }) => ({ url })
 const getCategory = ({ name, slug }) => ({ name, slug })
-const getVariant = ({ title, slug, interaction: interactions, examples, additions }) => {
+const getVariant = ({ title, slug, interaction: interactions, examples, additions, filters }) => {
   const data = { annotationIndex: 0 }
   return {
     title,
     slug,
     interactions: interactions.map(interaction => getInteraction(interaction, data)),
     examples: examples.map(example => getExample(example)),
-    additions: additions.map(addition => getAddition(addition))
+    additions: additions.map(addition => getAddition(addition)),
+    filters: filters.map(filter => getFilter(filter))
   }
 }
 const getInteraction = ({ image, annotations }, data) => ({
@@ -35,6 +36,10 @@ const getInteraction = ({ image, annotations }, data) => ({
 const getAnnotation = ({ text }, data) => ({ text, index: ++data.annotationIndex })
 const getExample = ({ title, content }) => ({ title, content })
 const getAddition = ({ title, content }) => ({ title, content })
+const getFilter = ({ name, icon }) => ({
+  name,
+  icon: icon ? icon.url : null
+})
 
 module.exports = {
   async find(ctx) {
@@ -42,7 +47,19 @@ module.exports = {
     return entities.map(entity => getPatternShort(entity))
   },
   async findBySlug(ctx) {
-    const entity = await db.findBySlug('pattern', ctx)
+    const entity = await db.findBySlug('pattern', ctx, [
+      {
+        path: 'variants',
+        populate: [
+          {
+            path: 'filters'
+          }
+        ],
+      },
+      {
+        path: 'category'
+      }
+    ])
     return getPatternLong(entity)
   }
 }

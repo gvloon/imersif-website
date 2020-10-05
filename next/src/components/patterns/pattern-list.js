@@ -1,6 +1,7 @@
 import { React, makeStyles, PropTypes, classNames, href } from 'common'
 import { Button, Link, Image } from 'components'
 import ProConList from './pro-con-list'
+import PatternFilterIcons from './pattern-filter-icons'
 
 const marginPattern = 1
 
@@ -21,6 +22,7 @@ const useStyles = makeStyles(theme => ({
         borderRadius: '3px',
         display: 'flex',
         flexDirection: 'column',
+        cursor: 'pointer',
         [theme.breakpoints.up('xs')]: {
             display: 'none'
         }
@@ -35,6 +37,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'flex-start',
         padding: '0.5rem',
         display: 'none',
+        cursor: 'pointer',
         [theme.breakpoints.up('xs')]: {
             display: 'flex'
         }
@@ -62,22 +65,31 @@ const useStyles = makeStyles(theme => ({
         left: 0,
         top: 0,
         width: '100%',
-        height: '100%'
+        height: '100%',
+        alignItems: 'flex-end'
     },
     prosAndCons: {
         marginTop: '0.5rem',
         flex: 1
     },
     title: {
-        fontWeight: 'bold'
+        marginTop: '0px'
+    },
+    bottom: {
+        marginTop: '1rem',
+        display: 'flex',
+        alignItems: 'flex-end'
     },
     seeMore: {
-        marginLeft: 'auto',
-        marginTop: '1rem'
+        marginLeft: 'auto'
+    },
+    icons: {
+        marginLeft: '5px',
+        marginBottom: '5px'
     }
 }))
 
-const PatternList = ({ patterns, filters, className }) => {
+const PatternList = ({ patterns, className }) => {
     if (!patterns) {
         return null
     }
@@ -91,32 +103,41 @@ const PatternList = ({ patterns, filters, className }) => {
             <div className={classes.container}>
                 {
                     patterns.map((pattern, index) => (
-                        <Link key={index} href={href('/pattern/[slug]', pattern.slug)}>
-                            <a>
+                        <React.Fragment key={index}>
+                            <Link href={href('/pattern/[slug]', pattern.slug)}>
                                 <div className={classes.patternMobile}>
                                     <div className={classes.top}>
                                         <div className={classes.imageContainer}>
                                             <Image className={classes.image} image={pattern.image} />
                                         </div>
                                         <div className={classes.right}>
-                                            <h3>{pattern.title}</h3>
+                                            <h3 className={classes.title}>{pattern.title}</h3>
                                         </div>
                                     </div>
                                     <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
-                                    <Button className={classes.seeMore}>See more</Button>
+                                    <div className={classes.bottom}>
+                                        <PatternFilterIcons className={classes.icons} filters={pattern.filters} />
+                                        <Button component="span" className={classes.seeMore}>See more</Button>
+                                    </div>
                                 </div>
+                            </Link>
+                            <Link href={href('/pattern/[slug]', pattern.slug)}>
                                 <div className={classes.patternDesktop}>
                                     <div className={classes.imageContainer}>
-                                        <Image className={classes.image} image={pattern.image} />
+                                        <Image className={classes.image} image={pattern.image}>
+                                            <PatternFilterIcons className={classes.icons} filters={pattern.filters} />
+                                        </Image>
                                     </div>
                                     <div className={classes.right}>
                                         <h4>{pattern.title}</h4>
                                         <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
-                                        <Button className={classes.seeMore}>See more</Button>
+                                        <div className={classes.bottom}>
+                                            <Button component="span" className={classes.seeMore}>See more</Button>
+                                        </div>
                                     </div>
                                 </div>
-                            </a>
-                        </Link>
+                            </Link>
+                        </React.Fragment>
                     ))
                 }
             </div>

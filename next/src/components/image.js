@@ -4,7 +4,8 @@ import config from 'config'
 const useStyles = makeStyles(theme => ({
     image: {
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
+        display: 'flex'
     }
 }))
 

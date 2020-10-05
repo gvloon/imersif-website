@@ -1,105 +1,46 @@
-import { React, api, withStyles, memoize, href } from 'common'
-import { CheckboxList } from 'components'
-import { BasicPage } from 'components/page'
-import { PatternList } from 'components/patterns'
+import { React, api } from 'common'
+import { PatternCategoryPage, PatternPage } from 'components/patterns'
 
-const styles = theme => ({
-    patterns: {
-        marginTop: '0.5rem'
-    }
-})
-
-class Page extends React.PureComponent {
-    constructor(props) {
-        super(props)
-        this.state = {
-            selectedFilters: []
-        }
-    }
-
-    render = () => {
-        const { patternCategory, classes } = this.props
-        if (!patternCategory)
-            return null
-
-        const { selectedFilters } = this.state
-        const { slug, name, patterns } = patternCategory
-
-        const context = {
-            title: name,
-            section: 'patterns',
-            search: {
-                desktop: 'patterns',
-                mobile: null
+const Page = ({ patternCategory, pattern }) => {
+    const { slug, name } = patternCategory
+    const context = {
+        title: name,
+        section: 'patterns',
+        search: {
+            desktop: 'patterns',
+            mobile: null
+        },
+        breadcrumb: [
+            {
+                name: 'Patterns',
+                href: '/patterns'
             },
-            breadcrumb: [
-                {
-                    name: 'Patterns',
-                    href: '/patterns'
-                },
-                {
-                    name: name,
-                    href: ('/pattern-category/[slug]', slug)
-                }
-            ]
-        }
-
-        const filters = getAvailableFilters(patterns)
-        const preparedPatterns = preparePatterns(patterns)
-        const filteredPatterns = getFilteredPatterns(preparedPatterns, selectedFilters)
-        return (
-            <BasicPage context={context}>
-                <CheckboxList title="With: " values={filters} onChange={this.onFilterChange} />
-                <PatternList className={classes.patterns} patterns={filteredPatterns} />
-            </BasicPage>
-        )
+            {
+                name: name,
+                href: ('/pattern-category/[slug]', slug)
+            }
+        ]
     }
 
-    onFilterChange = selected => {
-        this.setState({ selectedFilters: selected })
+    if (pattern != null) {
+        return <PatternPage context={context} pattern={pattern} />
+    } else {
+        return <PatternCategoryPage context={context} patternCategory={patternCategory} />
     }
 }
 
-const getAvailableFilters = memoize(patterns => {
-    const map = {}
-    patterns.forEach(pattern => {
-        pattern.filters.forEach(filter => {
-            map[filter.name] = true
-        })
-    })
-    return Object.keys(map)
-})
-
-const preparePatterns = memoize(patterns => {
-    return patterns.map(pattern => {
-        const item = Object.assign({}, pattern)
-        item.filterMap = {}
-        pattern.filters.forEach(filter => {
-            item.filterMap[filter.name] = true
-        })
-        return item
-    })
-})
-
-const getFilteredPatterns = memoize((patterns, filters) => {
-    return patterns.filter(pattern => {
-        if (filters.length === 0) {
-            return true
-        }
-        for (const filter of filters) {
-            if (pattern.filterMap.hasOwnProperty(filter)) {
-                return true
-            }
-        }
-        return false
-    })
-})
-
 export const getStaticProps = async context => {
+    let pattern = null
     const [patternCategory] = await Promise.all([
         api.get(`/pattern-categories/${context.params.slug}`)
     ])
-    const props = { patternCategory }
+    if (patternCategory && patternCategory.patterns && patternCategory.patterns.length === 1) {
+        [pattern] = await Promise.all([
+            api.get(`/patterns/${patternCategory.patterns[0].slug}`)
+        ])
+    }
+
+    const props = { patternCategory, pattern }
     return { props, revalidate: 1 }
 }
 
@@ -111,4 +52,4 @@ export const getStaticPaths = async () => {
     return { paths, fallback: true }
 }
 
-export default withStyles(styles)(Page)
+export default Page

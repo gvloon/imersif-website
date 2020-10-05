@@ -1,95 +1,38 @@
-import { React, api, withStyles, href } from 'common'
-import { Markdown, Accordion } from 'components'
-import { BasicPage } from 'components/page'
-import { SolutionBlock, PatternVariant } from 'components/patterns'
+import { React, api, href } from 'common'
+import { PatternPage } from 'components/patterns'
 
-const styles = theme => ({
-    solution: {
-        marginTop: '1rem'
-    },
-    variants: {
-        marginTop: '3rem',
-        display: 'block',
-    },
-    variant: {
-        marginBottom: '4rem'
-    },
-    toc: {
-        marginTop: '4rem'
+const Page = ({ pattern }) => {
+    const { title } = pattern
+    const context = {
+        title,
+        section: 'patterns',
+        search: {
+            desktop: 'patterns',
+            mobile: null
+        },
+        breadcrumb: getBreadcrumb(pattern)
     }
-})
 
-class Page extends React.Component {
-    render () {
-        const { pattern, classes } = this.props
-        if (!pattern)
-            return null
-
-        const { title, solution, image, variants } = pattern
-
-        const context = {
-            title,
-            section: 'patterns',
-            search: {
-                desktop: 'patterns',
-                mobile: null
-            },
-            breadcrumb: getBreadcrumb(pattern)
-        }
-
-        return (
-            <BasicPage context={context}>
-                <Markdown />
-                <SolutionBlock className={classes.solution} solution={solution} image={image} />
-                <div className={classes.variants}>
-                    <Accordion>
-                        {
-                            variants.map((variant, index) => (
-                                <Accordion.Item key={index}>
-                                    <Accordion.Summary>
-                                        <h2>{variant.title}</h2>
-                                    </Accordion.Summary>
-                                    <Accordion.Details>
-                                        <PatternVariant key={index} className={classes.variant} variant={variant} />
-                                    </Accordion.Details>
-                                </Accordion.Item>
-                            ))
-                        }
-                    </Accordion>
-                </div>
-            </BasicPage>
-        )
-    }
+    return <PatternPage context={context} pattern={pattern} />
 }
 
 const getBreadcrumb = ({ title, slug, category }) => {
+    const breadcrumb = []
+    breadcrumb.push({
+        name: 'Patterns',
+        href: '/patterns'
+    })
     if (category) {
-        return [
-            {
-                name: 'Patterns',
-                href: '/patterns'
-            },
-            {
-                name: category.name,
-                href: href('/pattern-category/[slug]', category.slug)
-            },
-            {
-                name: title,
-                href: href('/pattern/[slug]', slug)
-            }
-        ]
-    } else {
-        return [
-            {
-                name: 'Patterns',
-                href: '/patterns'
-            },
-            {
-                name: title,
-                href: href('/pattern/[slug]', slug)
-            }
-        ]
+        breadcrumb.push({
+            name: category.name,
+            href: href('/pattern-category/[slug]', category.slug)
+        })
     }
+    breadcrumb.push({
+        name: title,
+        href: href('/pattern/[slug]', slug)
+    })
+    return breadcrumb
 }
 
 export const getStaticProps = async context => {
@@ -108,4 +51,4 @@ export const getStaticPaths = async () => {
     return { paths, fallback: true }
 }
 
-export default withStyles(styles)(Page)
+export default Page

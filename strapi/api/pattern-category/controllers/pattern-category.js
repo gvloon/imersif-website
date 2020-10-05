@@ -21,19 +21,30 @@ const getPatternCategoryLong = ({ slug, name, patterns }) => ({
   name,
   patterns: patterns ? patterns.map(pattern => getPattern(pattern)) : []
 })
-const getPattern = ({ slug, title, image, pros_and_cons, filters }) => ({
+const getPattern = ({ slug, title, image, pros_and_cons, variants }) => ({
   slug,
   title,
   image: image ? getImage(image) : null,
   pros_and_cons: pros_and_cons ? getProsAndCons(pros_and_cons) : null,
-  filters: filters ? filters.map(filter => getFilter(filter)) : []
+  filters: getFiltersFromVariants(variants)
 })
 const getImage = ({ url }) => ({ url })
 const getProsAndCons = ({ pros, cons }) => ({
   pros: pros.map(({ text }) => ({ text })),
   cons: cons.map(({ text }) => ({ text }))
 })
-const getFilter = ({ name }) => ({ name })
+const getFiltersFromVariants = variants => {
+  const map = {}
+  variants.forEach(({ filters }) => {
+    filters.forEach(({ _id, name, icon }) => {
+      map[_id] = {
+        name,
+        icon: icon ? icon.url : null
+      }
+    })
+  })
+  return Object.values(map)
+}
 
 module.exports = {
   async find(ctx) {
@@ -43,9 +54,16 @@ module.exports = {
   async findBySlug(ctx) {
     const entity = await db.findBySlug('pattern-category', ctx, [{
       path: 'patterns',
-      populate: [{
-        path: 'filters'
-      }]
+      populate: [
+        {
+          path: 'variants',
+          populate: [
+            {
+              path: 'filters'
+            }
+          ]
+        }
+      ]
     }])
     return getPatternCategoryLong(entity)
   }
