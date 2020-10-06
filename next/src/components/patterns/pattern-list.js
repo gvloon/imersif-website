@@ -1,7 +1,7 @@
 import { React, makeStyles, PropTypes, classNames, href } from 'common'
 import { Button, Link, Image } from 'components'
 import ProConList from './pro-con-list'
-import PatternFilterIcons from './pattern-filter-icons'
+// import PatternFilterIcons from './pattern-filter-icons'
 
 const marginPattern = 1
 
@@ -116,7 +116,7 @@ const PatternList = ({ patterns, className }) => {
                                     </div>
                                     <ProConList className={classes.prosAndCons} prosAndCons={pattern.pros_and_cons} />
                                     <div className={classes.bottom}>
-                                        <PatternFilterIcons className={classes.icons} filters={pattern.filters} />
+                                        {/* <PatternFilterIcons className={classes.icons} filters={pattern.filters} /> */}
                                         <Button component="span" className={classes.seeMore}>See more</Button>
                                     </div>
                                 </div>
@@ -125,7 +125,7 @@ const PatternList = ({ patterns, className }) => {
                                 <div className={classes.patternDesktop}>
                                     <div className={classes.imageContainer}>
                                         <Image className={classes.image} image={pattern.image}>
-                                            <PatternFilterIcons className={classes.icons} filters={pattern.filters} />
+                                            {/* <PatternFilterIcons className={classes.icons} filters={pattern.filters} /> */}
                                         </Image>
                                     </div>
                                     <div className={classes.right}>
