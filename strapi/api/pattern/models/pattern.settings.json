@@ -48,9 +48,6 @@
       ],
       "plugin": "upload",
       "required": false
-    },
-    "filters": {
-      "collection": "pattern-filter"
     }
   }
 }

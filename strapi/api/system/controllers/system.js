@@ -52,10 +52,7 @@ module.exports = {
     const model = strapi.connections.default.model('Pattern')
     model.collection.updateMany({}, {
       $unset: {
-        description: true,
-        test: true,
-        supported: true,
-        media: true
+        filters: true
       }
     })
     return 'ok'
