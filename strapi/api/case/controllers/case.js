@@ -16,7 +16,7 @@ const getCaseLong = ({ slug, title, summary, description, category }) => ({
   title,
   summary,
   description,
-  category: getCategory(category)
+  category: category ? getCategory(category) : null
 })
 const getCategory = ({ slug, title }) => ({ slug, title })
 
