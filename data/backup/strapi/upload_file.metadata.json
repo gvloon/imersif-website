@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"154f034c714d4c40b7ef7a07b35c3b17","collectionName":"upload_file"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.upload_file"}],"uuid":"09839a5629354414a1f557f819e944b8"}
