@@ -1,4 +1,4 @@
-import { React, withStyles, classNames, debug } from 'common'
+import { React, withStyles, classNames, delay } from 'common'
 import config from 'config'
 
 const styles = theme => ({
@@ -112,8 +112,9 @@ class Media extends React.Component
             onVideoLoaded(data)
     }
 
-    onVideoFinished = () => {
+    onVideoFinished = async () => {
         const { playing, onVideoFinished, data } = this.props
+        await delay(1000)
         this.video.currentTime = 0
         if (playing) {
             this.playVideo()
