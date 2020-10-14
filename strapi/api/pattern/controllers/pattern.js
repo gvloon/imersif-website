@@ -16,7 +16,7 @@ const getPatternLong = ({ title, solution, image, category, variants }) => ({
   variants: variants.map(variant => getVariant(variant)),
 })
 const getSolution = ({ what, why, when, how }) => ({ what, why, when, how })
-const getImage = ({ url }) => ({ url })
+const getImage = ({ url, mime, width, height }) => ({ url, mime, width, height })
 const getCategory = ({ name, slug }) => ({ name, slug })
 const getVariant = ({ title, slug, interaction: interactions, examples, additions, filters }) => {
   const data = { annotationIndex: 0 }

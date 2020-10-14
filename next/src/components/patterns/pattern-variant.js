@@ -1,51 +1,18 @@
 import { React, makeStyles, PropTypes, classNames, _ } from 'common'
-import { Image, Markdown } from 'components'
+import { Markdown } from 'components'
+import InteractionSteps from './interaction-steps'
 
 const useStyles = makeStyles(theme => ({
     variant: {
         paddingTop: '0.5rem',
         width: '100%'
     },
-    interaction: {
-
-    },
-    interactionPair: {
-        display: 'flex',
-        marginLeft: '-1rem',
-        marginRight: '-1rem',
-        flexDirection: 'column',
-        [theme.breakpoints.up('xs')]: {
-            flexDirection: 'row'
-        }
-    },
-    steps: {
-        marginTop: '0.5rem'
-    },
-    interactionStep: {
-        width: '100%',
-        paddingLeft: '1rem',
-        paddingRight: '1rem',
-        marginBottom: '1rem',
-        [theme.breakpoints.up('xs')]: {
-            width: '50%'
-        }
-    },
-    interactionImage: {
-        width: '100%',
-        paddingTop: '66%'
-    },
     examples: {
         marginTop: '3rem'
-    },
-    annotations: {
-        marginTop: '0.5rem'
-    },
-    annotationIndex: {
-        fontWeight: 500
     }
 }))
 
-const PatternVariant = ({ variant, className }) => {
+const PatternVariant = ({ variant, active, className }) => {
     if (!variant) {
         return null
     }
@@ -58,45 +25,13 @@ const PatternVariant = ({ variant, className }) => {
     return (
         <div className={rootClasses}>
             <h3>How this pattern works</h3>
-            <InteractionSteps interactions={interactions} classes={classes} />
+            <InteractionSteps interactions={interactions} active={active} />
             <Examples examples={examples} classes={classes} />
             <Additions additions={additions} classes={classes} />
         </div>
     )
 }
 
-const InteractionSteps = ({ interactions, classes }) => {
-    return (
-        <div className={classes.steps}>
-            {
-                _.chunk(interactions, 2).map((chunk, index) => (
-                    <div key={index} className={classes.interactionPair}>
-                        {
-                            chunk.map((interaction, index) => (
-                                <div key={index} className={classes.interactionStep}>
-                                    <Image className={classes.interactionImage} image={interaction.image} />
-                                    <Annotations annotations={interaction.annotations} classes={classes} />
-                                </div>
-                            ))
-                        }
-                    </div>
-                ))
-            }
-        </div>
-    )
-}
-
-const Annotations = ({ annotations, classes }) => {
-    return (
-        <div className={classes.annotations}>
-            {
-                annotations.map((annotation, index) => (
-                    <div key={index}><span className={classes.annotationIndex}>{annotation.index + '. '}</span>{annotation.text}</div>
-                ))
-            }
-        </div>
-    )
-}
 
 const Examples = ({ examples, classes }) => {
     if (!examples || examples.length === 0) {

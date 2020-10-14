@@ -1,4 +1,4 @@
-import { React, withStyles, href } from 'common'
+import { React, withStyles, debug } from 'common'
 import { Markdown, Accordion } from 'components'
 import { BasicPage } from 'components/page'
 import { SolutionBlock, PatternVariant, PatternFilterIcons } from 'components/patterns'
@@ -23,7 +23,15 @@ const styles = theme => ({
 })
 
 class Page extends React.Component {
-    render () {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            selectedVariant: -1
+        }
+    }
+
+    render = () => {
         const { pattern, context, classes } = this.props
         if (!pattern)
             return null
@@ -35,26 +43,56 @@ class Page extends React.Component {
                 <Markdown />
                 <SolutionBlock className={classes.solution} solution={solution} image={image} />
                 <div className={classes.variants}>
-                    <Accordion>
-                        {
-                            variants.map((variant, index) => (
-                                <Accordion.Item key={index}>
-                                    <Accordion.Summary>
-                                        <h2>
-                                            {variant.title}
-                                            <PatternFilterIcons className={classes.icons} filters={variant.filters} />
-                                        </h2>
-                                    </Accordion.Summary>
-                                    <Accordion.Details>
-                                        <PatternVariant key={index} className={classes.variant} variant={variant} />
-                                    </Accordion.Details>
-                                </Accordion.Item>
-                            ))
-                        }
-                    </Accordion>
+                    {
+                        variants.length > 1
+                            ? this.renderVariants(variants)
+                            : this.renderVariant(variants[0])
+                    }
                 </div>
             </BasicPage>
         )
+    }
+
+    renderVariants = variants => {
+        const { classes } = this.props
+        const { selectedVariant } = this.state
+
+        return (
+            <Accordion onChange={this.onChange}>
+                {
+                    variants.map((variant, index) => (
+                        <Accordion.Item key={index}>
+                            <Accordion.Summary>
+                                <h2>
+                                    {variant.title}
+                                    <PatternFilterIcons className={classes.icons} filters={variant.filters} />
+                                </h2>
+                            </Accordion.Summary>
+                            <Accordion.Details>
+                                <PatternVariant
+                                    key={index}
+                                    className={classes.variant}
+                                    variant={variant}
+                                    active={index === selectedVariant}
+                                />
+                            </Accordion.Details>
+                        </Accordion.Item>
+                    ))
+                }
+            </Accordion>
+
+        )
+    }
+
+    renderVariant = variant => {
+        const { classes } = this.props
+        return <PatternVariant className={classes.variant} variant={variant} active={true} />
+    }
+
+    onChange = index => {
+        this.setState({
+            selectedVariant: index
+        })
     }
 }
 

@@ -1,4 +1,4 @@
-import { React, withStyles, useState } from 'common'
+import { React, withStyles, debug } from 'common'
 import { ExpandMore } from '@material-ui/icons'
 import MuiAccordion from '@material-ui/core/Accordion'
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary'
@@ -19,7 +19,8 @@ class Accordion extends React.Component
                     children.map((child, index) => {
                         return React.cloneElement(child, {
                             expanded: expanded === index,
-                            onChange: () => this.setExpanded(index),
+                            'data-index': index,
+                            onChange: this.setExpanded,
                         })
                     })
                 }
@@ -27,10 +28,18 @@ class Accordion extends React.Component
         )
     }
 
-    setExpanded = index => {
-        this.setState(state => ({
-            expanded: state.expanded !== index ? index : -1
-        }))
+    setExpanded = evt => {
+        const { onChange } = this.props
+        const index = parseInt(evt.currentTarget.parentNode.dataset.index)
+        this.setState(state => {
+            const newIndex = state.expanded !== index ? index : -1
+            if (onChange) {
+                onChange(newIndex)
+            }
+            return {
+                expanded: newIndex
+            }
+        })
     }
 }
 
