@@ -85,9 +85,11 @@ class InteractionSteps extends React.Component {
     }
 
     onVideoLoaded = data => {
-        this.setState(state => ({
-            videos: [...state.videos, data]
-        }))
+        this.setState(state => {
+            const videos = [...state.videos, data]
+            videos.sort()
+            return { videos }
+        })
     }
 
     onMouseOver = data => {
