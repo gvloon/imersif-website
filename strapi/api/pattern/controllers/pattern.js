@@ -53,6 +53,12 @@ module.exports = {
         populate: [
           {
             path: 'filters'
+          },
+          {
+            path: 'examples'
+          },
+          {
+            path: 'additions'
           }
         ],
       },

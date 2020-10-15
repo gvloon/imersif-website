@@ -34,7 +34,7 @@ const PatternVariant = ({ variant, active, className }) => {
 
 
 const Examples = ({ examples, classes }) => {
-    if (!examples || examples.length === 0) {
+    if (!examples || !examples.length) {
         return null
     }
 
@@ -49,7 +49,7 @@ const Examples = ({ examples, classes }) => {
 }
 
 const Additions = ({ additions, classes }) => {
-    if (!additions || additions.length === 0) {
+    if (!additions || !additions.length) {
         return null
     }
 

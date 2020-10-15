@@ -49,6 +49,8 @@ class InteractionSteps extends React.Component {
 
     render = () => {
         const { interactions, active, classes } = this.props
+        if (!interactions || !interactions.length)
+            return null
 
         let mediaIndex = -1
         const activeIndex = this.activeIndex()
