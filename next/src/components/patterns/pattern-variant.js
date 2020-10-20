@@ -24,7 +24,6 @@ const PatternVariant = ({ variant, active, className }) => {
     })
     return (
         <div className={rootClasses}>
-            <h3>How this pattern works</h3>
             <InteractionSteps interactions={interactions} active={active} />
             <Examples examples={examples} classes={classes} />
             <Additions additions={additions} classes={classes} />
@@ -37,10 +36,9 @@ const Examples = ({ examples, classes }) => {
     if (!examples || !examples.length) {
         return null
     }
-
     return (
         <div className={classes.examples}>
-            <h3>{ examples.length === 1 ? 'Examples' : 'Example' }</h3>
+            <h3>{ examples.length === 1 ? 'Example' : 'Examples' }</h3>
             {
                 examples.map((example, index) => <Example key={index} example={example} classes={classes} />)
             }
@@ -55,7 +53,7 @@ const Additions = ({ additions, classes }) => {
 
     return (
         <>
-            <h2>{ additions.length === 1 ? 'Additions' : 'Addition' }</h2>
+            <h2>{ additions.length === 1 ? 'Addition' : 'Additions' }</h2>
             {
                 additions.map((addition, index) => <Example key={index} example={addition} classes={classes} />)
             }

@@ -55,34 +55,37 @@ class InteractionSteps extends React.Component {
         let mediaIndex = -1
         const activeIndex = this.activeIndex()
         return (
-            <div className={classes.steps}>
-                {
-                    _.chunk(interactions, 2).map((chunk, index) => (
-                        <div key={index} className={classes.pair}>
-                            {
-                                chunk.map((interaction, index) => {
-                                    mediaIndex++
-                                    return (
-                                        <div key={index} className={classes.step}>
-                                            <Media
-                                                data={mediaIndex}
-                                                className={classes.media}
-                                                media={interaction.image}
-                                                playing={active && mediaIndex === activeIndex}
-                                                onMouseOver={this.onMouseOver}
-                                                onMouseOut={this.onMouseOut}
-                                                onVideoLoaded={this.onVideoLoaded}
-                                                onVideoFinished={this.onVideoFinished}
-                                            />
-                                            <Annotations annotations={interaction.annotations} classes={classes}/>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
-                    ))
-                }
-            </div>
+            <>
+                <h3>How this pattern works</h3>
+                <div className={classes.steps}>
+                    {
+                        _.chunk(interactions, 2).map((chunk, index) => (
+                            <div key={index} className={classes.pair}>
+                                {
+                                    chunk.map((interaction, index) => {
+                                        mediaIndex++
+                                        return (
+                                            <div key={index} className={classes.step}>
+                                                <Media
+                                                    data={mediaIndex}
+                                                    className={classes.media}
+                                                    media={interaction.image}
+                                                    playing={active && mediaIndex === activeIndex}
+                                                    onMouseOver={this.onMouseOver}
+                                                    onMouseOut={this.onMouseOut}
+                                                    onVideoLoaded={this.onVideoLoaded}
+                                                    onVideoFinished={this.onVideoFinished}
+                                                />
+                                                <Annotations annotations={interaction.annotations} classes={classes}/>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        ))
+                    }
+                </div>
+            </>
         )
     }
 

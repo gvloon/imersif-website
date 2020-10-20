@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     imageContainer: {
         width: '25%',
         position: 'relative',
-        paddingTop: '20%',
+        paddingTop: '16.6666%',
         height: 0
     },
     image: {
