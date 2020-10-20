@@ -56,9 +56,13 @@ const useStyles = makeStyles(theme => ({
     },
     imageContainer: {
         width: '25%',
-        position: 'relative',
         paddingTop: '16.6666%',
-        height: 0
+        position: 'relative',
+        height: 0,
+        [theme.breakpoints.up('xs')]: {
+            width: '30%',
+            paddingTop: '20%',
+        }
     },
     image: {
         position: 'absolute',

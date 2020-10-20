@@ -71,8 +71,6 @@ class InteractionSteps extends React.Component {
                                                     className={classes.media}
                                                     media={interaction.image}
                                                     playing={active && mediaIndex === activeIndex}
-                                                    onMouseOver={this.onMouseOver}
-                                                    onMouseOut={this.onMouseOut}
                                                     onVideoLoaded={this.onVideoLoaded}
                                                     onVideoFinished={this.onVideoFinished}
                                                 />
