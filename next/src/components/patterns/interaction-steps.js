@@ -29,10 +29,23 @@ const styles = theme => ({
         backgroundColor: '#FEEED7'
     },
     annotations: {
-        marginTop: '0.5rem'
+        marginTop: '0.6rem',
+        paddingTop: '-0.4rem',
+        paddingBottom: '-0.4rem'
+    },
+    annotation: {
+        marginTop: '0.4rem',
+        marginBottom: '0.4rem',
+        display: 'flex',
+        flexDirection: 'row'
     },
     annotationIndex: {
-        fontWeight: 500
+        fontWeight: 500,
+        width: '1.25rem'
+    },
+    annotationText: {
+        flex: 1,
+        lineHeight: '1.4rem'
     }
 })
 
@@ -136,7 +149,10 @@ const Annotations = ({ annotations, classes }) => {
         <div className={classes.annotations}>
             {
                 annotations.map((annotation, index) => (
-                    <div key={index}><span className={classes.annotationIndex}>{annotation.index + '. '}</span>{annotation.text}</div>
+                    <div className={classes.annotation} key={index}>
+                        <div className={classes.annotationIndex}>{annotation.index + '. '}</div>
+                        <div className={classes.annotationText}>{annotation.text}</div>
+                    </div>
                 ))
             }
         </div>
