@@ -30,22 +30,23 @@ const styles = theme => ({
     },
     annotations: {
         marginTop: '0.6rem',
-        paddingTop: '-0.4rem',
-        paddingBottom: '-0.4rem'
+        paddingTop: '-0.35rem',
+        paddingBottom: '-0.35rem'
     },
     annotation: {
-        marginTop: '0.4rem',
-        marginBottom: '0.4rem',
+        marginTop: '0.35rem',
+        marginBottom: '0.35rem',
         display: 'flex',
         flexDirection: 'row'
     },
     annotationIndex: {
         fontWeight: 500,
-        width: '1.25rem'
+        paddingRight: '0.2rem',
+        lineHeight: '1.35rem'
     },
     annotationText: {
         flex: 1,
-        lineHeight: '1.4rem'
+        lineHeight: '1.35rem'
     }
 })
 
