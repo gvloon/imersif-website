@@ -25,7 +25,7 @@ const styles = theme => ({
     },
     media: {
         width: '100%',
-        paddingTop: '66%',
+        paddingTop: '68%',
         backgroundColor: '#FEEED7'
     },
     annotations: {
