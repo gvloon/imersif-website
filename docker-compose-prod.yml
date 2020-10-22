@@ -18,10 +18,19 @@ services:
       - ./next:/home/node/app
       - ./scripts:/home/scripts
     working_dir: /home/node/app
-  ngnix:
-    build: ./nginx
+  nginx:
+    image: nginx
     container_name: imersif_nginx
-    depends_on:
-      - next
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     ports:
       - '80:80'
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
