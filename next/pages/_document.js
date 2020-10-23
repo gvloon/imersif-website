@@ -5,20 +5,36 @@ import Document, {
     Html, Main, NextScript,
 } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
+import { ga } from 'common'
 
 export default class MyDocument extends Document {
     render() {
+        const { production } = this.props
         return (
             <Html lang="en">
                 <Head>
-                    <!-- Global site tag (gtag.js) - Google Analytics -->
-                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTPM0BWTG9"></script>
-                    <script>
-                        window.dataLayer = window.dataLayer || [];
-                        function gtag(){dataLayer.push(arguments);}
-                        gtag('js', new Date());
-                        gtag('config', 'G-XTPM0BWTG9');
-                    </script>
+                    {
+                        production &&
+                        <>
+                            {/* Global Site Tag (gtag.js) - Google Analytics */}
+                            <script
+                                async
+                                src={`https://www.googletagmanager.com/gtag/js?id=${ga.GA_TRACKING_ID}`}
+                            />
+                            <script
+                                dangerouslySetInnerHTML={{
+                                    __html: `
+                                window.dataLayer = window.dataLayer || [];
+                                function gtag(){dataLayer.push(arguments);}
+                                gtag('js', new Date());
+                                gtag('config', '${ga.GA_TRACKING_ID}', {
+                                  page_path: window.location.pathname,
+                                });
+                            `,
+                                }}
+                            />
+                        </>
+                    }
                     <meta charSet="utf-8" />
                     <meta
                         name="viewport"
@@ -69,5 +85,6 @@ MyDocument.getInitialProps = async (ctx) => {
         ...initialProps,
         // Styles fragment is rendered after the app and page rendering finish.
         styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
+        production: process.env.NODE_ENV === 'production'
     };
 };

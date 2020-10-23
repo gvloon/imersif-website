@@ -1,12 +1,11 @@
 import React from 'react'
 import Router from 'next/router'
 import {ThemeProvider, createMuiTheme} from '@material-ui/core/styles'
-import {withStyles, LoaderContext} from 'common'
+import {withStyles, LoaderContext, ga} from 'common'
 import {Loader} from 'components'
 import {motion, AnimatePresence} from 'framer-motion'
 
 import '../assets/scss/index.scss'
-import {Head} from "next/document";
 
 const theme = createMuiTheme({
     palette: {
@@ -91,15 +90,15 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        Router.events.on('routeChangeStart', this.showLoading)
-        Router.events.on('routeChangeComplete', this.hideLoading)
-        Router.events.on('routeChangeError', this.hideLoading)
+        Router.events.on('routeChangeStart', this.onRouteChangeStart)
+        Router.events.on('routeChangeComplete', this.onRouteChangeComplete)
+        Router.events.on('routeChangeError', this.onRouteChangeError)
     }
 
     componentWillUnmount() {
-        Router.events.off('routeChangeStart', this.showLoading)
-        Router.events.off('routeChangeComplete', this.hideLoading)
-        Router.events.off('routeChangeError', this.hideLoading)
+        Router.events.off('routeChangeStart', this.onRouteChangeStart)
+        Router.events.off('routeChangeComplete', this.onRouteChangeComplete)
+        Router.events.off('routeChangeError', this.onRouteChangeError)
     }
 
     render() {
@@ -154,11 +153,16 @@ class App extends React.Component {
         this.setState({loading})
     }
 
-    showLoading = () => {
+    onRouteChangeStart = () => {
         this.setState({loading: true})
     }
 
-    hideLoading = () => {
+    onRouteChangeComplete = url => {
+        this.setState({loading: false})
+        ga.pageview(url)
+    }
+
+    onRouteChangeError = () => {
         this.setState({loading: false})
     }
 }
