@@ -77,7 +77,6 @@ docker-compose -f docker-compose-cert.yml run --rm --entrypoint "\
     --force-renewal" certbot
 echo
 
-echo "### Reloading nginx ..."
-docker-compose -f docker-compose-cert.yml exec nginx nginx -s reload
+docker-compose -f docker-compose-cert.yml down nginx
 
 popd > /dev/null
