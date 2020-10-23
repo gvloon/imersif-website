@@ -21,6 +21,8 @@ services:
   nginx:
     image: nginx
     container_name: imersif_nginx
+    depends_on:
+      - next
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     ports:
       - '80:80'
