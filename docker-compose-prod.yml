@@ -27,7 +27,7 @@ services:
     ports:
       - '80:80'
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/prod:/etc/nginx/conf.d
       - ./certbot/conf:/etc/letsencrypt
       - ./certbot/www:/var/www/certbot
   certbot:
