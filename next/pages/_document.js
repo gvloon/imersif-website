@@ -11,6 +11,14 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
+                    <!-- Global site tag (gtag.js) - Google Analytics -->
+                    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XTPM0BWTG9"></script>
+                    <script>
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-XTPM0BWTG9');
+                    </script>
                     <meta charSet="utf-8" />
                     <meta
                         name="viewport"
