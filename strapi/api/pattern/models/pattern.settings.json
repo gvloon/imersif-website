@@ -34,10 +34,6 @@
     "variants": {
       "collection": "pattern-variant"
     },
-    "category": {
-      "model": "pattern-category",
-      "via": "patterns"
-    },
     "image": {
       "model": "file",
       "via": "related",
@@ -48,6 +44,9 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "category": {
+      "model": "pattern-category"
     }
   }
 }

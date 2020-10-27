@@ -21,7 +21,6 @@
       "via": "children"
     },
     "patterns": {
-      "via": "category",
       "collection": "pattern"
     },
     "slug": {
