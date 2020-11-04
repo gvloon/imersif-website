@@ -37,6 +37,7 @@ popd > /dev/null
 
 pushd $(dirname "$0")/../next/ > /dev/null
 
+yarn
 yarn dev
 
 popd > /dev/null
