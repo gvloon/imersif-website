@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_common_texts",
+  "info": {
+    "name": "text",
+    "icon": "indent"
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "text"
+    }
+  }
+}

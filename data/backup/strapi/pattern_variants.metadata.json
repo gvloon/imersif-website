@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.pattern_variants"},{"v":{"$numberInt":"2"},"key":{"label":{"$numberInt":"1"}},"name":"label_1","background":true,"ns":"strapi.pattern_variants"}],"uuid":"f6c8f90776ad40b990b2e9fa190d8bad"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"label":{"$numberInt":"1"}},"name":"label_1","background":true}],"uuid":"ed669ae229b44f74ac68843d17c5e63b","collectionName":"pattern_variants"}

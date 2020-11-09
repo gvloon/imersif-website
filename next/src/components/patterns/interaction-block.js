@@ -12,7 +12,8 @@ const styles = theme => ({
         }
     },
     steps: {
-        marginTop: '0.5rem'
+        marginTop: '0.5rem',
+        marginBottom: '1rem'
     },
     step: {
         width: '100%',
@@ -51,7 +52,7 @@ const styles = theme => ({
 })
 
 
-class InteractionSteps extends React.Component {
+class InteractionBlock extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -62,33 +63,38 @@ class InteractionSteps extends React.Component {
     }
 
     render = () => {
-        const { interactions, active, classes } = this.props
-        if (!interactions || !interactions.length)
-            return null
+        const { title, intro, steps, active, classes } = this.props
 
         let mediaIndex = -1
         const activeIndex = this.activeIndex()
         return (
             <>
-                <h3>How this pattern works</h3>
+                {
+                    title &&
+                    <h3>{title}</h3>
+                }
+                {
+                    intro &&
+                    <p>{intro}</p>
+                }
                 <div className={classes.steps}>
                     {
-                        _.chunk(interactions, 2).map((chunk, index) => (
+                        _.chunk(steps, 2).map((chunk, index) => (
                             <div key={index} className={classes.pair}>
                                 {
-                                    chunk.map((interaction, index) => {
+                                    chunk.map((step, index) => {
                                         mediaIndex++
                                         return (
                                             <div key={index} className={classes.step}>
                                                 <Media
                                                     data={mediaIndex}
                                                     className={classes.media}
-                                                    media={interaction.image}
+                                                    media={step.image}
                                                     playing={active && mediaIndex === activeIndex}
                                                     onVideoLoaded={this.onVideoLoaded}
                                                     onVideoFinished={this.onVideoFinished}
                                                 />
-                                                <Annotations annotations={interaction.annotations} classes={classes}/>
+                                                <Annotations annotations={step.annotations} classes={classes}/>
                                             </div>
                                         )
                                     })
@@ -160,4 +166,4 @@ const Annotations = ({ annotations, classes }) => {
     )
 }
 
-export default withStyles(styles)(InteractionSteps)
+export default withStyles(styles)(InteractionBlock)

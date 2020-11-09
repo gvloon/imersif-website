@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.cases_pages"}],"uuid":"58201bbbf0964d8eb34986da0f48ab40"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"45082d30e28e4162bdeaaa824fe0b10e","collectionName":"cases_pages"}

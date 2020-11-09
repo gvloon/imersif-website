@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_pattern_examples",
+  "info": {
+    "name": "examples",
+    "icon": "photo-video"
+  },
+  "options": {},
+  "attributes": {
+    "examples": {
+      "collection": "pattern-example"
+    },
+    "intro": {
+      "type": "string"
+    }
+  }
+}

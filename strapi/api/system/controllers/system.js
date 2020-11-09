@@ -1,6 +1,7 @@
 const search = require('search')
 const slug = require('slug')
 const update = require('update')
+const util = require('util')
 
 module.exports = {
   indexElastic: async () => {
@@ -67,6 +68,34 @@ module.exports = {
     })
     return 'ok'
   },
+
+  updatePatternVariants: async () => {
+    const variant = strapi.query('pattern-variant').model
+    const variants = await variant.find()
+    for (let current of variants) {
+      current = current.toJSON()
+      const res = await variant.updateOne(
+        { _id: current._id },
+        {
+          $set: { content: current.interactions },
+          $unset: { interactions: true, examples: true, additions: true },
+        }
+      )
+    }
+    return 'ok'
+  },
+
+  updatePatternExamples: async () => {
+    const variant = strapi.query('pattern-example').model
+    const res = await variant.updateMany({
+      $rename: { content: 'content_old' }
+    })
+    console.log(util.inspect(res))
+
+    return 'ok'
+  }
+
+
 }
 
 

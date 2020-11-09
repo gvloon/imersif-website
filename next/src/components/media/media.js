@@ -115,12 +115,14 @@ class Media extends React.Component
     onVideoFinished = async () => {
         const { playing, onVideoFinished, data } = this.props
         await delay(1000)
-        this.video.currentTime = 0
-        if (playing) {
-            this.playVideo()
+        if (this.video) {
+            this.video.currentTime = 0
+            if (playing) {
+                this.playVideo()
+            }
+            if (onVideoFinished)
+                onVideoFinished(data)
         }
-        if (onVideoFinished)
-            onVideoFinished(data)
     }
 
     componentDidUpdate = prevProps => {

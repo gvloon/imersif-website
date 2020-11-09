@@ -32,6 +32,16 @@
     },
     {
       "method": "GET",
+      "path": "/system/update-pattern-variants",
+      "handler": "system.updatePatternVariants"
+    },
+    {
+      "method": "GET",
+      "path": "/system/update-pattern-examples",
+      "handler": "system.updatePatternExamples"
+    },
+    {
+      "method": "GET",
       "path": "/system/update-tools",
       "handler": "system.updateTools"
     }

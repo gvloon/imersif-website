@@ -12,15 +12,7 @@
     "title": {
       "type": "string"
     },
-    "interaction": {
-      "type": "component",
-      "repeatable": true,
-      "component": "pattern.interaction-step"
-    },
     "examples": {
-      "collection": "pattern-example"
-    },
-    "additions": {
       "collection": "pattern-example"
     },
     "label": {
@@ -28,11 +20,15 @@
       "required": false,
       "unique": false
     },
-    "order": {
-      "type": "integer"
-    },
     "filters": {
       "collection": "pattern-filter"
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "pattern.interaction-block",
+        "pattern.examples"
+      ]
     }
   }
 }

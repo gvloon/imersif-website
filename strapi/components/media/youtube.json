@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_media_youtubes",
+  "info": {
+    "name": "youtube",
+    "icon": "play-circle"
+  },
+  "options": {},
+  "attributes": {
+    "key": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "string"
+    }
+  }
+}

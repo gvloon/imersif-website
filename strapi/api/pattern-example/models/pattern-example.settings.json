@@ -13,7 +13,13 @@
       "type": "string"
     },
     "content": {
-      "type": "richtext"
+      "type": "dynamiczone",
+      "components": [
+        "media.youtube",
+        "media.vimeo",
+        "common.rich-text",
+        "common.text"
+      ]
     }
   }
 }

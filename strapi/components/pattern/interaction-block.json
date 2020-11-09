@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_pattern_interaction_blocks",
+  "info": {
+    "name": "interaction-block",
+    "icon": "hand-pointer"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "default": "How this pattern works",
+      "required": true
+    },
+    "intro": {
+      "type": "string"
+    },
+    "interaction": {
+      "type": "component",
+      "repeatable": true,
+      "component": "pattern.interaction-step"
+    }
+  }
+}

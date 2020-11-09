@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_media_vimeos",
+  "info": {
+    "name": "vimeo",
+    "icon": "play-circle"
+  },
+  "options": {},
+  "attributes": {
+    "key": {
+      "type": "string"
+    },
+    "caption": {
+      "type": "string"
+    }
+  }
+}
