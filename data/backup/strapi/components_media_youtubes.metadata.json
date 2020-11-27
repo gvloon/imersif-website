@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"c0c0b17fca5545189464a38d89889a0f","collectionName":"components_media_youtubes"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.components_media_youtubes"}],"uuid":"7f5a255540e0440d82115711109665ae"}

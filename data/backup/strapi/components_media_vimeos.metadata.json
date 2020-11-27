@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"cc9272052aff4bb68ec7e0d9c4ae5967","collectionName":"components_media_vimeos"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.components_media_vimeos"}],"uuid":"a7d93d5abcc546fbae37fb383c65a495"}
