@@ -59,47 +59,40 @@ class Media extends React.Component {
     }
 
     renderMedia = () => {
-        const {image, video, playing} = this.props
+        const {image, video} = this.props
 
         if (image && video) {
             return (
-                <>
-                    { this.renderOverlay() }
+                <AnimatePresence>
                     { this.renderVideo() }
-                    {
-                        !playing &&
-                        <PlayButton />
-                    }
-                </>
+                    { this.renderOverlay() }
+                    { this.renderPlayButton() }
+                </AnimatePresence>
             )
        } else if (image) {
             return this.renderImage()
         } else {
             return (
-                <>
+                <AnimatePresence>
                     { this.renderVideo() }
-                    {
-                        !playing &&
-                        <PlayButton />
-                    }
-                </>
+                    { this.renderPlayButton() }
+                </AnimatePresence>
             )
         }
     }
 
     renderOverlay = () => {
         const {image, playing, classes} = this.props
+        if (playing)
+            return null
+
         return (
-            <AnimatePresence>
-                {
-                    !!playing &&
-                    <motion.img
-                        alt=""
-                        className={classes.media}
-                        src={image.url}
-                    />
-                }
-            </AnimatePresence>
+            <motion.img
+                key="overlay"
+                alt=""
+                className={classes.media}
+                src={image.url}
+            />
         )
     }
 
@@ -107,6 +100,7 @@ class Media extends React.Component {
         const {video, index, playing, data, classes} = this.props
         return (
             <Video
+                key="video"
                 className={classes.media}
                 src={video.url}
                 data={data}
@@ -119,7 +113,15 @@ class Media extends React.Component {
     renderImage = () => {
         const {image, classes} = this.props
 
-        return <img alt="" className={classes.media} src={image.url}/>
+        return <img key="image" alt="" className={classes.media} src={image.url}/>
+    }
+
+    renderPlayButton = () => {
+        const {playing} = this.props
+        if (playing)
+            return null
+
+        return <PlayButton key="button" />
     }
 
     renderChildren = () => {

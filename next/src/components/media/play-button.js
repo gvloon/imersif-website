@@ -1,5 +1,6 @@
 import {React, makeStyles, classNames} from 'common'
 import PlayIcon from '@material-ui/icons/PlayArrow'
+import {motion} from 'framer-motion'
 
 const useStyles = makeStyles({
     play: {
@@ -24,6 +25,24 @@ const useStyles = makeStyles({
     }
 })
 
+const animations = {
+    initial: {
+        opacity: 0
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 0.3
+        }
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.3
+        }
+    }
+}
+
 const PlayButton = ({ className }) => {
     const classes = useStyles()
     const rootClasses = classNames({
@@ -32,12 +51,20 @@ const PlayButton = ({ className }) => {
     })
 
     return (
-        <div className={rootClasses}>
+        <motion.div
+            className={rootClasses}
+            variants={animations}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+        >
             <div className={classes.background}>
                 <PlayIcon fontSize="large" />
             </div>
-        </div>
+        </motion.div>
     )
 }
+
+
 
 export default PlayButton
