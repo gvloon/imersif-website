@@ -5,7 +5,6 @@ const dynamicZone = require('../common/dynamic-zone')
 const example = (obj, components) => {
   if (!obj) return null
 
-  console.log('example: ' + util.inspect(obj, true, 10))
   const { title, intro, content } = obj
   return {
     title: title || null,

@@ -1,5 +1,5 @@
 module.exports = {
-  image: require('./image'),
+  upload: require('./upload'),
   youtube: require('./youtube'),
   vimeo: require('./vimeo')
 }

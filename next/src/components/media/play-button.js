@@ -2,11 +2,21 @@ import {React, makeStyles, classNames} from 'common'
 import PlayIcon from '@material-ui/icons/PlayArrow'
 
 const useStyles = makeStyles({
-    icon: {
+    play: {
         display: 'flex',
         position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    background: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
         width: '45px',
         height: '45px',
         borderRadius: '50%',
@@ -14,18 +24,20 @@ const useStyles = makeStyles({
     }
 })
 
-const PlayIcon = ({ className }) => {
+const PlayButton = ({ className }) => {
     const classes = useStyles()
     const rootClasses = classNames({
         [className]: !!className,
-        [classes.icon]: classes.icon
+        [classes.play]: classes.play
     })
 
     return (
         <div className={rootClasses}>
-            <PlayIcon />
+            <div className={classes.background}>
+                <PlayIcon fontSize="large" />
+            </div>
         </div>
     )
 }
 
-export default PlayIcon
+export default PlayButton

@@ -56,17 +56,15 @@ class InteractionBlock extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            videos: [],
-            index: 0,
-            hovering: false
+            currentIndex: -1
         }
     }
 
     render = () => {
         const { title, intro, steps, active, classes } = this.props
+        const { currentIndex } = this.state
 
-        let mediaIndex = -1
-        const activeIndex = this.activeIndex()
+        let index = 0
         return (
             <>
                 {
@@ -79,24 +77,28 @@ class InteractionBlock extends React.Component {
                 }
                 <div className={classes.steps}>
                     {
-                        _.chunk(steps, 2).map((chunk, index) => (
-                            <div key={index} className={classes.pair}>
+                        _.chunk(steps, 2).map((chunk, chunkIndex) => (
+                            <div key={chunkIndex} className={classes.pair}>
                                 {
-                                    chunk.map((step, index) => {
-                                        mediaIndex++
-                                        return (
-                                            <div key={index} className={classes.step}>
+                                    chunk.map((step, stepIndex) => {
+                                        const image = _.find(step.media, item => item.mime && item.mime.startsWith('image'))
+                                        const video = _.find(step.media, item => item.mime && item.mime.startsWith('video'))
+                                        const node = (
+                                            <div key={stepIndex} className={classes.step}>
                                                 <Media
-                                                    data={mediaIndex}
+                                                    index={index}
                                                     className={classes.media}
-                                                    media={step.image}
-                                                    playing={active && mediaIndex === activeIndex}
-                                                    onVideoLoaded={this.onVideoLoaded}
-                                                    onVideoFinished={this.onVideoFinished}
+                                                    image={image}
+                                                    video={video}
+                                                    playing={index === currentIndex}
+                                                    onActivated={this.onActivated}
+                                                    onDeactivated={this.onDeactivated}
                                                 />
                                                 <Annotations annotations={step.annotations} classes={classes}/>
                                             </div>
                                         )
+                                        index++
+                                        return node
                                     })
                                 }
                             </div>
@@ -107,47 +109,16 @@ class InteractionBlock extends React.Component {
         )
     }
 
-    onVideoLoaded = data => {
-        this.setState(state => {
-            const videos = [...state.videos, data]
-            videos.sort()
-            return { videos }
+    onActivated = index => {
+        this.setState({
+            currentIndex: index
         })
     }
 
-    onMouseOver = data => {
-        const index = _.findIndex(this.state.videos, current => current === data)
-        if (index > -1) {
-            this.setState({
-                index,
-                hovering: true
-            })
-        }
-    }
-
-    onMouseOut = () => {
-        if (this.state.hovering) {
-            this.setState({
-                hovering: false
-            })
-        }
-    }
-
-    onVideoFinished = () => {
-        this.setState(state => {
-            const { videos, index, hovering} = state
-            if (hovering) {
-                return null
-            }
-            return {
-                index: index < videos.length - 1  ? index + 1 : 0
-            }
+    onDeactivated = () => {
+        this.setState({
+            currentIndex: -1
         })
-    }
-
-    activeIndex = () => {
-        const { index, videos } = this.state
-        return index < videos.length ? videos[index] : -1
     }
 }
 

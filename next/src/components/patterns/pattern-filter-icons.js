@@ -26,7 +26,7 @@ const PatternFilterIcons = ({ filters, className }) => {
     return (
         <span className={rootClasses}>
             {
-                filters.map((filter, index) => <img key={index} className={classes.icon} src={config.mediaUrl + filter.icon} />)
+                filters.map((filter, index) => <img key={index} className={classes.icon} src={filter.icon} />)
             }
         </span>
     )

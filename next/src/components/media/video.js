@@ -29,26 +29,17 @@ class Video extends React.Component {
     }
   }
 
-  onMouseOver = () => {
-    const {onMouseOver, data} = this.props
-    if (onMouseOver)
-      onMouseOver(data)
-  }
-
-  onMouseOut = () => {
-    const {onMouseOut, data} = this.props
-    if (onMouseOut)
-      onMouseOut(data)
-  }
-
   onVideoLoaded = () => {
-    const {onVideoLoaded, data} = this.props
+    const {onVideoLoaded, playing} = this.props
     if (onVideoLoaded)
-      onVideoLoaded(data)
+      onVideoLoaded()
+    if (playing) {
+      this.playVideo()
+    }
   }
 
   onVideoFinished = async () => {
-    const {playing, autoplayDelay, onVideoFinished, data} = this.props
+    const {playing, autoplayDelay, onVideoFinished} = this.props
     await delay(autoplayDelay)
     if (this.video) {
       this.video.currentTime = 0
@@ -56,7 +47,7 @@ class Video extends React.Component {
         this.playVideo()
       }
       if (onVideoFinished)
-        onVideoFinished(data)
+        onVideoFinished()
     }
   }
 

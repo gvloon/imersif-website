@@ -1,5 +1,6 @@
 'use strict';
 
+const config = require('config')
 const db = require('db')
 const _ = require('lodash')
 const util = require('util')
@@ -14,7 +15,7 @@ const getPatternShort = ({ slug, title }) => ({ slug, title })
 const getPatternLong = ({ title, solution, image, category, variants }) => ({
   title,
   solution: solution ? getSolution(solution) : null,
-  image: media.image(image),
+  image: media.upload(image),
   category: category ? getCategory(category) : null,
   variants: variants.map(variant => variant ? getVariant(variant) : null),
 })
@@ -28,7 +29,7 @@ const getVariant = ({ title, slug, content, filters }) => ({
 })
 const getFilter = ({ name, icon }) => ({
   name,
-  icon: icon ? icon.url : null
+  icon: icon ? config.mediaUrl + icon.url : null
 })
 
 module.exports = {
@@ -50,7 +51,6 @@ module.exports = {
         path: 'category'
       }
     ])
-    console.log(util.inspect(entity, true, 10))
     return getPatternLong(entity)
   }
 }

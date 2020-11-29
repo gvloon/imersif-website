@@ -4,7 +4,8 @@ set -a
 . .env
 set +a
 
-cp config/prod.js next/src/properties.js
+cp config/prod/strapi.js strapi/src/config/properties.js
+cp config/prod/next.js next/src/config/properties.js
 
 docker-compose -f docker-compose.yml -f docker-compose-prod.yml down --remove-orphans
 docker-compose -f docker-compose.yml -f docker-compose-prod.yml build --no-cache

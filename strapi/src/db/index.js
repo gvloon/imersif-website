@@ -15,16 +15,8 @@ const findBySlug = async (name, ctx, populate) => {
   return await strapi.services[name].findOne({ slug }, populate)
 }
 
-const serializePage = ({ title, image, content, introduction }) => ({
-  title,
-  introduction,
-  content,
-  image: { url: image.url }
-})
-
 module.exports = {
   find,
   findOne,
-  findBySlug,
-  serializePage
+  findBySlug
 }

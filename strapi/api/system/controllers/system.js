@@ -70,18 +70,32 @@ module.exports = {
   },
 
   updatePatternVariants: async () => {
-    const variant = strapi.query('pattern-variant').model
-    const variants = await variant.find()
-    for (let current of variants) {
-      current = current.toJSON()
-      const res = await variant.updateOne(
-        { _id: current._id },
-        {
-          $set: { content: current.interactions },
-          $unset: { interactions: true, examples: true, additions: true },
+    await update.remove('PatternVariant', {
+      $unset: {
+        slug: true,
+        supported: true,
+        platforms: true,
+        pattern: true,
+        pros_and_cons: true,
+        subtitle: true,
+        examples: true,
+        additions: true,
+        interaction: true,
+        interactions: true
+      }
+    })
+    await update.set('ComponentPatternInteractionStep', item => {
+      if (item.image) {
+        return {
+          media: [item.image]
         }
-      )
-    }
+      }
+      return null
+    })
+    await update.remove('ComponentPatternInteractionStep', {
+      image: true
+    })
+
     return 'ok'
   },
 
@@ -90,7 +104,6 @@ module.exports = {
     const res = await variant.updateMany({
       $rename: { content: 'content_old' }
     })
-    console.log(util.inspect(res))
 
     return 'ok'
   }

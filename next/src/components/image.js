@@ -19,7 +19,7 @@ const Image = ({ image, className, children }) => {
         [className]: !!className,
         [classes.image]: true
     })
-    const backgroundImage = image ? 'url(\'' + config.mediaUrl + image.url + '\')' : null
+    const backgroundImage = image ? 'url(\'' + image.url + '\')' : null
     return (
         <div className={rootClasses} style={{ backgroundImage }}>
             { children }

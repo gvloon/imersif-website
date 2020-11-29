@@ -11,7 +11,8 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-cp config/dev.js next/src/properties.js
+cp config/dev/strapi.js strapi/src/config/properties.js
+cp config/dev/next.js next/src/config/properties.js
 
 docker-compose down --remove-orphans
 docker-compose up -d

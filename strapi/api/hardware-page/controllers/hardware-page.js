@@ -1,6 +1,7 @@
 'use strict';
 
 const db = require('db')
+const { common } = require('serialize')
 
 /**
  * Read the documentation (https://strapi.io/documentation/3.0.0-beta.x/concepts/controllers.html#core-controllers)
@@ -10,6 +11,6 @@ const db = require('db')
 module.exports = {
   async find(ctx) {
     const entity = await db.findOne('hardware-page')
-    return db.serializePage(entity)
+    return common.page(entity)
   }
 }

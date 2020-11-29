@@ -1,6 +1,7 @@
 'use strict';
 
 const db = require('db')
+const { media } = require('serialize')
 
 /**
  * Read the documentation (https://strapi.io/documentation/3.0.0-beta.x/concepts/controllers.html#core-controllers)
@@ -24,11 +25,10 @@ const getPatternCategoryLong = ({ slug, name, patterns }) => ({
 const getPattern = ({ slug, title, image, pros_and_cons, variants }) => ({
   slug,
   title,
-  image: image ? getImage(image) : null,
+  image: media.upload(image),
   pros_and_cons: pros_and_cons ? getProsAndCons(pros_and_cons) : null,
   filters: getFiltersFromVariants(variants)
 })
-const getImage = ({ url, mime, width, height }) => ({ url, mime, width, height })
 const getProsAndCons = ({ pros, cons }) => ({
   pros: pros.map(({ text }) => ({ text })),
   cons: cons.map(({ text }) => ({ text }))

@@ -2,12 +2,13 @@
   "collectionName": "components_pattern_interaction_steps",
   "info": {
     "name": "interaction-step",
-    "icon": "hand-pointer"
+    "icon": "hand-pointer",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "image": {
-      "model": "file",
+    "media": {
+      "collection": "file",
       "via": "related",
       "allowedTypes": [
         "images",

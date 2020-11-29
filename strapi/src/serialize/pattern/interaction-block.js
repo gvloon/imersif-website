@@ -1,5 +1,6 @@
 const _ = require('lodash')
 const media = require('../media')
+const util = require('util')
 
 const getAnnotation = (obj, data) => {
   if (!obj) return null
@@ -14,10 +15,9 @@ const getAnnotation = (obj, data) => {
 const getInteractionStep = (obj, data) => {
   if (!obj) return null
 
-  const { image, annotations } = obj
   return {
-    image: media.image(image),
-    annotations: _.map(annotations, annotation => getAnnotation(annotation, data))
+    media: media.upload(obj.media),
+    annotations: _.map(obj.annotations, annotation => getAnnotation(annotation, data))
   }
 }
 

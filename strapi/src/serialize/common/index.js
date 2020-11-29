@@ -1,3 +1,4 @@
 module.exports = {
-  dynamicZone: require('./dynamic-zone')
+  dynamicZone: require('./dynamic-zone'),
+  page: require('./page')
 }
