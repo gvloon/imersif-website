@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "cases",
   "info": {
-    "name": "case"
+    "name": "case",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "title": {
@@ -35,12 +37,26 @@
       "unique": true
     },
     "summary": {
-      "type": "text"
+      "type": "string"
     },
     "description": {
       "type": "richtext"
     },
     "release": {
+      "type": "string"
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "media.youtube",
+        "media.vimeo",
+        "common.rich-text"
+      ]
+    },
+    "devices": {
+      "collection": "case-device"
+    },
+    "topic": {
       "type": "string"
     }
   }

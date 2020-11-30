@@ -1,0 +1,17 @@
+{
+  "kind": "collectionType",
+  "collectionName": "case_devices",
+  "info": {
+    "name": "case-device"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

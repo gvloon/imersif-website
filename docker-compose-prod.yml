@@ -13,7 +13,6 @@ services:
       - '$NEXT_PORT'
     ports:
       - '$NEXT_PORT:$NEXT_PORT'
-    user: node
     volumes:
       - ./next:/home/node/app
       - ./scripts:/home/scripts
