@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/case-devices",
+      "handler": "case-device.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/case-devices/count",
+      "handler": "case-device.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/case-devices/:id",
+      "handler": "case-device.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/case-devices",
+      "handler": "case-device.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/case-devices/:id",
+      "handler": "case-device.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/case-devices/:id",
+      "handler": "case-device.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
