@@ -112,7 +112,10 @@ const PatternList = ({ patterns, className }) => {
                                 <div className={classes.patternMobile}>
                                     <div className={classes.top}>
                                         <div className={classes.imageContainer}>
-                                            <Image className={classes.image} image={pattern.image} />
+                                            {
+                                                pattern.image &&
+                                                <Image className={classes.image} src={pattern.image.url} />
+                                            }
                                         </div>
                                         <div className={classes.right}>
                                             <h3 className={classes.title}>{pattern.title}</h3>
@@ -128,9 +131,12 @@ const PatternList = ({ patterns, className }) => {
                             <Link href={href('/pattern/[slug]', pattern.slug)}>
                                 <div className={classes.patternDesktop}>
                                     <div className={classes.imageContainer}>
-                                        <Image className={classes.image} image={pattern.image}>
-                                            {/* <PatternFilterIcons className={classes.icons} filters={pattern.filters} /> */}
-                                        </Image>
+                                        {
+                                            pattern.image &&
+                                            <Image className={classes.image} src={pattern.image.url}>
+                                                {/* <PatternFilterIcons className={classes.icons} filters={pattern.filters} /> */}
+                                            </Image>
+                                        }
                                     </div>
                                     <div className={classes.right}>
                                         <h4>{pattern.title}</h4>

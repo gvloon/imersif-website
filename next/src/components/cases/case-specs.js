@@ -1,4 +1,5 @@
 import {React, makeStyles} from 'common'
+import CasePlatform from './case-platform'
 
 const useStyles = makeStyles({
     title: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles({
 
 
 const Specs = ({ useCase, className }) => {
-    const { topic, platforms, devices, url} = useCase
+    const { topic, url} = useCase
     const classes = useStyles()
 
     return (
@@ -17,7 +18,7 @@ const Specs = ({ useCase, className }) => {
             <tbody>
                 <tr>
                     <td className={classes.title}>Platform</td>
-                    <td><Platform platforms={platforms} devices={devices} /></td>
+                    <td><CasePlatform useCase={useCase} /></td>
                 </tr>
                 <tr>
                     <td className={classes.title}>Topic</td>
@@ -30,10 +31,6 @@ const Specs = ({ useCase, className }) => {
             </tbody>
         </table>
     )
-}
-
-const Platform = ({ platforms, devices }) => {
-    return platforms.join(',') + '(' + devices.join(',') + ')'
 }
 
 const URL = ({ value }) => {

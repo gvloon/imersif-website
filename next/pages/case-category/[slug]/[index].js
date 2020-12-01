@@ -1,5 +1,5 @@
 import { React, api, href } from 'common'
-import { Markdown } from 'components'
+import { DynamicZone } from 'components'
 import { BasicPage } from 'components/page'
 import { CaseList } from 'components/cases'
 
@@ -9,7 +9,7 @@ const Page = ({ category, pageIndex }) => {
     if (!category)
         return null
 
-    const { slug, title, description } = category
+    const { slug, title, content } = category
 
     const context = {
         title,
@@ -32,8 +32,9 @@ const Page = ({ category, pageIndex }) => {
 
     return (
         <BasicPage context={context}>
-            <Markdown source={description} />
+            <DynamicZone className="block" content={content} />
             <CaseList
+                className="block"
                 category={category}
                 pageSize={pageSize}
                 pageIndex={pageIndex}

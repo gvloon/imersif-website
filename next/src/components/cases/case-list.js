@@ -1,6 +1,7 @@
 import { React, PropTypes, paginate, withStyles, href } from 'common'
-import { Pagination, Preview } from 'components'
+import { Pagination } from 'components'
 import { color } from 'jss/index'
+import CasePreview from './case-preview'
 
 const styles = theme => ({
     list: {
@@ -18,26 +19,17 @@ const styles = theme => ({
 
 class CaseList extends React.Component {
     render () {
-        const { category } = this.props
+        const { category, className } = this.props
 
         if (!category || !category.cases || !category.cases.length) {
             return null
         }
         return (
-            <div>
-                { this.renderTitle() }
+            <div className={className}>
                 { this.renderRows() }
                 { this.renderPagination() }
             </div>
         )
-    }
-
-    renderTitle = () => {
-        const { title } = this.props
-        if (!title)
-            return null
-
-        return <h2>{title}</h2>
     }
 
     renderRows = () => {
@@ -45,14 +37,12 @@ class CaseList extends React.Component {
 
         const items = paginate(category.cases, pageSize, pageIndex)
 
-        return items.map(({ slug, title, summary }) => {
+        return items.map(useCase => {
             return (
-                <Preview
-                    key={slug}
+                <CasePreview
+                    key={useCase.slug}
                     className={classes.row}
-                    title={title}
-                    summary={summary}
-                    link={href('/case/[slug]', slug)}
+                    useCase={useCase}
                 />
             )
         })

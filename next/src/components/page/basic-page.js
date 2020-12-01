@@ -48,7 +48,10 @@ const BasicPage = ({ context, image, breadcrumb, children }) => {
             <Layout>
                 <Menu />
                 <div className={classes.container}>
-                    <Image className={classes.image} image={image} />
+                    {
+                        image &&
+                        <Image className={classes.image} src={image.url} />
+                    }
                     <div className={classes.content}>
                         <Breadcrumb links={breadcrumb} />
                         <h1>{context.title}</h1>

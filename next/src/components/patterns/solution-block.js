@@ -31,7 +31,10 @@ const SolutionBlock = ({ solution, image, className }) => {
     })
     return (
         <div className={rootClasses}>
-            <Image className={classes.image} image={image} />
+            {
+                image &&
+                <Image className={classes.image} src={image.url} />
+            }
             {
                 solution.what &&
                 <p className={className.paragraph}><span className={classes.label}>What: </span>{solution.what}</p>

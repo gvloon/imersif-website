@@ -4,6 +4,6 @@ const vimeo = obj => {
   const { key: id } = obj
   return { id }
 }
-vimeo._name = 'media.youtube'
+vimeo._name = 'media.vimeo'
 
 module.exports = vimeo

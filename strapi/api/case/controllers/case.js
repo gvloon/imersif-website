@@ -9,10 +9,12 @@ const { common } = require('serialize')
  * to customize this controller
  */
 
-const getCaseShort = ({ slug, title, thumbnail, topic }) => ({
+const getCaseShort = ({ slug, title, thumbnail, platforms, devices, topic }) => ({
   slug,
   title,
   thumbnail,
+  platforms: platforms.map(platform => platform.name),
+  devices: devices.map(device => device.title),
   topic
 })
 const getCaseLong = ({ slug, title, topic, url, content, category, platforms, devices }) => ({
@@ -34,7 +36,6 @@ module.exports = {
   },
   async findBySlug(ctx) {
     const entity = await db.findBySlug('case', ctx)
-    console.log(util.inspect(entity, true, 5))
     return getCaseLong(entity)
   }
 }
