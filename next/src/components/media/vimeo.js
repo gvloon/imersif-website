@@ -1,6 +1,6 @@
 import { React, PropTypes, makeStyles } from 'common'
 const useStyles = makeStyles({
-    root: {
+    vimeo: {
         position: 'relative',
         paddingBottom: '56.25%',
         height: 0,
@@ -18,11 +18,11 @@ const useStyles = makeStyles({
     }
 })
 
-const Vimeo = ({ id, caption }) => {
+const Vimeo = ({ id, caption, className }) => {
     const classes = useStyles()
     return (
-        <>
-            <div className={classes.root}>
+        <div className={className}>
+            <div className={classes.vimeo}>
                 <iframe
                     src={`https://player.vimeo.com/video/${id}`}
                     className={classes.player}
@@ -35,7 +35,7 @@ const Vimeo = ({ id, caption }) => {
                 caption &&
                 <div className={classes.caption}>{caption}</div>
             }
-        </>
+        </div>
     )
 }
 

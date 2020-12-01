@@ -1,7 +1,7 @@
 import { React, PropTypes, makeStyles } from 'common'
 
 const useStyles = makeStyles({
-    root: {
+    youtube: {
         position: 'relative',
         width: '100%',
         height: 0,
@@ -21,11 +21,11 @@ const useStyles = makeStyles({
 })
 
 const Youtube = props => {
-    const { id, caption } = props
+    const { id, caption, className } = props
     const classes = useStyles()
     return (
-        <>
-            <div className={classes.root}>
+        <div className={className}>
+            <div className={classes.youtube}>
                 <iframe
                     src={`https://www.youtube.com/embed/${id}`}
                     className={classes.player}
@@ -37,7 +37,7 @@ const Youtube = props => {
                 caption &&
                 <div className={classes.caption}>{caption}</div>
             }
-        </>
+        </div>
     )
 }
 

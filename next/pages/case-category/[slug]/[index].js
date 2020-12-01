@@ -1,6 +1,7 @@
 import { React, api, href } from 'common'
-import { Markdown, CaseList } from 'components'
+import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
+import { CaseList } from 'components/cases'
 
 const pageSize = 10
 

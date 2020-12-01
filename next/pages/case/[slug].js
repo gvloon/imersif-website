@@ -1,12 +1,13 @@
 import { React, api, href } from 'common'
-import { Markdown } from 'components'
 import { BasicPage } from 'components/page'
+import { DynamicZone } from 'components'
+import { CaseSpecs } from 'components/cases'
 
 const Page = ({ case: useCase }) => {
     if (!useCase)
         return null
 
-    const { title, summary, description } = useCase
+    const { title, content } = useCase
 
     const context = {
         title,
@@ -20,11 +21,13 @@ const Page = ({ case: useCase }) => {
 
     return (
         <BasicPage context={context}>
-            <div>{summary}</div>
-            <Markdown source={description} />
+            <CaseSpecs className="block" useCase={useCase} />
+            <DynamicZone className="block" content={content} />
         </BasicPage>
     )
 }
+
+
 
 const getBreadcrumb = ({ slug, title, category }) => {
     if (category) {

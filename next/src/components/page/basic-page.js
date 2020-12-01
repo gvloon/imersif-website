@@ -34,6 +34,10 @@ const useStyles = makeStyles(theme => ({
     image: {
         width: '100%',
         paddingTop: '25%'
+    },
+    blocks: {
+        marginTop: '-2rem',
+        marginBottom: '-2rem'
     }
 }))
 
@@ -48,7 +52,9 @@ const BasicPage = ({ context, image, breadcrumb, children }) => {
                     <div className={classes.content}>
                         <Breadcrumb links={breadcrumb} />
                         <h1>{context.title}</h1>
-                        { children }
+                        <div className={classes.blocks}>
+                            { children }
+                        </div>
                     </div>
                 </div>
                 <Footer/>
