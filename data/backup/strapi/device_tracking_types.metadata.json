@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"d2fcca059561491cba7d1f5ced9e167e","collectionName":"device_tracking_types"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.device_tracking_types"}],"uuid":"518c49c6c22e431ea639d5412654ceb4"}

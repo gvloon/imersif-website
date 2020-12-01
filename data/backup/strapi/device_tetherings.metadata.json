@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"374fd648537d49ca9699f015975916b8","collectionName":"device_tetherings"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.device_tetherings"}],"uuid":"994070b67b07495d80269ea38e9766f9"}

@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"0a079e64517b43568dc03924bd1a03a7","collectionName":"peripheral_types"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.peripheral_types"}],"uuid":"bc68e740cc53441ab26d3b7d651f43e8"}
