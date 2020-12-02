@@ -1,4 +1,4 @@
-import { React, withStyles, withRouter, _, LoaderContext, api } from 'common'
+import { React, withStyles, withRouter, _, LoaderContext, api, classNames } from 'common'
 import config from 'config'
 import { Pagination } from 'components'
 import { BasicPage } from 'components/page'
@@ -7,7 +7,6 @@ import url from 'url'
 
 const styles = theme => ({
     search: {
-        marginTop: '1rem',
         display: 'flex',
         flexDirection: 'column',
         [theme.breakpoints.up('sm')]: {
@@ -98,9 +97,13 @@ class Page extends React.Component
         }
 
         const categoryObj = _.find(config.categories, current => current.value === category) || config.categories[0]
+        const rootClasses = classNames({
+            block: true,
+            [classes.search]: !!classes.search
+        })
         return (
             <BasicPage context={context}>
-                <div className={classes.search}>
+                <div className={rootClasses}>
                     <MobileFilter category={categoryObj} onChange={this.onChangeCategory} />
                     <DesktopFilter category={categoryObj} onChange={this.onChangeCategory} />
                     <div className={classes.content}>

@@ -20,8 +20,8 @@ const Page = ({ device }) => {
 
     return (
         <BasicPage context={context}>
-            <SpecificationList device={device} />
-            <Markdown source={description} />
+            <SpecificationList className="block" device={device} />
+            <Markdown className="block" source={description} />
         </BasicPage>
     )
 }
@@ -56,7 +56,7 @@ const getBreadcrumb = ({ title, slug, device_type }) => {
     }
 }
 
-const SpecificationList = ({ device }) => {
+const SpecificationList = ({ device, className }) => {
     const specs = [
         spec('Type', device.device_type ? device.device_type.name : ''),
         spec('Tethering', device.tethering || ''),
@@ -67,7 +67,7 @@ const SpecificationList = ({ device }) => {
         spec('Tracking type', device.tracking_type || ''),
         spec('Url', url(device.url))
     ]
-    return <Specifications data={specs} />
+    return <Specifications className={className} data={specs} />
 }
 
 const spec = (label, value) => ({ label, value })

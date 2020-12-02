@@ -20,8 +20,8 @@ const Page = ({ peripheral }) => {
 
     return (
         <BasicPage context={context}>
-            <SpecificationList peripheral={peripheral} />
-            <Markdown source={description} />
+            <SpecificationList className="block" peripheral={peripheral} />
+            <Markdown className="block" source={description} />
         </BasicPage>
     )
 }
@@ -56,12 +56,12 @@ const getBreadcrumb = ({ title, slug, peripheral_type }) => {
     }
 }
 
-const SpecificationList = ({ peripheral }) => {
+const SpecificationList = ({ peripheral, className }) => {
     const specs = [
         spec('Type', peripheral.peripheral_type ? peripheral.peripheral_type.name : ''),
         spec('Url', url(peripheral.url))
     ]
-    return <Specifications data={specs} />
+    return <Specifications className={className} data={specs} />
 }
 
 const spec = (label, value) => ({ label, value })

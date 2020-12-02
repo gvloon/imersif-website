@@ -39,8 +39,10 @@ class Page extends React.Component {
 
         return (
             <BasicPage context={context}>
-                { this.renderDeviceList() }
-                { this.renderPagination() }
+                <div className="block">
+                    { this.renderDeviceList() }
+                    { this.renderPagination() }
+                </div>
             </BasicPage>
         )
 

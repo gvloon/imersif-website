@@ -5,6 +5,7 @@ class Video extends React.Component {
     super(props)
 
     this.playPromise = null
+    this.actionId = 0
   }
 
   render = () => {
@@ -39,13 +40,9 @@ class Video extends React.Component {
   }
 
   onVideoFinished = async () => {
-    const {playing, autoplayDelay, onVideoFinished} = this.props
-    await delay(autoplayDelay)
+    const {onVideoFinished} = this.props
+    await delay(1500)
     if (this.video) {
-      this.video.currentTime = 0
-      if (playing) {
-        this.playVideo()
-      }
       if (onVideoFinished)
         onVideoFinished()
     }
@@ -64,8 +61,15 @@ class Video extends React.Component {
     }
   }
 
-  playVideo = () => {
+  playVideo = async () => {
     if (!this.video)
+      return
+
+    this.video.currentTime = 0
+
+    const actionId = ++this.actionId
+    await delay(1500)
+    if (actionId !== this.actionId)
       return
 
     this.playPromise = this.video.play()
@@ -75,8 +79,8 @@ class Video extends React.Component {
     if (!this.video)
       return
 
+    this.actionId++
     await this.playPromise
-    this.video.currentTime = 0
     this.video.pause()
   }
 }

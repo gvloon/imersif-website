@@ -30,8 +30,10 @@ class Page extends React.PureComponent {
         const filteredPatterns = getFilteredPatterns(preparedPatterns, selectedFilters)
         return (
             <BasicPage context={context}>
-                <CheckboxList title="With: " values={filters} onChange={this.onFilterChange} />
-                <PatternList className={classes.patterns} patterns={filteredPatterns} />
+                <div className="block">
+                    <CheckboxList title="With: " values={filters} onChange={this.onFilterChange} />
+                    <PatternList className={classes.patterns} patterns={filteredPatterns} />
+                </div>
             </BasicPage>
         )
     }

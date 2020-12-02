@@ -15,9 +15,6 @@ const List = ({ items, title, className }) => {
 
     const data = analyzeItems(items)
     const useStyles = makeStyles(theme => ({
-        root: {
-            marginTop: '1rem'
-        },
         list: {
             marginTop: '-' + verticalItemSpacing + 'rem',
             marginBottom: '-' + verticalItemSpacing + 'rem',
@@ -86,7 +83,7 @@ const List = ({ items, title, className }) => {
     const classes = useStyles()
     const rootClasses = classNames({
         [className]: !!className,
-        [classes.root]: true
+        [classes.root]: !!classes.root
     })
     return (
         <div className={rootClasses}>

@@ -84,9 +84,13 @@ const styles = theme => ({
 
 class Table extends React.Component {
     render = () => {
-        const {classes} = this.props
+        const {className, classes} = this.props
+        const rootClasses = classNames({
+            [classes.table]: !!classes.table,
+            [className]: !!className
+        })
         return (
-            <table className={classes.table}>
+            <table className={rootClasses}>
                 {this.renderHeaders()}
                 {this.renderRows()}
             </table>

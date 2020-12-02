@@ -15,20 +15,50 @@ const styles = theme => ({
         bottom: 0,
         objectFit: 'cover',
         width: '100%',
-        height: '100%'
+        height: '100%',
+        pointerEvents: 'none'
     },
     overlay: {
         position: 'absolute',
-        display: 'flex',
         left: 0,
         top: 0,
         right: 0,
-        bottom: 0
+        bottom: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none'
+    },
+    button: {
+        position: 'absolute',
+        margin: 'auto',
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        textAlign: 'center'
     },
     pointer: {
         cursor: 'pointer'
     }
 })
+
+const animations = {
+    initial: {
+        opacity: 0
+    },
+    animate: {
+        opacity: 1,
+        transition: {
+            duration: 0.5
+        }
+    },
+    exit: {
+        opacity: 0,
+        transition: {
+            duration: 0.5
+        }
+    }
+}
 
 class Media extends React.Component {
     constructor(props) {
@@ -59,25 +89,17 @@ class Media extends React.Component {
     }
 
     renderMedia = () => {
-        const {image, video} = this.props
+        const {video} = this.props
 
-        if (image && video) {
+        if (video) {
             return (
-                <AnimatePresence>
+                <AnimatePresence key="presence">
                     { this.renderVideo() }
                     { this.renderOverlay() }
-                    { this.renderPlayButton() }
                 </AnimatePresence>
             )
-       } else if (image) {
-            return this.renderImage()
         } else {
-            return (
-                <AnimatePresence>
-                    { this.renderVideo() }
-                    { this.renderPlayButton() }
-                </AnimatePresence>
-            )
+            return this.renderImage()
         }
     }
 
@@ -87,23 +109,30 @@ class Media extends React.Component {
             return null
 
         return (
-            <motion.img
+            <motion.div
                 key="overlay"
-                alt=""
-                className={classes.media}
-                src={image.url}
-            />
+                variants={animations}
+                className={classes.overlay}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+            >
+                {
+                    image &&
+                    <img key="image" alt="" className={classes.media} src={image.url}/>
+                }
+                <PlayButton className={classes.button} />
+            </motion.div>
         )
     }
 
     renderVideo = () => {
-        const {video, index, playing, data, classes} = this.props
+        const {video, playing, classes} = this.props
         return (
             <Video
                 key="video"
                 className={classes.media}
                 src={video.url}
-                data={data}
                 playing={playing}
                 onVideoFinished={this.onVideoFinished}
             />
@@ -114,14 +143,6 @@ class Media extends React.Component {
         const {image, classes} = this.props
 
         return <img key="image" alt="" className={classes.media} src={image.url}/>
-    }
-
-    renderPlayButton = () => {
-        const {playing} = this.props
-        if (playing)
-            return null
-
-        return <PlayButton key="button" />
     }
 
     renderChildren = () => {
@@ -136,7 +157,11 @@ class Media extends React.Component {
         )
     }
 
-    onMouseOver = async () => {
+    onMouseOver = async evt => {
+        console.log('onMouseOver: ' + evt.target)
+        if (this.hovering)
+            return
+
         this.hovering = true
 
         await delay(500)
@@ -146,7 +171,8 @@ class Media extends React.Component {
             onActivated(index)
     }
 
-    onMouseOut = () => {
+    onMouseOut = evt => {
+        console.log('onMouseOut: ' + evt.target)
         this.hovering = false
     }
 
@@ -157,10 +183,14 @@ class Media extends React.Component {
         }
     }
 
-    onVideoFinished = () => {
-        const {index, onDeactivated} = this.props
-        if (!this.hovering) {
+    onVideoFinished = async () => {
+        const {index, onActivated, onDeactivated} = this.props
+        if (onDeactivated) {
             onDeactivated(index)
+        }
+        await delay(2000)
+        if (this.hovering && onActivated) {
+            onActivated(index)
         }
     }
 }

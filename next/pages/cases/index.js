@@ -1,9 +1,9 @@
 import { React, api, href } from 'common'
-import { Markdown, Link, NestedColumnList } from 'components'
+import { DynamicZone, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ page, categories }) => {
-    const { title, image, introduction } = page
+    const { title, image, content } = page
 
     const context = {
         title,
@@ -22,13 +22,13 @@ const Page = ({ page, categories }) => {
 
     return (
         <BasicPage context={context} image={image}>
-            <Markdown source={introduction} />
-            <CategoryList categories={categories} />
+            <DynamicZone className="block" content={content} />
+            <CategoryList className="block" categories={categories} />
         </BasicPage>
     )
 }
 
-const CategoryList = ({ categories }) => {
+const CategoryList = ({ className, categories }) => {
     const items = categories.map((category, index) => ({
         value: category.title,
         children: category.children.map((child, index) => ({
@@ -39,7 +39,7 @@ const CategoryList = ({ categories }) => {
             )
         }))
     }))
-    return <NestedColumnList items={items} />
+    return <NestedColumnList className={className} items={items} />
 }
 
 export const getStaticProps = async context => {

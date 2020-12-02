@@ -1,5 +1,5 @@
 import { React, api, href } from 'common'
-import { Link, Markdown } from 'components'
+import { Link, DynamicZone } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ page, tools }) => {
@@ -22,15 +22,15 @@ const Page = ({ page, tools }) => {
 
     return (
         <BasicPage context={context} image={image}>
-            <Markdown source={content} />
-            <ToolList tools={tools} />
+            <DynamicZone className="block" content={content} />
+            <ToolList className="block" tools={tools} />
         </BasicPage>
     )
 }
 
-const ToolList = ({ tools }) => {
+const ToolList = ({ tools, className }) => {
     return (
-        <ul>
+        <ul className={className}>
             {
                 tools.map(({ slug, title }, index) => (
                     <li key={index}>

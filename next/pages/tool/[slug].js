@@ -1,12 +1,12 @@
 import { React, api, href } from 'common'
-import { Markdown } from 'components'
+import { DynamicZone } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ tool }) => {
     if (!tool)
         return null
 
-    const { slug, title, description } = tool
+    const { slug, title, content } = tool
 
     const context = {
         title,
@@ -29,7 +29,7 @@ const Page = ({ tool }) => {
 
     return (
         <BasicPage context={context}>
-            <Markdown source={description} />
+            <DynamicZone className="block" content={content} />
         </BasicPage>
     )
 }

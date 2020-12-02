@@ -5,8 +5,7 @@ import { FormGroup, FormControlLabel } from '@material-ui/core'
 const styles = theme => ({
     filters: {
         display: 'flex',
-        flexDirection: 'row',
-        marginTop: '1rem'
+        flexDirection: 'row'
     },
     title: {
         height: '1.8rem',

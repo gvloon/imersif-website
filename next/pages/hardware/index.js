@@ -1,9 +1,9 @@
 import { React, api, href } from 'common'
-import { Markdown, Link, NestedColumnList } from 'components'
+import { DynamicZone, Link, NestedColumnList } from 'components'
 import { BasicPage } from 'components/page'
 
 const Page = ({ page, deviceTypes, peripheralTypes }) => {
-    const { title, image, introduction } = page
+    const { title, image, content } = page
 
     const context = {
         title,
@@ -22,13 +22,13 @@ const Page = ({ page, deviceTypes, peripheralTypes }) => {
 
     return (
         <BasicPage context={context} image={image}>
-            <Markdown source={introduction} />
-            <CategoryList deviceTypes={deviceTypes} peripheralTypes={peripheralTypes} />
+            <DynamicZone className="block" content={content} />
+            <CategoryList className="block" deviceTypes={deviceTypes} peripheralTypes={peripheralTypes} />
         </BasicPage>
     )
 }
 
-const CategoryList = ({ deviceTypes, peripheralTypes }) => {
+const CategoryList = ({ deviceTypes, peripheralTypes, className }) => {
     const items = [
         {
             value: 'Head mounted devices',
@@ -51,7 +51,7 @@ const CategoryList = ({ deviceTypes, peripheralTypes }) => {
             }))
         }
     ]
-    return <NestedColumnList items={items} />
+    return <NestedColumnList className={className} items={items} />
 }
 
 export const getStaticProps = async context => {

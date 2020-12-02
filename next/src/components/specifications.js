@@ -24,9 +24,9 @@ const Row = ({ data }) => {
     )
 }
 
-const Specifications = ({ data }) => {
+const Specifications = ({ data, className }) => {
     return (
-        <table>
+        <table className={className}>
             <tbody>
             {
                 data.map((item, index) => <Row key={index} data={item} />)

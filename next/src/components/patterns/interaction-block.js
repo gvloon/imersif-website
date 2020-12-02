@@ -87,6 +87,7 @@ class InteractionBlock extends React.Component {
                                             <div key={stepIndex} className={classes.step}>
                                                 <Media
                                                     index={index}
+                                                    key={index}
                                                     className={classes.media}
                                                     image={image}
                                                     video={video}

@@ -4,15 +4,12 @@ import { BasicPage } from 'components/page'
 import { SolutionBlock, PatternVariant, PatternFilterIcons } from 'components/patterns'
 
 const styles = theme => ({
-    solution: {
-        marginTop: '1rem'
-    },
     variants: {
         marginTop: '3rem',
         display: 'block',
     },
     variant: {
-        marginBottom: '4rem'
+        marginBottom: '2rem'
     },
     toc: {
         marginTop: '4rem'
@@ -32,7 +29,7 @@ class Page extends React.Component {
     }
 
     render = () => {
-        const { pattern, context, classes } = this.props
+        const { pattern, context } = this.props
         if (!pattern)
             return null
 
@@ -40,9 +37,8 @@ class Page extends React.Component {
 
         return (
             <BasicPage context={context}>
-                <Markdown />
-                <SolutionBlock className={classes.solution} solution={solution} image={image} />
-                <div className={classes.variants}>
+                <SolutionBlock className="block" solution={solution} image={image} />
+                <div className="block">
                     {
                         variants.length > 1
                             ? this.renderVariants(variants)

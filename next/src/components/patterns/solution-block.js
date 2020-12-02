@@ -2,6 +2,13 @@ import { React, makeStyles, PropTypes, classNames } from 'common'
 import { Image } from 'components'
 
 const useStyles = makeStyles(theme => ({
+    solution: {
+        '&::after': {
+            content: '""',
+            display: 'block',
+            clear: 'both'
+        }
+    },
     image: {
         width: '100%',
         paddingTop: '66%',
@@ -10,7 +17,8 @@ const useStyles = makeStyles(theme => ({
             width: '39%',
             paddingTop: '24%',
             float: 'right',
-            marginLeft: '1rem'
+            marginLeft: '1rem',
+            marginBottom: '0rem',
         }
     },
     label: {

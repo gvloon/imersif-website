@@ -1,10 +1,10 @@
 import { React, api } from 'common'
-import { Markdown } from 'components'
+import { DynamicZone } from 'components'
 import { BasicPage } from 'components/page'
 import { Glossary } from 'components/glossary'
 
 export const Page = ({ page, items }) => {
-    const { title, image, introduction } = page
+    const { title, image, content } = page
 
     const context = {
         title,
@@ -23,8 +23,8 @@ export const Page = ({ page, items }) => {
 
     return (
         <BasicPage context={context} image={image}>
-            <Markdown source={introduction} />
-            <Glossary items={items} />
+            <DynamicZone className="block" content={content} />
+            <Glossary className="block" items={items} />
         </BasicPage>
     )
 }

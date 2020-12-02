@@ -1,4 +1,4 @@
-import { React, debug, makeStyles } from 'common'
+import { React, _ } from 'common'
 import * as Pattern from './patterns'
 import * as Media from './media'
 import * as Common from './common'
@@ -12,7 +12,7 @@ const components = {
 }
 
 const DynamicZone = ({ content, context, className }) => {
-    if (!content || !content.length)
+    if (!_.isArray(content))
         return null
 
     return content.map((item, index) => getComponent(item, context, index, className))

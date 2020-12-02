@@ -2,12 +2,6 @@ import { React, PropTypes, makeStyles, categorize, _, classNames } from 'common'
 import { Markdown } from 'components'
 
 const useStyles = makeStyles(index => ({
-    glossary: {
-        marginTop: '1rem'
-    },
-    list: {
-        marginTop: '-2rem'
-    },
     letter: {
         textTransform: 'uppercase',
         fontWeight: 'bold',
@@ -26,22 +20,20 @@ const Glossary = ({ items, className }) => {
     const classes = useStyles()
     const rootClasses = classNames({
         [className]: !!className,
-        [classes.glossary]: true
+        [classes.glossary]: !!classes.glossary
     })
     let categories = categorize(items, item => item.term.toLowerCase()[0])
     categories = _.sortBy(categories, [item => item.key])
     return (
         <div className={rootClasses}>
-            <div className={classes.list}>
-                {
-                    categories.map(({ key, items }) => <GlossaryCategory key={key} letter={key} items={items} />)
-                }
-            </div>
+            {
+                categories.map(({ key, items }) => <GlossaryCategory key={key} letter={key} items={items} />)
+            }
         </div>
     )
 }
 
-const GlossaryCategory = ({ letter, items }) => {
+const GlossaryCategory = ({ letter, items, className }) => {
     const classes = useStyles()
     return (
         <>
