@@ -18,8 +18,8 @@
       "type": "string"
     },
     "platforms": {
-      "collection": "case-platform",
       "via": "cases",
+      "collection": "case-platform",
       "dominant": true
     },
     "url": {

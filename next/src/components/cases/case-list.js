@@ -6,11 +6,19 @@ import CasePreview from './case-preview'
 const styles = theme => ({
     list: {
         marginTop: '-1rem',
-        marginBottom: '-1rem'
+        marginBottom: '-1rem',
+        [theme.breakpoints.up('sm')]: {
+            marginTop: '-1.25rem',
+            marginBottom: '-1.25rem',
+        }
     },
     row: {
         marginTop: '1rem',
-        marginBottom: '1rem'
+        marginBottom: '1rem',
+        [theme.breakpoints.up('sm')]: {
+            marginTop: '1.25rem',
+            marginBottom: '1.25rem',
+        }
     },
     disabled: {
         color: color.gray[17]

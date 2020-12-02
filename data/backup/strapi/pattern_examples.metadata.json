@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"strapi.pattern_examples"}],"uuid":"610387e030fc4dcd911508b3daf7a928"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"8eef0d01ce5540c8bc9741d77f233406","collectionName":"pattern_examples"}

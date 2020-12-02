@@ -2,19 +2,24 @@
   "kind": "collectionType",
   "collectionName": "case_platforms",
   "info": {
-    "name": "case-platform"
+    "name": "case-platform",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "name": {
       "type": "string"
     },
     "cases": {
-      "via": "platforms",
-      "collection": "case"
+      "collection": "case",
+      "via": "platforms"
+    },
+    "abbreviation": {
+      "type": "string"
     }
   }
 }

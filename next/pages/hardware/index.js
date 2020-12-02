@@ -40,16 +40,16 @@ const CategoryList = ({ deviceTypes, peripheralTypes, className }) => {
                 )
             }))
         },
-        {
-            value: 'Peripherals',
-            children: peripheralTypes.map((type, index) => ({
-                value: (
-                    <Link key={index} href={href('/peripheral-type/[slug]', type.slug)}>
-                        <a>{type.name}</a>
-                    </Link>
-                )
-            }))
-        }
+        // {
+        //     value: 'Peripherals',
+        //     children: peripheralTypes.map((type, index) => ({
+        //         value: (
+        //             <Link key={index} href={href('/peripheral-type/[slug]', type.slug)}>
+        //                 <a>{type.name}</a>
+        //             </Link>
+        //         )
+        //     }))
+        // }
     ]
     return <NestedColumnList className={className} items={items} />
 }

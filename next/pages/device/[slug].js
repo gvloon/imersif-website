@@ -21,7 +21,9 @@ const Page = ({ device }) => {
     return (
         <BasicPage context={context}>
             <SpecificationList className="block" device={device} />
-            <Markdown className="block" source={description} />
+            <div className="block">
+                <Markdown source={description} />
+            </div>
         </BasicPage>
     )
 }

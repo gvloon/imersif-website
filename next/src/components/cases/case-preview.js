@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
         paddingTop: Math.floor(30 * 9/16) +  '%',
         backgroundColor: 'black'
     },
-    info: {
+    right: {
         width: '70%',
         marginTop: '-0.2rem',
         marginLeft: '1rem',
@@ -38,29 +38,44 @@ const useStyles = makeStyles(theme => ({
             fontSize: '1.25rem'
         }
     },
-    platform: {
+    infoMobile: {
         fontSize: '0.85rem',
         [theme.breakpoints.up('xs')]: {
-            fontSize: '1rem',
-            marginTop: '0.5rem'
+            fontSize: '1rem'
+        },
+        [theme.breakpoints.up('sm')]: {
+            display: 'none'
         }
-
     },
-    topic: {
+    platformMobile: {
         marginTop: '0.15rem',
-        fontSize: '0.85rem',
+        [theme.breakpoints.up('xs')]: {
+            marginTop: '0.35rem'
+        }
+    },
+    topicMobile: {
+        marginTop: '0.15rem',
         color: '#000000',
         fontWeight: 400,
         [theme.breakpoints.up('xs')]: {
-            marginTop: '0.25rem',
-            fontSize: '1rem'
+            marginTop: '0.25rem'
         }
+    },
+    infoDesktop: {
+        display: 'none',
+        [theme.breakpoints.up('sm')]: {
+            display: 'block',
+            marginTop: '0.75rem'
+        }
+    },
+    platformDesktop: {
+        fontWeight: 400
     },
     summary: {
         display: 'none',
         [theme.breakpoints.up('sm')]: {
             display: 'block',
-            marginTop: '0.25rem'
+            marginTop: '0.75rem'
         }
     }
 }))
@@ -84,7 +99,7 @@ const CasePreview = ({ className, useCase }) => {
                         ? <Image className={classes.thumbnail} src={thumbnail} />
                         : <div className={classes.placeholder} />
                 }
-                <div className={classes.info}>
+                <div className={classes.right}>
                     <div className={classes.title}>
                         {
                             title &&
@@ -97,8 +112,8 @@ const CasePreview = ({ className, useCase }) => {
                             />
                         }
                     </div>
-                    <div className={classes.platform}><CasePlatform useCase={useCase} /></div>
-                    <div className={classes.topic}>{topic || '-'}</div>
+                    { getDesktopInfo(useCase, classes) }
+                    { getMobileInfo(useCase, classes) }
                     <div className={classes.summary}>
                         {
                             summary &&
@@ -114,6 +129,42 @@ const CasePreview = ({ className, useCase }) => {
                 </div>
             </div>
         </Link>
+    )
+}
+
+const getDesktopInfo = (useCase, classes) => {
+    const { platforms, topic } = useCase
+    return (
+        <div className={classes.infoDesktop}>
+            {
+                platforms.length &&
+                <span className={classes.platformDesktop}>{ platforms.join(',') }</span>
+            }
+            {
+                platforms && platforms.length && topic &&
+                " - "
+            }
+            {
+                topic
+            }
+        </div>
+    )
+}
+
+const getMobileInfo = (useCase, classes) => {
+    const { platforms, topic } = useCase
+
+    return (
+        <div className={classes.infoMobile}>
+            {
+                platforms && platforms.length &&
+                <div className={classes.platformMobile}>{ platforms.join(',') }</div>
+            }
+            {
+                topic &&
+                <div className={classes.topicMobile}>{ topic }</div>
+            }
+        </div>
     )
 }
 

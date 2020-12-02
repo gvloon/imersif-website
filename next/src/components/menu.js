@@ -147,10 +147,9 @@ const Menu = () => {
                             }}
                             buttonIcon={Apps}
                             dropdownList={[
-                                <Link href="/glossary" key="devices"><a className={classes.dropdownLink}>Glossary</a></Link>,
+                                <Link href="/cases" key="cases"><a className={classes.dropdownLink}>Cases</a></Link>,
                                 <Link href="/hardware" key="devices"><a className={classes.dropdownLink}>Hardware</a></Link>,
-                                <Link href="/software" key="tools"><a className={classes.dropdownLink}>Software</a></Link>,
-                                <Link href="/cases" key="cases"><a className={classes.dropdownLink}>Cases</a></Link>
+                                <Link href="/glossary" key="devices"><a className={classes.dropdownLink}>Glossary</a></Link>,
                             ]}
                         />
                     </Box>
@@ -198,17 +197,14 @@ const Menu = () => {
                     <Link href="/patterns">
                         <Button onClick={toggleDrawer} className={classes.drawerLink}>Patterns</Button>
                     </Link>
-                    <Link href="/glossary">
-                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Glossary</Button>
+                    <Link href="/cases">
+                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Cases</Button>
                     </Link>
                     <Link href="/hardware">
                         <Button onClick={toggleDrawer} className={classes.drawerLink}>Hardware</Button>
                     </Link>
-                    <Link href="/software">
-                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Software</Button>
-                    </Link>
-                    <Link href="/cases">
-                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Cases</Button>
+                    <Link href="/glossary">
+                        <Button onClick={toggleDrawer} className={classes.drawerLink}>Glossary</Button>
                     </Link>
                 </Box>
             </Drawer>

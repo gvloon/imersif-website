@@ -72,15 +72,15 @@ const Footer = ({ color }) => {
         <div className={footerClass}>
             <div className={classes.container}>
                 <div className={classes.links}>
-                    <a className={linkClass}>
-                        Imersif
+                    <a className={linkClass} href="mailto:info@imersif.com">
+                        Contact
                     </a>
-                    <a className={linkClass}>
-                        About us
-                    </a>
-                    <a className={linkClass}>
-                        Blog
-                    </a>
+                    {/*<a className={linkClass}>*/}
+                    {/*    About us*/}
+                    {/*</a>*/}
+                    {/*<a className={linkClass}>*/}
+                    {/*    Blog*/}
+                    {/*</a>*/}
                 </div>
                 <div className={classes.copyright}>
                     &copy; {1900 + new Date().getYear()} , made by&nbsp;<a className={companyClass}>Imersif</a>

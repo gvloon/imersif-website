@@ -42,10 +42,10 @@ export default {
             placeholder: 'Search patterns'
         },
         {
-            id: 'glossary',
-            label: 'Glossary',
-            value: 'glossary',
-            placeholder: 'Search glossary'
+            id: 'cases',
+            label: 'Cases',
+            value: 'cases',
+            placeholder: 'Search cases/applications'
         },
         {
             id: 'hardware',
@@ -54,16 +54,16 @@ export default {
             placeholder: 'Search hardware'
         },
         {
-            id: 'software',
-            label: 'Software',
-            value: 'software',
-            placeholder: 'Search software'
+            id: 'glossary',
+            label: 'Glossary',
+            value: 'glossary',
+            placeholder: 'Search glossary'
         },
-        {
-            id: 'cases',
-            label: 'Cases',
-            value: 'cases',
-            placeholder: 'Search cases/applications'
-        }
+        // {
+        //     id: 'software',
+        //     label: 'Software',
+        //     value: 'software',
+        //     placeholder: 'Search software'
+        // },
     ]
 }

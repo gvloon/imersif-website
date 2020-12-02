@@ -26,7 +26,7 @@ const getCase = ({ slug, title, summary, thumbnail, platforms, devices, topic })
   title,
   summary,
   thumbnail,
-  platforms: platforms.map(platform => platform.name),
+  platforms: platforms.map(platform => platform.abbreviation),
   devices: devices.map(device => device.title),
   topic
 })

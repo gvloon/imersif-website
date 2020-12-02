@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "case_devices",
   "info": {
-    "name": "case-device"
+    "name": "case-device",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -11,6 +12,9 @@
   },
   "attributes": {
     "title": {
+      "type": "string"
+    },
+    "abbreviation": {
       "type": "string"
     }
   }

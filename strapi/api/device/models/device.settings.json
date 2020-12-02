@@ -2,11 +2,13 @@
   "kind": "collectionType",
   "collectionName": "devices",
   "info": {
-    "name": "device"
+    "name": "device",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": false
   },
   "attributes": {
     "description": {
@@ -55,6 +57,12 @@
       "type": "component",
       "repeatable": false,
       "component": "hardware.resolution"
+    },
+    "hand_tracking": {
+      "type": "boolean"
+    },
+    "release": {
+      "type": "integer"
     }
   }
 }
