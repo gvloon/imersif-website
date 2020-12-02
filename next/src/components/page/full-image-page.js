@@ -32,13 +32,16 @@ const FullImagePage = ({ context, title, image, children }) => {
         <PageContext.Provider value={context}>
             <Layout>
                 <Menu color="transparent"/>
-                <Image className={classes.root} image={image}>
-                    <div className={classes.container}>
-                        <div className={classes.content}>
-                            { children }
+                {
+                    image &&
+                    <Image className={classes.root} src={image.url}>
+                        <div className={classes.container}>
+                            <div className={classes.content}>
+                                { children }
+                            </div>
                         </div>
-                    </div>
-                </Image>
+                    </Image>
+                }
                 <Footer color="gray" />
             </Layout>
         </PageContext.Provider>

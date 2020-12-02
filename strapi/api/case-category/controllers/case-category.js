@@ -21,7 +21,15 @@ const getCategoryLong = ({ slug, title, description, children, cases }) => ({
   cases: cases.map(useCase => getCase(useCase))
 })
 const getChild = ({ slug, title }) => ({ slug, title })
-const getCase = ({ slug, title, summary }) => ({ slug, title, summary })
+const getCase = ({ slug, title, summary, thumbnail, platforms, devices, topic }) => ({
+  slug,
+  title,
+  summary,
+  thumbnail,
+  platforms: platforms.map(platform => platform.name),
+  devices: devices.map(device => device.title),
+  topic
+})
 
 module.exports = {
   async find(ctx) {
@@ -29,7 +37,18 @@ module.exports = {
     return entities.map(entity => getCategoryShort(entity))
   },
   async findBySlug(ctx) {
-    const entity = await db.findBySlug('case-category', ctx)
+    const entity = await db.findBySlug('case-category', ctx, [
+      {
+        path: 'cases',
+        populate: [
+          { path: 'platforms' },
+          { path: 'devices' }
+        ]
+      },
+      {
+        path: 'children'
+      }
+    ])
     return getCategoryLong(entity)
   }
 }

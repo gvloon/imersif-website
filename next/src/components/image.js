@@ -8,8 +8,8 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const Image = ({ image, className, children }) => {
-    if (!image) {
+const Image = ({ src, className, children }) => {
+    if (!src) {
         return null
     }
 
@@ -18,9 +18,8 @@ const Image = ({ image, className, children }) => {
         [className]: !!className,
         [classes.image]: true
     })
-    const backgroundImage = image ? 'url(\'' + image.url + '\')' : null
     return (
-        <div className={rootClasses} style={{ backgroundImage }}>
+        <div className={rootClasses} style={{ backgroundImage: 'url(\'' + src + '\')' }}>
             { children }
         </div>
     )
