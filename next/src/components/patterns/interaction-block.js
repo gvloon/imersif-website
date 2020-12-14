@@ -116,9 +116,14 @@ class InteractionBlock extends React.Component {
         })
     }
 
-    onDeactivated = () => {
-        this.setState({
-            currentIndex: -1
+    onDeactivated = index => {
+        this.setState(state => {
+            if (state.currentIndex === index) {
+                return {
+                    currentIndex: -1
+                }
+            }
+            return null
         })
     }
 }

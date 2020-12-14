@@ -158,7 +158,6 @@ class Media extends React.Component {
     }
 
     onMouseOver = async evt => {
-        console.log('onMouseOver: ' + evt.target)
         if (this.hovering)
             return
 
@@ -167,12 +166,13 @@ class Media extends React.Component {
         await delay(500)
 
         const {onActivated, index} = this.props
-        if (this.hovering && onActivated)
+        if (this.hovering && onActivated) {
             onActivated(index)
+            console.log("onActivated: " + index)
+        }
     }
 
     onMouseOut = evt => {
-        console.log('onMouseOut: ' + evt.target)
         this.hovering = false
     }
 
@@ -186,10 +186,12 @@ class Media extends React.Component {
     onVideoFinished = async () => {
         const {index, onActivated, onDeactivated} = this.props
         if (onDeactivated) {
+            console.log("onDeactivated: " + index)
             onDeactivated(index)
         }
         await delay(2000)
         if (this.hovering && onActivated) {
+            console.log("onActivated: " + index)
             onActivated(index)
         }
     }
