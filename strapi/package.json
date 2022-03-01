@@ -18,7 +18,7 @@
     "markdown-it": "^12.0.2",
     "slugify": "^1.4.0",
     "sqlite3": "latest",
-    "strapi": "3.3.4",
+    "strapi": "3.6.8",
     "strapi-admin": "3.3.4",
     "strapi-connector-bookshelf": "3.3.4",
     "strapi-connector-mongoose": "3.3.4",
